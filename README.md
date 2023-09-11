@@ -1,0 +1,3 @@
+- parse the map into a 2d array consisting of integers each with a value that I can compare to 3 macros : WALL, PLAYER, TERRAIN
+- 
+- sanitize the input file's name and content

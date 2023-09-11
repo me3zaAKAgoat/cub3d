@@ -5,7 +5,8 @@ LINKED_LIST = libraries/linked_list
 GET_NEXT_LINE = libraries/get_next_line
 LIBFT = libraries/libft
 MLX42 = libraries/MLX42/build
-LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -ldl -lglfw -pthread -lm
+# LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -ldl -lglfw -pthread -lm
+LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -framework Cocoa -framework OpenGL -framework IOKit -lglfw -L/Users/echoukri/.brew/Cellar/glfw/3.3.8/lib
 SOURCES = src/test.c
 HEADERS = MLX42.h MLX42_Int.h
 OBJECTS = $(SOURCES:.c=.o)
@@ -26,7 +27,7 @@ $(NAME) : $(OBJECTS)
 	@make -C $(LINKED_LIST) --no-print-directory
 	@make -C $(GET_NEXT_LINE) --no-print-directory
 	@make -C $(LIBFT) --no-print-directory
-	@$(bash cd libraries/MLX42 && cmake -B build && cmake --build build -j4 && exit 0)
+	@$(bash cd libraries/MLX42 && cmake -B build && cmake --build build -j4)
 	@printf "${BLUE}Linking\r${COLOR_OFF}"
 	@$(CC) $(CFLAGS) -o $@ $(OBJECTS) $(LDLFLAGS)
 	@printf "${GREEN}Done Making Minishell.                        ${COLOR_OFF}\n"
