@@ -1,6 +1,6 @@
 {
     "files.associations": {
-        "test.C": "cpp",
-        "get_next_line.h": "c"
+        "cub3d.h": "c",
+        "mlx42.h": "c"
     }
 }

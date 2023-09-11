@@ -1,12 +1,10 @@
-R 1000 400
 NO ./assets/textures/Bark.xpm
 SO ./assets/textures/Bricks.xpm
 WE ./assets/textures/Dirt.xpm
 EA ./assets/textures/Coal.xpm
 
-S ./assets/sprites/cake.xpm
 C 51,53,51
-F 36,85,1
+F 36,85,
 
 1111111111111111111111111
 1000000000110000000000001
