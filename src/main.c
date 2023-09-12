@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/12 03:24:38 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/12 19:19:58 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,18 @@ int main(int ac, char **av)
     (void)ac;
     set_map_defaults(&map);
     data.map = &map;
-    parse_config_file(data, av[1]);
+    parse_config_file(&data, av[1]);
+    int x;
+    int y = 0;
+    while (data.map->map_array[y])
+    {
+        x = 0;
+        while (data.map->map_array[y][x] != HORIZONTAL_TERM)
+        {
+            printf("[%d] ", (data.map->map_array[y][x]));
+            x++;
+        }
+        puts("");
+        y++;
+    }
 }
