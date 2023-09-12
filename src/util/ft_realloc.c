@@ -1,18 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isspace.c                                       :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/02 18:49:10 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/11 19:46:59 by echoukri         ###   ########.fr       */
+/*   Created: 2023/09/12 16:24:11 by echoukri          #+#    #+#             */
+/*   Updated: 2023/09/12 19:17:23 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int ft_isspace(char c)
+void	*ft_realloc(void *ptr, size_t oldsize, size_t newsize)
 {
-	return (c == 32 || c == 9 || c == 10 || c == 13 || c == 12 || c == 11);
+	char	*newptr;
+
+	if (!ptr)
+		return (malloc(newsize));
+	if (newsize <= oldsize)
+		return (ptr);
+	newptr = malloc(newsize);
+	if (!newptr)
+		return (NULL);
+	ft_memcpy(newptr, ptr, oldsize);
+	free(ptr);
+	return (newptr);
 }

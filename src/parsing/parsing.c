@@ -3,28 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/12 03:30:31 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/12 19:47:41 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	count_lines(int fd)
-{
-	int line_count;
-
-	line_count = 0;
-	while (get_next_line(fd) != NULL)
-		line_count++;
-	return (line_count);
-}
-
 char	*skip_wspace(char *str)
 {
-	while (*str && ft_isspace(*str))
+	while (*str && ft_isspace2(*str))
 		str++;
 	return (str);
 }
@@ -34,7 +24,9 @@ int	char_to_map_element(char c)
 	if (c == '1')
 		return (WALL);
 	else if (c == '0')
-		return (PLAYABLE_SURFACE);
+		return (SURFACE_PLAYABLE);
+	else if (ft_isspace2(c))
+		return (SURFACE_NOT_PLAYABLE);
 	else if (c == 'N')
 		return (NORTH);
 	else if (c == 'W')
@@ -43,6 +35,8 @@ int	char_to_map_element(char c)
 		return (EAST);
 	else if (c == 'S')
 		return (SOUTH);
+	else if (c == '\n')
+		return (HORIZONTAL_TERM);
 	else
 	{
 		werror("Error\nUnrecognizable map element.");
@@ -50,7 +44,7 @@ int	char_to_map_element(char c)
 	}
 }
 
-void textures_colors(t_global data, int fd)
+void textures_colors(t_global *data, int fd)
 {
 	char *line;
 	int textures_recognized;
@@ -59,35 +53,35 @@ void textures_colors(t_global data, int fd)
 	textures_recognized = 0;
 	surfaces_recognized = 0;
 	line = get_next_line(fd);
-	while (line != NULL)
+	while (line != NULL && textures_recognized + surfaces_recognized < 6)
 	{
 		if (!ft_strncmp(skip_wspace(line), "NO", 2))
 		{
-			if (data.map->NO_path != NULL)
+			if (data->map->NO_path != NULL)
 				return (werror("Error\nPath for NO recognized twice."), exit(1));
 			textures_recognized++;
-			data.map->NO_path = ft_strdup(skip_wspace(line + 2));
+			data->map->NO_path = ft_strtrim(skip_wspace(line + 2), "\n");
 		}
 		else if (!ft_strncmp(skip_wspace(line), "SO", 2))
 		{
-			if (data.map->SO_path != NULL)
+			if (data->map->SO_path != NULL)
 				return (werror("Error\nPath for SO recognized twice."), exit(1));
 			textures_recognized++;
-			data.map->SO_path = ft_strdup(skip_wspace(line + 2));
+			data->map->SO_path = ft_strtrim(skip_wspace(line + 2), "\n");
 		}
 		else if (!ft_strncmp(skip_wspace(line), "WE", 2))
 		{
-			if (data.map->WE_path != NULL)
+			if (data->map->WE_path != NULL)
 				return (werror("Error\nPath for WE recognized twice."), exit(1));
 			textures_recognized++;
-			data.map->WE_path = ft_strdup(skip_wspace(line + 2));
+			data->map->WE_path = ft_strtrim(skip_wspace(line + 2), "\n");
 		}
 		else if (!ft_strncmp(skip_wspace(line), "EA", 2))
 		{
-			if (data.map->EA_path != NULL)
+			if (data->map->EA_path != NULL)
 				return (werror("Error\nPath for EA recognized twice."), exit(1));
 			textures_recognized++;
-			data.map->EA_path = ft_strdup(skip_wspace(line + 2));
+			data->map->EA_path = ft_strtrim(skip_wspace(line + 2), "\n");
 		}
 		else if (!ft_strncmp(skip_wspace(line), "C", 1))
 		{
@@ -96,9 +90,9 @@ void textures_colors(t_global data, int fd)
 			
 			if (!colors || strarr_len(colors) < 3 || !(ft_isnumber(colors[0]) && ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
 				return (werror("Error\nCeiling colors invalid."), exit(1));
-			data.map->ceil_color.red = ft_atoi(colors[0]);
-			data.map->ceil_color.green = ft_atoi(colors[1]);
-			data.map->ceil_color.blue = ft_atoi(colors[2]);
+			data->map->ceil_color.red = ft_atoi(colors[0]);
+			data->map->ceil_color.green = ft_atoi(colors[1]);
+			data->map->ceil_color.blue = ft_atoi(colors[2]);
 			surfaces_recognized++;
 			split_clear(colors);
 		}
@@ -109,59 +103,55 @@ void textures_colors(t_global data, int fd)
 
 			if (!colors || strarr_len(colors) < 3 || !(ft_isnumber(colors[0]) && ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
 				return (werror("Error\nFloors colors invalid."), exit(1));
-			data.map->floor_color.red = ft_atoi(colors[0]);
-			data.map->floor_color.green = ft_atoi(colors[1]);
-			data.map->floor_color.blue = ft_atoi(colors[2]);
+			data->map->floor_color.red = ft_atoi(colors[0]);
+			data->map->floor_color.green = ft_atoi(colors[1]);
+			data->map->floor_color.blue = ft_atoi(colors[2]);
 			surfaces_recognized++;
 			split_clear(colors);
 		}
-		else if (!ft_strncmp(skip_wspace(line), "\n", 1))
+		else if (ft_strncmp(skip_wspace(line), "\n", 1))
 			break;
 		free(line);
 		line = get_next_line(fd);
 	};
+	free(line);
 	if (textures_recognized < 4)
 		return (werror("Error\nMissing textures."), exit(1));
 	else if (surfaces_recognized < 2)
 		return (werror("Error\nMissing surface colors."), exit(1));
 }
 
-void	read_map(t_global data, int fd)
+void	read_map(t_global *data, int fd)
 {
 	char	*line;
 	int		x;
 	int		y;
-	
-	data.map->map_array = malloc(count_lines(fd) * sizeof(int *));
-	if (!data.map->map_array)
-	{
-		werror("Error\nA heap allocation failed.");
-		exit(1);
-	}
+
 	y = 0;
 	line = get_next_line(fd);
-	while (line != NULL)
+	while (line != NULL && ft_strncmp(skip_wspace(line), "\n", 1))
 	{
 		x = 0;
-		data.map->map_array[y] = malloc(ft_strlen(line) * sizeof(int));
-		if (!data.map->map_array[y])
-		{
-			werror("Error\nA heap allocation failed.");
-			exit(1);
-		}
+		data->map->map_array = ft_realloc(data->map->map_array, y * sizeof(int *), (y + 2) * sizeof(int *));
+		data->map->map_array[y] = NULL;
+		if (!data->map->map_array)
+			return (werror("Error\nA heap allocation failed."), exit(1));
+		data->map->map_array[y] = malloc(ft_strlen(line) * sizeof(int));
+		if (!data->map->map_array[y])
+			return (werror("Error\nA heap allocation failed."), exit(1));
 		while (line[x])
 		{
-			if (!ft_isspace(line[x]))
-				data.map->map_array[y][x] = char_to_map_element(line[x]); 
+			data->map->map_array[y][x] = char_to_map_element(line[x]);
 			x++;
 		}
 		y++;
 		free(line);
 		line = get_next_line(fd);
 	}
+	free(line);
 }
 
-void	parse_config_file(t_global data, char *filename)
+void	parse_config_file(t_global *data, char *filename)
 {
 	int	fd;
 

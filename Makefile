@@ -1,17 +1,18 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -g
 NAME = cub3d
 LINKED_LIST = libraries/linked_list
 GET_NEXT_LINE = libraries/get_next_line
 LIBFT = libraries/libft
 MLX42 = libraries/MLX42/build
-LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -ldl -lglfw -pthread -lm
-# LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -framework Cocoa -framework OpenGL -framework IOKit -lglfw -L/Users/echoukri/.brew/Cellar/glfw/3.3.8/lib
+# LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -ldl -lglfw -pthread -lm
+LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -framework Cocoa -framework OpenGL -framework IOKit -lglfw -L/Users/echoukri/.brew/Cellar/glfw/3.3.8/lib
 SOURCES = src/main.c\
-	src/util/ft_isspace.c\
+	src/util/ft_isspace2.c\
 	src/util/strutil.c\
 	src/util/werror.c\
 	src/util/ft_isnumber.c\
+	src/util/ft_realloc.c\
 	src/parsing/parsing.c
 # HEADERS = cub3d.h
 OBJECTS = $(SOURCES:.c=.o)
