@@ -1,14 +1,19 @@
 CC = cc
-CFLAGS = 
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g
 NAME = cub3d
 LINKED_LIST = libraries/linked_list
 GET_NEXT_LINE = libraries/get_next_line
 LIBFT = libraries/libft
 MLX42 = libraries/MLX42/build
-# LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -ldl -lglfw -pthread -lm
-LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -framework Cocoa -framework OpenGL -framework IOKit -lglfw -L/Users/echoukri/.brew/Cellar/glfw/3.3.8/lib
-SOURCES = src/test.c
-HEADERS = MLX42.h MLX42_Int.h
+LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -ldl -lglfw -pthread -lm
+# LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -framework Cocoa -framework OpenGL -framework IOKit -lglfw -L/Users/echoukri/.brew/Cellar/glfw/3.3.8/lib
+SOURCES = src/main.c\
+	src/util/ft_isspace.c\
+	src/util/strutil.c\
+	src/util/werror.c\
+	src/util/ft_isnumber.c\
+	src/parsing/parsing.c
+# HEADERS = cub3d.h
 OBJECTS = $(SOURCES:.c=.o)
 
 COLOR_OFF=\033[0m
@@ -27,10 +32,10 @@ $(NAME) : $(OBJECTS)
 	@make -C $(LINKED_LIST) --no-print-directory
 	@make -C $(GET_NEXT_LINE) --no-print-directory
 	@make -C $(LIBFT) --no-print-directory
-	@$(bash cd libraries/MLX42 && cmake -B build && cmake --build build -j4)
+	@$(shell cd libraries/MLX42 && cmake -B build && cmake --build build -j4)
 	@printf "${BLUE}Linking\r${COLOR_OFF}"
 	@$(CC) $(CFLAGS) -o $@ $(OBJECTS) $(LDLFLAGS)
-	@printf "${GREEN}Done Making Minishell.                        ${COLOR_OFF}\n"
+	@printf "${GREEN}Done Making $(NAME).                        ${COLOR_OFF}\n"
 
 %.o : %.c $(HEADER)
 	@printf "${BLUE}Compiling $<...\r${COLOR_OFF}"
@@ -38,14 +43,14 @@ $(NAME) : $(OBJECTS)
 
 clean :
 	@rm -f $(OBJECTS)
-	@printf "${RED}Removed minishell object files.${COLOR_OFF}\n"
+	@printf "${RED}Removed $(NAME) object files.${COLOR_OFF}\n"
 	@make -C $(LIBFT) clean --no-print-directory 
 	@make -C $(LINKED_LIST) clean --no-print-directory 
 	@make -C $(GET_NEXT_LINE) clean --no-print-directory 
 
 fclean :
 	@rm -f $(OBJECTS) $(NAME) 
-	@printf "${RED}Removed minishell object files and Minishell binary.${COLOR_OFF}\n"
+	@printf "${RED}Removed $(NAME) object files and $(NAME) binary.${COLOR_OFF}\n"
 	@make -C $(LIBFT) fclean --no-print-directory 
 	@make -C $(LINKED_LIST) fclean --no-print-directory 
 	@make -C $(GET_NEXT_LINE) fclean --no-print-directory 
