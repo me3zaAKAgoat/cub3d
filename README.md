@@ -14,10 +14,18 @@
 
 # Chores
 
-- check that all functions that use malloc are safe
+- Sanitize AV and AC
+- Add sanitization of the map (all void is covered by walls)
+- Make a ray structure
+  - Ray length
+  - Ray angle offset
+- Thouroughly check for any makefile errors !!
+- check that all functions that use malloc are failure safe
   - ft strdup in parsing 
 - find out a way to exit and clean all heap memory gracefully in order to fully utilize leak detectors as they flag even heap memory in use at exit 
+- create a minimap
+  - cast rays to represent the FOV of the player
+- test parsing of different maps
 
 # Questions
 
-- should I send an error if there's a newline on a line at the end of the file instead of a map only

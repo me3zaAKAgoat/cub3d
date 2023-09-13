@@ -5,8 +5,14 @@ LINKED_LIST = libraries/linked_list
 GET_NEXT_LINE = libraries/get_next_line
 LIBFT = libraries/libft
 MLX42 = libraries/MLX42/build
-# LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -ldl -lglfw -pthread -lm
-LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -framework Cocoa -framework OpenGL -framework IOKit -lglfw -L/Users/echoukri/.brew/Cellar/glfw/3.3.8/lib
+
+OS := $(shell uname)
+ifeq ($(OS), Ubuntu)
+    LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -framework Cocoa -framework OpenGL -framework IOKit -lglfw -L/Users/echoukri/.brew/Cellar/glfw/3.3.8/lib
+else
+    LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -ldl -lglfw -pthread -lm
+endif
+
 SOURCES = src/main.c\
 	src/util/ft_isspace2.c\
 	src/util/strutil.c\
@@ -14,7 +20,7 @@ SOURCES = src/main.c\
 	src/util/ft_isnumber.c\
 	src/util/ft_realloc.c\
 	src/parsing/parsing.c
-# HEADERS = cub3d.h
+HEADERS = includes/cub3d.h
 OBJECTS = $(SOURCES:.c=.o)
 
 COLOR_OFF=\033[0m
@@ -33,12 +39,12 @@ $(NAME) : $(OBJECTS)
 	@make -C $(LINKED_LIST) --no-print-directory
 	@make -C $(GET_NEXT_LINE) --no-print-directory
 	@make -C $(LIBFT) --no-print-directory
-	@$(shell cd libraries/MLX42 && cmake -B build && cmake --build build -j4)
+	@echo 'cd libraries/MLX42 && cmake -B build > /dev/null && (printf "${GREEN}MLX42 build was setup successfully.${COLOR_OFF}\n" || "${RED}MLX42 build setup failed.${COLOR_OFF}\n") && cmake --build build -j4 > /dev/null && (printf "${GREEN}MLX42 built successfully.${COLOR_OFF}\n" || "${RED}MLX42 build failed.${COLOR_OFF}\n")' | bash
 	@printf "${BLUE}Linking\r${COLOR_OFF}"
 	@$(CC) $(CFLAGS) -o $@ $(OBJECTS) $(LDLFLAGS)
 	@printf "${GREEN}Done Making $(NAME).                        ${COLOR_OFF}\n"
 
-%.o : %.c $(HEADER)
+%.o : %.c $(HEADERS)
 	@printf "${BLUE}Compiling $<...\r${COLOR_OFF}"
 	@$(CC) $(CFLAGS) -I./includes -c $< -o $@
 
