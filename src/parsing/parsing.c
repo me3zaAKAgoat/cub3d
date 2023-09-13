@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/12 19:47:41 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/14 00:15:47 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	read_map(t_global *data, int fd)
 	{
 		x = 0;
 		data->map->map_array = ft_realloc(data->map->map_array, y * sizeof(int *), (y + 2) * sizeof(int *));
-		data->map->map_array[y] = NULL;
+		data->map->map_array[y + 1] = NULL;
 		if (!data->map->map_array)
 			return (werror("Error\nA heap allocation failed."), exit(1));
 		data->map->map_array[y] = malloc(ft_strlen(line) * sizeof(int));
