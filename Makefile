@@ -7,7 +7,7 @@ LIBFT = libraries/libft
 MLX42 = libraries/MLX42/build
 
 OS := $(shell uname)
-ifeq ($(OS), Ubuntu)
+ifeq ($(OS), Linux)
     LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -ldl -lglfw -pthread -lm
 else
     LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -framework Cocoa -framework OpenGL -framework IOKit -lglfw -L/Users/$(USER)/.brew/Cellar/glfw/3.3.8/lib
