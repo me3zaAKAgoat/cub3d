@@ -6,7 +6,7 @@
 /*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/14 00:15:47 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/14 00:36:59 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ int	char_to_map_element(char c)
 	}
 }
 
-void textures_colors(t_global *data, int fd)
+void	textures_colors(t_global *data, int fd)
 {
-	char *line;
-	int textures_recognized;
-	int surfaces_recognized;
+	char	*line;
+	int		textures_recognized;
+	int		surfaces_recognized;
 
 	textures_recognized = 0;
 	surfaces_recognized = 0;
@@ -85,8 +85,8 @@ void textures_colors(t_global *data, int fd)
 		}
 		else if (!ft_strncmp(skip_wspace(line), "C", 1))
 		{
-			char *tmp = ft_strtrim(skip_wspace(line + 1), "\n");
-			char **colors = ft_split(tmp, ',');
+			char	*tmp = ft_strtrim(skip_wspace(line + 1), "\n");
+			char	**colors = ft_split(tmp, ',');
 			
 			if (!colors || strarr_len(colors) < 3 || !(ft_isnumber(colors[0]) && ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
 				return (werror("Error\nCeiling colors invalid."), exit(1));
@@ -98,8 +98,8 @@ void textures_colors(t_global *data, int fd)
 		}
 		else if (!ft_strncmp(skip_wspace(line), "F", 1))
 		{
-			char *tmp = ft_strtrim(skip_wspace(line + 1), "\n");
-			char **colors = ft_split(tmp, ',');
+			char	*tmp = ft_strtrim(skip_wspace(line + 1), "\n");
+			char	**colors = ft_split(tmp, ',');
 
 			if (!colors || strarr_len(colors) < 3 || !(ft_isnumber(colors[0]) && ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
 				return (werror("Error\nFloors colors invalid."), exit(1));

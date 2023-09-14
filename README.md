@@ -16,6 +16,10 @@
 
 - Sanitize AV and AC
 - Add sanitization of the map (all void is covered by walls)
+  - check if any HORIZONTAL TERM is precedented with a WALL element
+  - check if any array starts with a WALL element
+  - check if any VOID is surrounded by VOID and WALL element
+  - check if first and last array are all WALL or VOID elements
 - Make a ray structure
   - Ray length
   - Ray angle offset
@@ -29,3 +33,5 @@
 
 # Questions
 
+- should minimap be on its own seperate image and have the 3d game on a another image
+- what is the best hook to use to update the minimap
