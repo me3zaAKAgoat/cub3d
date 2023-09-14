@@ -6,7 +6,7 @@
 /*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/14 18:41:23 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/14 19:27:19 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,8 @@ void	read_map(t_global *data, int fd)
 		line = get_next_line(fd);
 	}
 	free(line);
+	if (!data->map->map_array)
+		return (werror("Error\nNo map found."), exit(1));
 }
 
 void	parse_config_file(t_global *data, char *filename)
