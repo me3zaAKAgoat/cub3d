@@ -30,8 +30,12 @@
 - create a minimap
   - cast rays to represent the FOV of the player
 - test parsing of different maps
-
+- theres some gibberish regarding N W E S and PLayer in elements structure
 # Questions
 
+- how many units should my player be moving
+- what is fishbowl effect
 - should minimap be on its own seperate image and have the 3d game on a another image
 - what is the best hook to use to update the minimap
+- should I use mlx key hook or mlx loop hook
+  - which one is more costly and what does each one do best

@@ -6,7 +6,7 @@
 /*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/14 05:03:37 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/14 19:13:47 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_global
 
 /* Function Definitions */
 
+extern void	clear_global(t_global *data);
 extern void	minimap(t_global *data);
 extern void	*ft_realloc(void *ptr, size_t oldsize, size_t newsize);
 extern size_t	strarr_len(char **arr);

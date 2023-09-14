@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address -g
 NAME = cub3d
 LINKED_LIST = libraries/linked_list
 GET_NEXT_LINE = libraries/get_next_line
@@ -19,8 +19,10 @@ SOURCES = src/main.c\
 	src/util/werror.c\
 	src/util/ft_isnumber.c\
 	src/util/ft_realloc.c\
+	src/util/clear_global.c\
 	src/minimap/minimap.c\
 	src/parsing/parsing.c
+
 HEADERS = includes/cub3d.h
 OBJECTS = $(SOURCES:.c=.o)
 
