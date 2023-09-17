@@ -6,7 +6,7 @@
 /*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/17 02:08:30 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/17 03:08:39 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,17 @@ uint32_t	element_color(t_map_element element)
 		return (0x0FFFFFFFF);
 }
 
-void filled_circle(t_global *data, int xm, int ym, int r, uint32_t color, int unit)
+void	filled_circle(t_global *data, int xm, int ym, int r, uint32_t color, int unit)
 {
-	int x = -r, y = 0, err = 2 - 2 * r;
-	do {
+	int	x;
+	int	y;
+	int	err;
+
+	x = -r;
+	y = 0;
+	err = 2 - 2 * r;
+	while (x < 0)
+	{
 		for (int i = xm * unit + x; i <= xm * unit - x; i++) {
 			mlx_put_pixel(data->minimap_img, abs(OFFSET_X + i) % WIN_WIDTH, abs(OFFSET_Y + (ym * unit + y)) % WIN_HEIGHT, color);
 			mlx_put_pixel(data->minimap_img, abs(OFFSET_X + i) % WIN_WIDTH, abs(OFFSET_Y + (ym * unit - y)) % WIN_HEIGHT, color);
@@ -44,17 +51,20 @@ void filled_circle(t_global *data, int xm, int ym, int r, uint32_t color, int un
 		if (r <= y) err += ++y * 2 + 1;
 		if (r > x || err > y)
 			err += ++x * 2 + 1;
-	} while (x < 0);
+	}
 }
 
-void square(t_global *data, int x, int y, uint32_t color, int rad)
+void	square(t_global *data, int x, int y, uint32_t color, int rad)
 {
-	int halfSize = rad / 2;
-	int left = x - halfSize;
-	int top = y - halfSize;
-	int right = x + halfSize;
-	int bottom = y + halfSize;
+	int	left;
+	int	top;
+	int	right;
+	int	bottom;
 
+	left = x - rad / 2;
+	top = y - rad / 2;
+	right = x + rad / 2;
+	bottom = y + rad / 2;
 	for (int i = top; i <= bottom; i++)
 	{
 		for (int j = left; j <= right; j++)
@@ -85,7 +95,7 @@ void	draw_minimap(t_global *data)
 
 void	move_player(mlx_key_data_t keydata, void *param)
 {
-	t_global *data;
+	t_global	*data;
 
 	(void)keydata;
 	data = param;

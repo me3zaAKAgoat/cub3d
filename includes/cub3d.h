@@ -6,7 +6,7 @@
 /*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/14 19:13:47 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/17 03:37:32 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,12 @@ typedef struct s_global
 	mlx_image_t	*img;
 	mlx_image_t	*minimap_img;
 } t_global;
+
+typedef struct s_ray
+{
+	double distance;
+	double angle;
+}	t_ray;
 
 /* Function Definitions */
 
