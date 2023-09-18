@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/17 03:08:39 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/18 21:38:05 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ uint32_t	element_color(t_map_element element)
 		return (0x0FFFFFFFF);
 }
 
-void	filled_circle(t_global *data, int xm, int ym, int r, uint32_t color, int unit)
+void	filled_circle(t_global *data, int xm, int ym, int r, uint32_t color)
 {
 	int	x;
 	int	y;
@@ -42,9 +42,9 @@ void	filled_circle(t_global *data, int xm, int ym, int r, uint32_t color, int un
 	err = 2 - 2 * r;
 	while (x < 0)
 	{
-		for (int i = xm * unit + x; i <= xm * unit - x; i++) {
-			mlx_put_pixel(data->minimap_img, abs(OFFSET_X + i) % WIN_WIDTH, abs(OFFSET_Y + (ym * unit + y)) % WIN_HEIGHT, color);
-			mlx_put_pixel(data->minimap_img, abs(OFFSET_X + i) % WIN_WIDTH, abs(OFFSET_Y + (ym * unit - y)) % WIN_HEIGHT, color);
+		for (int i = xm + x; i <= xm - x; i++) {
+			mlx_put_pixel(data->minimap_img, abs(OFFSET_X + i) % WIN_WIDTH, abs(OFFSET_Y + (ym + y)) % WIN_HEIGHT, color);
+			mlx_put_pixel(data->minimap_img, abs(OFFSET_X + i) % WIN_WIDTH, abs(OFFSET_Y + (ym - y)) % WIN_HEIGHT, color);
 		}
 
 		r = err;
@@ -102,40 +102,21 @@ void	move_player(mlx_key_data_t keydata, void *param)
 	draw_minimap(data);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_UP) || mlx_is_key_down(data->mlx, MLX_KEY_DOWN) || mlx_is_key_down(data->mlx, MLX_KEY_RIGHT) || mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 	{
-		if (mlx_is_key_down(data->mlx, MLX_KEY_UP) && data->map->map_array[(int)data->player.y - 1][(int)data->player.x] != WALL)
-				data->player.y -= 1;
-		if (mlx_is_key_down(data->mlx, MLX_KEY_DOWN) && data->map->map_array[(int)data->player.y + 1][(int)data->player.x] != WALL)
-				data->player.y += 1;
-		if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT) && data->map->map_array[(int)data->player.y][(int)data->player.x + 1] != WALL)
-				data->player.x += 1;
-		if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT) && data->map->map_array[(int)data->player.y][(int)data->player.x - 1] != WALL)
-				data->player.x -= 1;
+		if (mlx_is_key_down(data->mlx, MLX_KEY_UP) && data->map->map_array[(int)(data->player.y - .25)][(int)data->player.x] != WALL)
+				data->player.y -= .25;
+		if (mlx_is_key_down(data->mlx, MLX_KEY_DOWN) && data->map->map_array[(int)(data->player.y + .25)][(int)data->player.x] != WALL)
+				data->player.y += .25;
+		if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT) && data->map->map_array[(int)data->player.y][(int)(data->player.x + .25)] != WALL)
+				data->player.x += .25;
+		if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT) && data->map->map_array[(int)data->player.y][(int)(data->player.x - .25)] != WALL)
+				data->player.x -= .25;
 	}
-	filled_circle(data, data->player.x, data->player.y, MINIMAP_CIRCLE, element_color(NORTH), MINIMAP_SQUARE);
-}
-
-void	put_player_on_map(t_global *data)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (data->map->map_array[y])
-	{
-		x = 0;
-		while (data->map->map_array[y][x] != HORIZONTAL_TERM)
-		{
-			if (data->map->map_array[y][x] >= NORTH && data->map->map_array[y][x] <= SOUTH)
-				filled_circle(data, x, y, MINIMAP_CIRCLE, element_color(NORTH), MINIMAP_SQUARE);
-			x++;
-		}
-		y++;
-	}	
+	filled_circle(data, data->player.x * MINIMAP_SQUARE, data->player.y * MINIMAP_SQUARE, MINIMAP_CIRCLE, element_color(NORTH));
 }
 
 void	minimap(t_global *data)
 {
 	draw_minimap(data);
-	put_player_on_map(data);
+	filled_circle(data, data->player.x * MINIMAP_SQUARE, data->player.y * MINIMAP_SQUARE, MINIMAP_CIRCLE, element_color(NORTH));
 	mlx_key_hook(data->mlx, move_player, data);
 }
