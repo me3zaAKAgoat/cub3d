@@ -3,19 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/18 21:38:05 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/19 04:32:00 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-#define MINIMAP_SQUARE 8
-#define MINIMAP_CIRCLE 4
-#define OFFSET_X 4
-#define OFFSET_Y 4
 
 uint32_t	element_color(t_map_element element)
 {
@@ -33,6 +28,8 @@ uint32_t	element_color(t_map_element element)
 
 void	filled_circle(t_global *data, int xm, int ym, int r, uint32_t color)
 {
+	xm -= r;
+	ym -= r;
 	int	x;
 	int	y;
 	int	err;
@@ -84,13 +81,20 @@ void	draw_minimap(t_global *data)
 		while (data->map->map_array[y][x] != HORIZONTAL_TERM)
 		{
 			if (data->map->map_array[y][x] >= NORTH && data->map->map_array[y][x] <= SOUTH)
-				square(data, x * MINIMAP_SQUARE, y * MINIMAP_SQUARE, element_color(SURFACE_PLAYABLE), MINIMAP_SQUARE);
+				square(data, x * MINIMAP_UNIT, y * MINIMAP_UNIT, element_color(SURFACE_PLAYABLE), MINIMAP_UNIT);
 			else
-				square(data, x * MINIMAP_SQUARE, y * MINIMAP_SQUARE, element_color(data->map->map_array[y][x]), MINIMAP_SQUARE);
+				square(data, x * MINIMAP_UNIT, y * MINIMAP_UNIT, element_color(data->map->map_array[y][x]), MINIMAP_UNIT);
 			x++;
 		}
 		y++;
 	}
+}
+
+bool	is_wall(int **map, double x, double y)
+{
+	if (map[(int)floor(y)][(int)floor(x)] == WALL)
+		return (1);
+	return (0);
 }
 
 void	move_player(mlx_key_data_t keydata, void *param)
@@ -99,24 +103,40 @@ void	move_player(mlx_key_data_t keydata, void *param)
 
 	(void)keydata;
 	data = param;
-	draw_minimap(data);
-	if (mlx_is_key_down(data->mlx, MLX_KEY_UP) || mlx_is_key_down(data->mlx, MLX_KEY_DOWN) || mlx_is_key_down(data->mlx, MLX_KEY_RIGHT) || mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
+	if (mlx_is_key_down(data->mlx, MLX_KEY_UP) || mlx_is_key_down(data->mlx, MLX_KEY_DOWN)
+		|| mlx_is_key_down(data->mlx, MLX_KEY_RIGHT) || mlx_is_key_down(data->mlx, MLX_KEY_LEFT)
+		|| mlx_is_key_down(data->mlx, MLX_KEY_Q) || mlx_is_key_down(data->mlx, MLX_KEY_D))
 	{
-		if (mlx_is_key_down(data->mlx, MLX_KEY_UP) && data->map->map_array[(int)(data->player.y - .25)][(int)data->player.x] != WALL)
-				data->player.y -= .25;
-		if (mlx_is_key_down(data->mlx, MLX_KEY_DOWN) && data->map->map_array[(int)(data->player.y + .25)][(int)data->player.x] != WALL)
-				data->player.y += .25;
-		if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT) && data->map->map_array[(int)data->player.y][(int)(data->player.x + .25)] != WALL)
-				data->player.x += .25;
-		if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT) && data->map->map_array[(int)data->player.y][(int)(data->player.x - .25)] != WALL)
-				data->player.x -= .25;
+		draw_minimap(data);
+		if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
+			data->player.viewing_angle += ROTATION_SPEED;
+		if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
+			data->player.viewing_angle -= ROTATION_SPEED;
+		if (mlx_is_key_down(data->mlx, MLX_KEY_UP)
+			&& !is_wall(data->map->map_array 
+			, data->player.x + MINIMAP_MOVE_SPEED * cos(data->player.viewing_angle)
+			, data->player.y + MINIMAP_MOVE_SPEED * sin(data->player.viewing_angle)))
+		{
+			data->player.x += MINIMAP_MOVE_SPEED * cos(data->player.viewing_angle);
+			data->player.y += MINIMAP_MOVE_SPEED * sin(data->player.viewing_angle);
+		}
+		if (mlx_is_key_down(data->mlx, MLX_KEY_DOWN)
+			&& !is_wall(data->map->map_array
+			, data->player.x - MINIMAP_MOVE_SPEED * cos(data->player.viewing_angle)
+			, data->player.y - MINIMAP_MOVE_SPEED * sin(data->player.viewing_angle)))
+		{
+			data->player.x -= MINIMAP_MOVE_SPEED * cos(data->player.viewing_angle);
+			data->player.y -= MINIMAP_MOVE_SPEED * sin(data->player.viewing_angle);
+		}
+		cast_all_rays(data);
+		filled_circle(data, data->player.x * MINIMAP_UNIT, data->player.y * MINIMAP_UNIT, PLAYER_CIRCLE, element_color(NORTH));
 	}
-	filled_circle(data, data->player.x * MINIMAP_SQUARE, data->player.y * MINIMAP_SQUARE, MINIMAP_CIRCLE, element_color(NORTH));
 }
 
 void	minimap(t_global *data)
 {
 	draw_minimap(data);
-	filled_circle(data, data->player.x * MINIMAP_SQUARE, data->player.y * MINIMAP_SQUARE, MINIMAP_CIRCLE, element_color(NORTH));
+	cast_all_rays(data);
+	filled_circle(data, data->player.x * MINIMAP_UNIT, data->player.y * MINIMAP_UNIT, PLAYER_CIRCLE, element_color(NORTH));
 	mlx_key_hook(data->mlx, move_player, data);
 }

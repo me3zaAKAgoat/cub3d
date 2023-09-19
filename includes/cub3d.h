@@ -6,7 +6,7 @@
 /*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/17 03:37:32 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/19 03:49:30 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,23 @@
 
 #define WIN_WIDTH 1600
 #define WIN_HEIGHT 900
+
+/* Minimap */
+#define MINIMAP_UNIT 20
+#define HITBOX_SIZE 1
+#define PLAYER_CIRCLE (MINIMAP_UNIT / 2)
+#define OFFSET_X (MINIMAP_UNIT / 2)
+#define OFFSET_Y (MINIMAP_UNIT / 2)
+#define MINIMAP_MOVE_SPEED .25
+#define ROTATION_SPEED .25
+/*        */
+
+#define FOV_DEG 60
+#define PI 3.14159265359
+#define PI_BY_ONEEIGHTY 0.01745329251
+#define FOV FOV_DEG * PI_BY_ONEEIGHTY
+#define WALL_STRIP_WIDTH 1
+#define NUM_RAYS WIN_WIDTH / WALL_STRIP_WIDTH
 
 /* Types */
 
@@ -63,7 +80,7 @@ typedef struct s_map
 
 typedef struct s_player
 {
-	double	player_angle;
+	double	viewing_angle;
 	double	x;
 	double	y;
 } t_player;
@@ -83,8 +100,16 @@ typedef struct s_ray
 	double angle;
 }	t_ray;
 
+typedef struct s_point 
+{
+	int x;
+	int y;
+}	t_point;
+
 /* Function Definitions */
 
+extern void cast_all_rays(t_global *data);
+extern void	bresenham(mlx_image_t *img, t_point a, t_point b, uint32_t color);
 extern void	clear_global(t_global *data);
 extern void	minimap(t_global *data);
 extern void	*ft_realloc(void *ptr, size_t oldsize, size_t newsize);

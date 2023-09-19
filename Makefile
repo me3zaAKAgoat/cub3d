@@ -21,7 +21,9 @@ SOURCES = src/main.c\
 	src/util/ft_realloc.c\
 	src/util/clear_global.c\
 	src/minimap/minimap.c\
-	src/parsing/parsing.c
+	src/minimap/raycasting.c\
+	src/parsing/parsing.c\
+	src/geometry/geometry.c
 
 HEADERS = includes/cub3d.h
 OBJECTS = $(SOURCES:.c=.o)
