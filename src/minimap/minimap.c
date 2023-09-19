@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/19 04:12:33 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/19 18:52:01 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,9 @@ void	draw_minimap(t_global *data)
 	}
 }
 
-bool	is_wall(int **map, double x, double y)
+bool	is_wall(t_map_element **map, double x, double y)
 {
+	printf("%f %f\n", x, y);
 	if (map[(int)floor(y)][(int)floor(x)] == WALL)
 		return (1);
 	return (0);

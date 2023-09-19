@@ -32,8 +32,8 @@
 - [ ] test parsing of different maps
 - [ ] theres some gibberish regarding N W E S and PLayer in elements structure
 - [ ] modularize square and circle drawing functions
-- [ ] should make a function to replace mlx pixel put that adds absolute value and a modulo window/image heigh to avoid undefined behaviour
-
+- [ ] should make a function to replace mlx pixel put that adds absolute value and a modulo window/image heigh to avoid undefined behaviour6
+- [ ] tehres duplication in minimap raycasting file
 # Questions
 
 - how many units should my player be moving

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/19 03:49:30 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/19 17:51:33 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 #define ROTATION_SPEED .25
 /*        */
 
-#define FOV_DEG 60
+#define FOV_DEG 90
 #define PI 3.14159265359
 #define PI_BY_ONEEIGHTY 0.01745329251
 #define FOV FOV_DEG * PI_BY_ONEEIGHTY
@@ -69,13 +69,13 @@ typedef struct s_rgba
 
 typedef struct s_map
 {
-	char	*NO_path;
-	char	*SO_path;
-	char	*EA_path;
-	char	*WE_path;
-	t_rgba	floor_color;
-	t_rgba	ceil_color;
-	int		**map_array;
+	char				*NO_path;
+	char				*SO_path;
+	char				*EA_path;
+	char				*WE_path;
+	t_rgba				floor_color;
+	t_rgba				ceil_color;
+	t_map_element		**map_array;
 } t_map;
 
 typedef struct s_player
@@ -107,7 +107,7 @@ typedef struct s_point
 }	t_point;
 
 /* Function Definitions */
-
+extern bool	is_wall(t_map_element **map, double x, double y);
 extern void cast_all_rays(t_global *data);
 extern void	bresenham(mlx_image_t *img, t_point a, t_point b, uint32_t color);
 extern void	clear_global(t_global *data);

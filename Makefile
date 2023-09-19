@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g
 NAME = cub3d
 LINKED_LIST = libraries/linked_list
 GET_NEXT_LINE = libraries/get_next_line
