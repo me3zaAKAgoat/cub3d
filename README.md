@@ -24,14 +24,15 @@
   - Ray length
   - Ray angle offset
 - [ ] Thouroughly check for any makefile errors !!
+- [ ] find out a way to exit and clean all heap memory gracefully in order to fully utilize leak detectors as they flag even heap memory in use at exit 
 - [ ] check that all functions that use malloc are failure safe
   - ft strdup in parsing 
-- [ ] find out a way to exit and clean all heap memory gracefully in order to fully utilize leak detectors as they flag even heap memory in use at exit 
 - [ ] create a minimap
   - cast rays to represent the FOV of the player
 - [ ] test parsing of different maps
 - [ ] theres some gibberish regarding N W E S and PLayer in elements structure
 - [ ] modularize square and circle drawing functions
+- [ ] should make a function to replace mlx pixel put that adds absolute value and a modulo window/image heigh to avoid undefined behaviour
 
 # Questions
 
