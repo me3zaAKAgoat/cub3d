@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/19 02:35:48 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/20 13:50:52 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void	read_map(t_global *data, int fd)
 			{
 				data->player.x = x;
 				data->player.y = y;
-				data->player.viewing_angle = -PI / 2;
+				data->player.viewing_angle = PI / 2;
 			}
 			x++;
 		}
