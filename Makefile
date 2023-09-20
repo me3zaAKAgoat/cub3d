@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 NAME = cub3d
 LINKED_LIST = libraries/linked_list
 GET_NEXT_LINE = libraries/get_next_line
@@ -23,6 +23,7 @@ SOURCES = src/main.c\
 	src/minimap/minimap.c\
 	src/minimap/raycasting.c\
 	src/parsing/parsing.c\
+	src/parsing/parsingmap.c\
 	src/geometry/geometry.c
 
 HEADERS = includes/cub3d.h
