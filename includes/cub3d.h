@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/19 17:51:33 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/20 01:29:57 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 #define OFFSET_X (MINIMAP_UNIT / 2)
 #define OFFSET_Y (MINIMAP_UNIT / 2)
 #define MINIMAP_MOVE_SPEED .25
-#define ROTATION_SPEED .25
+#define ROTATION_SPEED .1
 /*        */
 
 #define FOV_DEG 90

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/19 18:56:27 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/20 01:08:59 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ double facing(t_map_element element)
 	if (element == EAST)
 		return (0);
 	else if (element == NORTH)
-		return (90 * PI_BY_ONEEIGHTY);
+		return (PI * .5);
 	else if (element == WEST)
-		return (180 * PI_BY_ONEEIGHTY);
+		return (PI);
 	else
-		return (270 * PI_BY_ONEEIGHTY);
+		return (PI * 1.5);
 }
 
 void	textures_colors(t_global *data, int fd)

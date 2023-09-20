@@ -43,3 +43,4 @@
   - its mlx key hook
 - should I use mlx key hook or mlx loop hook
   - which one is more costly and what does each one do best
+- for all the increment calculations what if the values are PI/2 or 0 what happens to tan then
