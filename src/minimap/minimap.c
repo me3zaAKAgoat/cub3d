@@ -6,7 +6,7 @@
 /*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/20 01:18:14 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/20 17:46:53 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	move_player(mlx_key_data_t keydata, void *param)
 void	minimap(t_global *data)
 {
 	draw_minimap(data);
-	// cast_all_rays(data);
+	cast_all_rays(data);
 	filled_circle(data, data->player.x * MINIMAP_UNIT, data->player.y * MINIMAP_UNIT, PLAYER_CIRCLE, element_color(NORTH));
 	mlx_key_hook(data->mlx, move_player, data);
 }

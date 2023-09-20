@@ -6,7 +6,7 @@
 /*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/20 01:29:57 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/20 16:11:35 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 #define OFFSET_X (MINIMAP_UNIT / 2)
 #define OFFSET_Y (MINIMAP_UNIT / 2)
 #define MINIMAP_MOVE_SPEED .25
-#define ROTATION_SPEED .1
+#define ROTATION_SPEED .008
 /*        */
 
 #define FOV_DEG 90
