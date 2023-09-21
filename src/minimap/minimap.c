@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/21 01:03:14 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/21 20:00:26 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	filled_circle(t_global *data, int xm, int ym, int r, uint32_t color)
 	while (x < 0)
 	{
 		for (int i = xm + x; i <= xm - x; i++) {
-			mlx_put_pixel(data->minimap_img, abs(OFFSET_X + i) % WIN_WIDTH, abs(OFFSET_Y + (ym + y)) % WIN_HEIGHT, color);
-			mlx_put_pixel(data->minimap_img, abs(OFFSET_X + i) % WIN_WIDTH, abs(OFFSET_Y + (ym - y)) % WIN_HEIGHT, color);
+			mlx_put_pixel(data->hud_img, OFFSET_X + i, OFFSET_Y + (ym + y), color);
+			mlx_put_pixel(data->hud_img, OFFSET_X + i, OFFSET_Y + (ym - y), color);
 		}
 
 		r = err;
@@ -65,7 +65,7 @@ void	square(t_global *data, int x, int y, uint32_t color, int rad)
 	for (int i = top; i <= bottom; i++)
 	{
 		for (int j = left; j <= right; j++)
-			mlx_put_pixel(data->minimap_img, (abs(OFFSET_X + j) + WIN_WIDTH) % WIN_WIDTH, (abs(OFFSET_Y + i) + WIN_HEIGHT) % WIN_HEIGHT, color);
+			mlx_put_pixel(data->hud_img, OFFSET_X + j, OFFSET_Y + i, color);
 	}
 }
 

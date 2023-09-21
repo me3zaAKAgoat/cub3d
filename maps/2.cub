@@ -3,7 +3,7 @@ SO ./assets/textures/Bricks.xpm
 WE ./assets/textures/Dirt.xpm
 EA ./assets/textures/Coal.xpm
 
-C 51,53,51
+C 51,3,51
 F 36,85,30
 
 1111111111111111111111111

@@ -6,41 +6,13 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 00:39:37 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/21 01:10:31 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/21 19:53:00 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 #define RAY_LENGTH 5
-
-double normalize_angle(double angle)
-{
-	angle = fmod(angle , 2 * PI);
-	if (angle < 0)
-		angle += 2 * PI;
-	return (angle);
-}
-
-bool	is_facing_up(double angle)
-{
-	return (angle < 0 || angle > PI);
-}
-
-bool	is_facing_down(double angle)
-{
-	return (!is_facing_up(angle));
-}
-
-bool	is_facing_right(double angle)
-{
-	return (angle > 3 * PI / 2 || angle < PI / 2);
-}
-
-bool	is_facing_left(double angle)
-{
-	return (!is_facing_right(angle));
-}
 
 double	horizontal_intersection_distance(t_map_element **map, double x, double y, double ray_angle)
 {
@@ -68,7 +40,6 @@ double	horizontal_intersection_distance(t_map_element **map, double x, double y,
 		final_x += xstep;
 		final_y += ystep;
 	}
-	printf("(%f, %f)\n", final_x, final_y);
 	return (INT32_MAX);
 }
 
@@ -98,7 +69,6 @@ double	vertical_intersection_distance(t_map_element **map, double x, double y, d
 		final_x += xstep;
 		final_y += ystep;
 	}
-	printf("(%f, %f)\n", final_x, final_y);
 	return (INT32_MAX);
 }
 
@@ -120,16 +90,16 @@ void	cast_all_rays(t_global *data)
 	int		i;
 	t_ray	ray;
 
-	// ray.angle = data->player.viewing_angle - FOV / 2;
-	ray.angle = data->player.viewing_angle;
+	ray.angle = data->player.viewing_angle - FOV / 2;
 	i = 0;
-	while (i < 1)
+	while (i < NUM_RAYS)
 	{
+		ray.id = i;
 		ray.distance = intersection_distance(data->map->map_array, data->player.x, data->player.y, ray.angle);
-		// ray.distance = 20;
-		bresenham(data->minimap_img,
+		bresenham(data->hud_img,
 			(t_point){.x = data->player.x * MINIMAP_UNIT, .y = data->player.y * MINIMAP_UNIT},
 			(t_point){.x = (data->player.x + cos(ray.angle) * ray.distance) * MINIMAP_UNIT, .y = (data->player.y + sin(ray.angle) * ray.distance) * MINIMAP_UNIT}, 0xFF0000FF);
+		project_wall(data, ray);
 		ray.angle += FOV / NUM_RAYS;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/20 22:57:48 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/21 20:16:41 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,9 +102,7 @@ void	textures_colors(t_global *data, int fd)
 			
 			if (!colors || strarr_len(colors) < 3 || !(ft_isnumber(colors[0]) && ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
 				return (werror("Error\nCeiling colors invalid."), exit(1));
-			data->map->ceil_color.red = ft_atoi(colors[0]);
-			data->map->ceil_color.green = ft_atoi(colors[1]);
-			data->map->ceil_color.blue = ft_atoi(colors[2]);
+			data->map->ceil_color = RGBA(ft_atoi(colors[0]), ft_atoi(colors[1]), ft_atoi(colors[2]), 255);
 			surfaces_recognized++;
 			split_clear(colors);
 		}
@@ -115,9 +113,7 @@ void	textures_colors(t_global *data, int fd)
 
 			if (!colors || strarr_len(colors) < 3 || !(ft_isnumber(colors[0]) && ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
 				return (werror("Error\nFloors colors invalid."), exit(1));
-			data->map->floor_color.red = ft_atoi(colors[0]);
-			data->map->floor_color.green = ft_atoi(colors[1]);
-			data->map->floor_color.blue = ft_atoi(colors[2]);
+			data->map->floor_color = RGBA(ft_atoi(colors[0]), ft_atoi(colors[1]), ft_atoi(colors[2]), 255);
 			surfaces_recognized++;
 			split_clear(colors);
 		}
