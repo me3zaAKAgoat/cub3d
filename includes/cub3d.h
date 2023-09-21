@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/21 04:40:13 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/21 17:20:58 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ typedef struct s_map
 	int				map_width;
 	int				map_height;
 	int				is_hit_vertical;
-	int				is_facing_up;
-	int				is_facing_down;
-	int				is_facing_left;
-	int				is_facing_right;
+	bool			is_facing_up;
+	bool			is_facing_down;
+	bool			is_facing_left;
+	bool			is_facing_right;
 } t_map;
 
 typedef struct s_player
@@ -98,6 +98,7 @@ typedef struct s_global
 	t_player	player;
 	mlx_t		*mlx;
 	mlx_image_t	*img;
+	mlx_image_t	*cf_img;
 	mlx_image_t	*minimap_img;
 } t_global;
 
@@ -115,7 +116,14 @@ typedef struct s_point
 
 /* Function Definitions */
 
-extern void clear_image(t_global *data);
+//extern void clear_image(t_global *data);
+extern double normalize_angle(double angle);
+extern bool is_facing_up(double angle);
+extern bool is_facing_down(double angle);
+extern bool is_facing_left(double angle);
+extern bool is_facing_right(double angle);
+extern void walls_3D(t_global *data,double distance, int i);
+extern int ft_pixel(int r, int g, int b, int a);
 extern bool	is_wall(t_map_element **map, double x, double y);
 extern void cast_all_rays(t_global *data);
 extern void	bresenham(mlx_image_t *img, t_point a, t_point b, uint32_t color);

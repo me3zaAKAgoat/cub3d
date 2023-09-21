@@ -24,7 +24,8 @@ SOURCES = src/main.c\
 	src/minimap/raycasting.c\
 	src/parsing/parsing.c\
 	src/parsing/parsingmap.c\
-	src/geometry/geometry.c
+	src/geometry/geometry.c\
+	src/minimap/walls.c
 
 HEADERS = includes/cub3d.h
 OBJECTS = $(SOURCES:.c=.o)

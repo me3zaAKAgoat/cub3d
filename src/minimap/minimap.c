@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/21 04:38:41 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/21 16:51:19 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ uint32_t	element_color(t_map_element element)
 	else
 		return (0x0FFFFFFFF);
 }
+
+
 
 void	filled_circle(t_global *data, int xm, int ym, int r, uint32_t color)
 {
