@@ -3,30 +3,134 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 00:39:37 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/19 03:01:29 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/21 01:10:31 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-#define RAY_LENGTH 2
+#define RAY_LENGTH 5
 
-void cast_all_rays(t_global *data)
+double normalize_angle(double angle)
 {
-	int	i;
-	double	ray_angle;
+	angle = fmod(angle , 2 * PI);
+	if (angle < 0)
+		angle += 2 * PI;
+	return (angle);
+}
 
-	ray_angle = data->player.viewing_angle - FOV / 2;
-	i = 0;
-	while (i < NUM_RAYS)
+bool	is_facing_up(double angle)
+{
+	return (angle < 0 || angle > PI);
+}
+
+bool	is_facing_down(double angle)
+{
+	return (!is_facing_up(angle));
+}
+
+bool	is_facing_right(double angle)
+{
+	return (angle > 3 * PI / 2 || angle < PI / 2);
+}
+
+bool	is_facing_left(double angle)
+{
+	return (!is_facing_right(angle));
+}
+
+double	horizontal_intersection_distance(t_map_element **map, double x, double y, double ray_angle)
+{
+	double xintercept;
+	double yintercept;
+	double xstep;
+	double ystep;
+	double final_x;
+	double final_y;
+	
+	yintercept = floor(y);
+	yintercept += is_facing_down(ray_angle) * 1;
+	xintercept = x + (yintercept - y) / tan(ray_angle);
+	ystep = 1;
+	ystep *= -1 * is_facing_up(ray_angle) + 1 * !is_facing_up(ray_angle);
+	xstep = 1 / tan(ray_angle);
+	xstep *= -1 * (is_facing_left(ray_angle) && xstep > 0) + 1 * !(is_facing_left(ray_angle) && xstep > 0);
+	xstep *= -1 * (is_facing_right(ray_angle) && xstep < 0) + 1 * !(is_facing_right(ray_angle) && xstep < 0);
+	final_x = xintercept;
+	final_y = yintercept;
+	while (final_x >= 0 && final_x <= 32 && final_y >= 0 && final_y <= 27)
 	{
+		if (is_wall(map, final_x, final_y - (is_facing_up(ray_angle) ? 0.03125 : 0)))
+			return (sqrt(pow(final_x - x, 2) + pow(final_y - y, 2)));
+		final_x += xstep;
+		final_y += ystep;
+	}
+	printf("(%f, %f)\n", final_x, final_y);
+	return (INT32_MAX);
+}
+
+double	vertical_intersection_distance(t_map_element **map, double x, double y, double ray_angle)
+{
+	double xintercept;
+	double yintercept;
+	double xstep;
+	double ystep;
+	double final_x;
+	double final_y;
+
+	xintercept = floor(x);
+	xintercept += is_facing_right(ray_angle) * 1;
+	yintercept = y + (xintercept - x) * tan(ray_angle);
+	xstep = 1;
+	xstep *= -1 * is_facing_left(ray_angle) + 1 * !is_facing_left(ray_angle);
+	ystep = 1 * tan(ray_angle);
+	ystep *= -1 * (is_facing_up(ray_angle) && ystep > 0) + 1 * !(is_facing_up(ray_angle) && ystep > 0);
+	ystep *= -1 * (is_facing_down(ray_angle) && ystep < 0) + 1 * !(is_facing_down(ray_angle) && ystep < 0);
+	final_x = xintercept;
+	final_y = yintercept;
+	while (final_x >= 0 && final_x <= 32 && final_y >= 0 && final_y <= 27)
+	{
+		if (is_wall(map, final_x - (is_facing_left(ray_angle) ? 0.03125 : 0), final_y))
+			return (sqrt(pow(final_x - x, 2) + pow(final_y - y, 2)));
+		final_x += xstep;
+		final_y += ystep;
+	}
+	printf("(%f, %f)\n", final_x, final_y);
+	return (INT32_MAX);
+}
+
+double	intersection_distance(t_map_element **map, double x, double y, double ray_angle)
+{
+	double	hdistance;
+	double	vdistance;
+
+	ray_angle = normalize_angle(ray_angle);
+	hdistance = horizontal_intersection_distance(map, x, y, ray_angle);
+	vdistance = vertical_intersection_distance(map, x, y, ray_angle);
+	if (hdistance < vdistance)
+		return (hdistance);
+	return (vdistance);
+}
+
+void	cast_all_rays(t_global *data)
+{
+	int		i;
+	t_ray	ray;
+
+	// ray.angle = data->player.viewing_angle - FOV / 2;
+	ray.angle = data->player.viewing_angle;
+	i = 0;
+	while (i < 1)
+	{
+		ray.distance = intersection_distance(data->map->map_array, data->player.x, data->player.y, ray.angle);
+		// ray.distance = 20;
 		bresenham(data->minimap_img,
 			(t_point){.x = data->player.x * MINIMAP_UNIT, .y = data->player.y * MINIMAP_UNIT},
-			(t_point){.x = (data->player.x + cos(ray_angle) * RAY_LENGTH) * MINIMAP_UNIT, .y = (data->player.y + sin(ray_angle) * RAY_LENGTH) * MINIMAP_UNIT}, 0xFF0000FF);
-		ray_angle += FOV / NUM_RAYS;
+			(t_point){.x = (data->player.x + cos(ray.angle) * ray.distance) * MINIMAP_UNIT, .y = (data->player.y + sin(ray.angle) * ray.distance) * MINIMAP_UNIT}, 0xFF0000FF);
+		ray.angle += FOV / NUM_RAYS;
 		i++;
 	}
 }
