@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/20 13:50:52 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/20 22:57:48 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,18 @@ int	char_to_map_element(char c)
 		werror("Error\nUnrecognizable map element.");
 		exit(1);
 	}
+}
+
+double initial_angle(t_map_element element)
+{
+	if (element == EAST)
+		return (0);
+	else if (element == NORTH)
+		return (PI * .5);
+	else if (element == WEST)
+		return (PI);
+	else
+		return (PI * 1.5);
 }
 
 void	textures_colors(t_global *data, int fd)
@@ -146,7 +158,7 @@ void	read_map(t_global *data, int fd)
 			{
 				data->player.x = x;
 				data->player.y = y;
-				data->player.viewing_angle = PI / 2;
+				data->player.viewing_angle = initial_angle(data->map->map_array[y][x]);
 			}
 			x++;
 		}

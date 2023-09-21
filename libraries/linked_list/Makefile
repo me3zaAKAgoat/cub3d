@@ -31,11 +31,11 @@ $(NAME) : $(OBJECTS)
 
 clean :
 	@rm -f $(OBJECTS) 
-	@printf "${RED}Removed linekd list object files.${COLOR_OFF}\n"
+	@printf "${RED}Removed linked list object files.${COLOR_OFF}\n"
 
 fclean :
 	@rm -f $(OBJECTS) $(NAME)
-	@printf "${RED}Removed linekd list object files and linked list library file.${COLOR_OFF}\n"
+	@printf "${RED}Removed linked list object files and linked list library file.${COLOR_OFF}\n"
 
 re : fclean all
 

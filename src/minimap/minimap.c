@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/19 04:12:33 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/21 03:31:08 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,29 @@ void	draw_minimap(t_global *data)
 	}
 }
 
-bool	is_wall(int **map, double x, double y)
+bool	is_wall(t_map_element **map, double x, double y)
 {
+	if (x < 0 || y < 0)
+		return (1);
 	if (map[(int)floor(y)][(int)floor(x)] == WALL)
 		return (1);
 	return (0);
+}
+
+void clear_image(t_global *data)
+{
+	int j;
+	int i = 0;
+	while(i < WIN_WIDTH)
+	{
+		j = 0;
+		while(j < WIN_HEIGHT)
+		{
+			mlx_put_pixel(data->img, i, j, 0x00000000);
+			j++;
+		}
+		i++;
+	}
 }
 
 void	move_player(mlx_key_data_t keydata, void *param)
@@ -108,10 +126,10 @@ void	move_player(mlx_key_data_t keydata, void *param)
 		|| mlx_is_key_down(data->mlx, MLX_KEY_Q) || mlx_is_key_down(data->mlx, MLX_KEY_D))
 	{
 		draw_minimap(data);
-		if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-			data->player.viewing_angle += ROTATION_SPEED;
 		if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 			data->player.viewing_angle -= ROTATION_SPEED;
+		if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
+			data->player.viewing_angle += ROTATION_SPEED;
 		if (mlx_is_key_down(data->mlx, MLX_KEY_UP)
 			&& !is_wall(data->map->map_array 
 			, data->player.x + MINIMAP_MOVE_SPEED * cos(data->player.viewing_angle)
