@@ -13,6 +13,7 @@
 
 
 # Chores
+
 - [ ] might need map max width and max height
 - [ ] Sanitize AV and AC
 - [ ] Add sanitization of the map (all void is covered by walls)
@@ -30,8 +31,16 @@
 - [ ] !!!!!!!! put the width and the height of the map in a struct to help for checks in vertical and horizontal raycasters
   - why is it needed anyways
 - [ ] add more sanitization for surface colors
+- [ ] efficency
+  - make as many defined macros for constants to reduce calculations
+  - check wether it would be better to keep scaled values as opposed to array size values
+- [ ] match buttons to what the subject states
+- [ ] make a player hitbox
+- [ ] store ray facades in the ray structure itself to save the calculations
+
 # Questions
 
 - should we rectangle our map
 - !!!!!!!!!!!!!!!!! if we dont rectangle the map should we take teh max width/height or the min and why
 - even after fishbowl theres a go pro effect still
+- how to test peformance

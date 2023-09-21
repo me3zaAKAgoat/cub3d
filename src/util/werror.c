@@ -6,13 +6,13 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 02:17:38 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/11 20:35:03 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/22 00:21:39 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void werror(char *msg)
+void	werror(char *msg)
 {
 	if (msg)
 		write(2, msg, ft_strlen(msg));

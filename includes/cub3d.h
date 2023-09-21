@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/21 20:14:04 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/22 00:12:50 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,15 @@
 #define WIN_WIDTH 1600
 #define WIN_HEIGHT 900
 
-#define MINIMAP_UNIT 5
+#define MINIMAP_SIZE 250
+#define UNIT_SIZE 8
 #define HITBOX_SIZE 1
-#define PLAYER_CIRCLE (MINIMAP_UNIT / 2)
-#define OFFSET_X (MINIMAP_UNIT / 2)
-#define OFFSET_Y (MINIMAP_UNIT / 2)
-#define MINIMAP_MOVE_SPEED 1
+#define PLAYER_CIRCLE (UNIT_SIZE / 2)
+#define OFFSET_X (UNIT_SIZE / 2)
+#define OFFSET_Y (UNIT_SIZE / 2)
+#define MOVE_SPEED 1
 #define ROTATION_SPEED .1
-#define FOV_DEG 80
+#define FOV_DEG 60
 #define FOV FOV_DEG * PI_BY_ONEEIGHTY
 #define PI 3.14159265359
 #define PI_BY_ONEEIGHTY 0.01745329251
@@ -93,6 +94,7 @@ typedef struct s_ray
 	double	distance;
 	double	angle;
 	int		id;
+	bool	hit_vertical;
 }	t_ray;
 
 typedef struct s_point 
@@ -103,7 +105,10 @@ typedef struct s_point
 
 /* Function Definitions */
 
-
+extern void		draw_minimap_background(t_global *data);
+extern void		player_icon(t_global *data, int xm, int ym, int r, uint32_t color);
+extern uint32_t	map_element_color(t_map_element element);
+extern void		move_player(mlx_key_data_t keydata, void *param);
 extern double	normalize_angle(double angle);
 extern bool		is_facing_up(double angle);
 extern bool		is_facing_down(double angle);
