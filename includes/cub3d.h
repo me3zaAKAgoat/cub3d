@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/21 03:35:39 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/21 04:40:13 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,11 @@ typedef struct s_map
 	t_map_element	**map_array;
 	int				map_width;
 	int				map_height;
+	int				is_hit_vertical;
+	int				is_facing_up;
+	int				is_facing_down;
+	int				is_facing_left;
+	int				is_facing_right;
 } t_map;
 
 typedef struct s_player

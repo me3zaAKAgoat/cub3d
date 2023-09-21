@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 00:39:37 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/21 03:44:28 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/21 04:36:36 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,17 +100,17 @@ double	vertical_intersection_distance(t_map_element **map, double x, double y, d
 	return (INT32_MAX);
 }
 
-double	intersection_distance(t_map_element **map, double x, double y, double ray_angle)
+double	intersection_distance(t_global *data, double x, double y, double ray_angle)
 {
 	double	hdistance;
 	double	vdistance;
 
 	ray_angle = normalize_angle(ray_angle);
-	hdistance = horizontal_intersection_distance(map, x, y, ray_angle);
-	vdistance = vertical_intersection_distance(map, x, y, ray_angle);
+	hdistance = horizontal_intersection_distance(data->map->map_array, x, y, ray_angle);
+	vdistance = vertical_intersection_distance(	data->map->map_array, x, y, ray_angle);
 	if (hdistance < vdistance)
-		return (hdistance);
-	return (vdistance);
+		return (data->map->is_hit_vertical = 0, hdistance);
+	return (data->map->is_hit_vertical = 1,vdistance);
 }
 
 void walls_3D(t_global *data,double distance, int i)
@@ -134,6 +134,15 @@ void walls_3D(t_global *data,double distance, int i)
 	wallbottom = (WIN_HEIGHT / 2) + (wall / 2);
 	if (wallbottom > WIN_HEIGHT)
 		wallbottom = WIN_HEIGHT;
+	int color = 0;
+	if (data->map->is_hit_vertical == 1 && is_facing_up(data->player.viewing_angle))
+		color = 0xFF0000FF;
+	else if (data->map->is_hit_vertical == 1 && is_facing_down(data->player.viewing_angle))
+		color = 0x00FF00FF;
+	else if (data->map->is_hit_vertical == 0 && is_facing_left(data->player.viewing_angle))
+		color = 0x0000FFFF;
+	else if (data->map->is_hit_vertical == 0 && is_facing_right(data->player.viewing_angle))
+		color = 0xFFFF00FF;
 	y = wall_top;
 	int ADFSFAS = 0;
 	while (ADFSFAS < y)
@@ -142,7 +151,7 @@ void walls_3D(t_global *data,double distance, int i)
 		ADFSFAS++;
 	}
     while (y < wallbottom){
-			mlx_put_pixel(data->img, i, y, 0xFF0000FF);
+		mlx_put_pixel(data->img, i, y, color);
         y++;
     }
 	ADFSFAS = wallbottom;
@@ -163,7 +172,7 @@ void	cast_all_rays(t_global *data)
 	i = 0;
 	while (i < NUM_RAYS)
 	{
-		ray.distance = intersection_distance(data->map->map_array, data->player.x, data->player.y, ray.angle);
+		ray.distance = intersection_distance(data, data->player.x, data->player.y, ray.angle);
 		// ray.distance = 20;
 		bresenham(data->minimap_img,
 			(t_point){.x = data->player.x * MINIMAP_UNIT, .y = data->player.y * MINIMAP_UNIT},
