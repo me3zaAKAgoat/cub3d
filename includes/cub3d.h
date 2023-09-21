@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/21 01:11:37 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/21 03:35:39 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@
 #define WIN_HEIGHT 900
 
 /* Minimap */
-#define MINIMAP_UNIT 30
+#define MINIMAP_UNIT 5
 #define HITBOX_SIZE 1
 #define PLAYER_CIRCLE (MINIMAP_UNIT / 2)
 #define OFFSET_X (MINIMAP_UNIT / 2)
 #define OFFSET_Y (MINIMAP_UNIT / 2)
 #define MINIMAP_MOVE_SPEED .9
-#define ROTATION_SPEED .01
+#define ROTATION_SPEED .1
 /*        */
 
 #define FOV_DEG 60
@@ -109,6 +109,8 @@ typedef struct s_point
 }	t_point;
 
 /* Function Definitions */
+
+extern void clear_image(t_global *data);
 extern bool	is_wall(t_map_element **map, double x, double y);
 extern void cast_all_rays(t_global *data);
 extern void	bresenham(mlx_image_t *img, t_point a, t_point b, uint32_t color);

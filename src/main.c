@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/17 05:23:41 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/21 02:16:51 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,14 @@ int	main(int ac, char **av)
 	data.mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "cub3d", false);
 	if (!data.mlx)
 		werror("mlx init failed.");
-	// data.minimap_img = mlx_new_image(data.mlx, WIN_WIDTH * .25, WIN_HEIGHT * .25);
+	data.img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
 	data.minimap_img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
-	// if (!data.img)
-	// 	werror("mlx new img failed.");
-	if (mlx_image_to_window(data.mlx, data.minimap_img, 0, 0) < 0)
+	if (!data.img || !data.minimap_img)
+	{
+		werror("mlx new img failed.");
+		exit(0);	
+	}
+	if (mlx_image_to_window(data.mlx, data.img, 0, 0) < 0 || mlx_image_to_window(data.mlx, data.minimap_img, 0, 0) < 0 )
 		werror("mlx new img to window failed.");
 	minimap(&data);
 	mlx_loop_hook(data.mlx, quit, data.mlx);

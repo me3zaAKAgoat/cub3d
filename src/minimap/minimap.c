@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/21 01:03:14 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/21 03:31:08 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,22 @@ bool	is_wall(t_map_element **map, double x, double y)
 	if (map[(int)floor(y)][(int)floor(x)] == WALL)
 		return (1);
 	return (0);
+}
+
+void clear_image(t_global *data)
+{
+	int j;
+	int i = 0;
+	while(i < WIN_WIDTH)
+	{
+		j = 0;
+		while(j < WIN_HEIGHT)
+		{
+			mlx_put_pixel(data->img, i, j, 0x00000000);
+			j++;
+		}
+		i++;
+	}
 }
 
 void	move_player(mlx_key_data_t keydata, void *param)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 00:39:37 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/21 01:10:31 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/21 03:44:28 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ double	horizontal_intersection_distance(t_map_element **map, double x, double y,
 		final_x += xstep;
 		final_y += ystep;
 	}
-	printf("(%f, %f)\n", final_x, final_y);
 	return (INT32_MAX);
 }
 
@@ -98,7 +97,6 @@ double	vertical_intersection_distance(t_map_element **map, double x, double y, d
 		final_x += xstep;
 		final_y += ystep;
 	}
-	printf("(%f, %f)\n", final_x, final_y);
 	return (INT32_MAX);
 }
 
@@ -115,15 +113,55 @@ double	intersection_distance(t_map_element **map, double x, double y, double ray
 	return (vdistance);
 }
 
+void walls_3D(t_global *data,double distance, int i)
+{
+    double wall_strip_height;
+    double raydistance;
+	double distance_projection_plane;
+	int wall;
+	int wallbottom;
+	int wall_top;
+	int y;
+	
+	// clear_image(data);
+	raydistance = distance * cos(data->player.viewing_angle - data->player.viewing_angle);
+    distance_projection_plane = (WIN_WIDTH / 2) / tan(FOV / 2);
+    wall_strip_height = (1/raydistance) * distance_projection_plane;
+	wall = (int) wall_strip_height;
+    wall_top = (WIN_HEIGHT / 2) - (wall / 2);
+	if(wall_top < 0)
+		wall_top = 0;
+	wallbottom = (WIN_HEIGHT / 2) + (wall / 2);
+	if (wallbottom > WIN_HEIGHT)
+		wallbottom = WIN_HEIGHT;
+	y = wall_top;
+	int ADFSFAS = 0;
+	while (ADFSFAS < y)
+	{
+		mlx_put_pixel(data->img, i, ADFSFAS, 0x000000FF);
+		ADFSFAS++;
+	}
+    while (y < wallbottom){
+			mlx_put_pixel(data->img, i, y, 0xFF0000FF);
+        y++;
+    }
+	ADFSFAS = wallbottom;
+	while (ADFSFAS < WIN_HEIGHT)
+	{
+		mlx_put_pixel(data->img, i, ADFSFAS, 0x000000FF);
+		ADFSFAS++;
+	}
+}
+
 void	cast_all_rays(t_global *data)
 {
 	int		i;
 	t_ray	ray;
 
-	// ray.angle = data->player.viewing_angle - FOV / 2;
-	ray.angle = data->player.viewing_angle;
+	ray.angle = data->player.viewing_angle - FOV / 2;
+	// ray.angle = data->player.viewing_angle;
 	i = 0;
-	while (i < 1)
+	while (i < NUM_RAYS)
 	{
 		ray.distance = intersection_distance(data->map->map_array, data->player.x, data->player.y, ray.angle);
 		// ray.distance = 20;
@@ -131,6 +169,7 @@ void	cast_all_rays(t_global *data)
 			(t_point){.x = data->player.x * MINIMAP_UNIT, .y = data->player.y * MINIMAP_UNIT},
 			(t_point){.x = (data->player.x + cos(ray.angle) * ray.distance) * MINIMAP_UNIT, .y = (data->player.y + sin(ray.angle) * ray.distance) * MINIMAP_UNIT}, 0xFF0000FF);
 		ray.angle += FOV / NUM_RAYS;
+		walls_3D(data, ray.distance, i);
 		i++;
 	}
 }
