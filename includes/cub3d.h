@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/21 17:20:58 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/21 20:14:04 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,22 @@
 #define WIN_WIDTH 1600
 #define WIN_HEIGHT 900
 
-/* Minimap */
 #define MINIMAP_UNIT 5
 #define HITBOX_SIZE 1
 #define PLAYER_CIRCLE (MINIMAP_UNIT / 2)
 #define OFFSET_X (MINIMAP_UNIT / 2)
 #define OFFSET_Y (MINIMAP_UNIT / 2)
-#define MINIMAP_MOVE_SPEED .9
+#define MINIMAP_MOVE_SPEED 1
 #define ROTATION_SPEED .1
-/*        */
-
-#define FOV_DEG 60
+#define FOV_DEG 80
+#define FOV FOV_DEG * PI_BY_ONEEIGHTY
 #define PI 3.14159265359
 #define PI_BY_ONEEIGHTY 0.01745329251
-#define FOV FOV_DEG * PI_BY_ONEEIGHTY
 #define WALL_STRIP_WIDTH 1
 #define NUM_RAYS WIN_WIDTH / WALL_STRIP_WIDTH
+
+
+#define RGBA(r, g, b, a) ((r << 24) | (g << 16) | (b << 8) | a)
 
 /* Types */
 
@@ -59,22 +59,14 @@ typedef enum e_map_element
 	HORIZONTAL_TERM
 } t_map_element;
 
-typedef struct s_rgba
-{
-	unsigned char	red;
-	unsigned char	green;
-	unsigned char	blue;
-	unsigned char	a;
-} t_rgba;
-
 typedef struct s_map
 {
 	char			*NO_path;
 	char			*SO_path;
 	char			*EA_path;
 	char			*WE_path;
-	t_rgba			floor_color;
-	t_rgba			ceil_color;
+	uint32_t		floor_color;
+	uint32_t		ceil_color;
 	t_map_element	**map_array;
 	int				map_width;
 	int				map_height;
@@ -97,15 +89,15 @@ typedef struct s_global
 	t_map		*map;
 	t_player	player;
 	mlx_t		*mlx;
-	mlx_image_t	*img;
-	mlx_image_t	*cf_img;
-	mlx_image_t	*minimap_img;
+	mlx_image_t	*game_img;
+	mlx_image_t	*hud_img;
 } t_global;
 
 typedef struct s_ray
 {
-	double distance;
-	double angle;
+	double	distance;
+	double	angle;
+	int		id;
 }	t_ray;
 
 typedef struct s_point 
@@ -116,25 +108,23 @@ typedef struct s_point
 
 /* Function Definitions */
 
-//extern void clear_image(t_global *data);
-extern double normalize_angle(double angle);
-extern bool is_facing_up(double angle);
-extern bool is_facing_down(double angle);
-extern bool is_facing_left(double angle);
-extern bool is_facing_right(double angle);
-extern void walls_3D(t_global *data,double distance, int i);
-extern int ft_pixel(int r, int g, int b, int a);
-extern bool	is_wall(t_map_element **map, double x, double y);
-extern void cast_all_rays(t_global *data);
-extern void	bresenham(mlx_image_t *img, t_point a, t_point b, uint32_t color);
-extern void	clear_global(t_global *data);
-extern void	minimap(t_global *data);
-extern void	*ft_realloc(void *ptr, size_t oldsize, size_t newsize);
+
+extern double	normalize_angle(double angle);
+extern bool		is_facing_up(double angle);
+extern bool		is_facing_down(double angle);
+extern bool		is_facing_right(double angle);
+extern bool		is_facing_left(double angle);
+extern void		project_wall(t_global *data, t_ray ray);
+extern bool		is_wall(t_map_element **map, double x, double y);
+extern void		cast_all_rays(t_global *data);
+extern void		bresenham(mlx_image_t *img, t_point a, t_point b, uint32_t color);
+extern void		clear_global(t_global *data);
+extern void		minimap(t_global *data);
+extern void		*ft_realloc(void *ptr, size_t oldsize, size_t newsize);
 extern size_t	strarr_len(char **arr);
-extern void	werror(char *msg);
-extern int	ft_isnumber(char *str);
-extern int ft_isspace2(char c);
-extern void	parse_config_file(t_global *data, char *filename);
-extern void	parsing_wall(t_global *data);
+extern void		werror(char *msg);
+extern int		ft_isnumber(char *str);
+extern int		ft_isspace2(char c);
+extern void		parse_config_file(t_global *data, char *filename);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 17:48:39 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/21 18:26:40 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/21 22:17:22 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,17 @@ void walls_3D(t_global *data,double distance, int i)
 	int ADFSFAS = 0;
 	while (ADFSFAS < wall_top && ADFSFAS < WIN_HEIGHT / 2)
 	{
-		mlx_put_pixel(data->img, i, ADFSFAS, ft_pixel(data->map->ceil_color.red, data->map->ceil_color.green, data->map->ceil_color.blue,255));
+		mlx_put_pixel(data->game_img, i, ADFSFAS, ft_pixel(data->map->ceil_color.red, data->map->ceil_color.green, data->map->ceil_color.blue,255));
 		ADFSFAS++;
 	}
     while (y < wallbottom){
-		mlx_put_pixel(data->img, i, y, color);
+		mlx_put_pixel(data->game_img, i, y, color);
         y++;
     }
 	ADFSFAS = wallbottom;
 	while (ADFSFAS < WIN_HEIGHT && ADFSFAS >= WIN_HEIGHT / 2)
 	{
-		mlx_put_pixel(data->img, i, ADFSFAS, ft_pixel(data->map->floor_color.red, data->map->floor_color.green, data->map->floor_color.blue,255));
+		mlx_put_pixel(data->game_img, i, ADFSFAS, ft_pixel(data->map->floor_color.red, data->map->floor_color.green, data->map->floor_color.blue,255));
 		ADFSFAS++;
 	}
 }

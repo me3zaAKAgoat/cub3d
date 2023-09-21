@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/21 17:26:38 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/21 20:11:09 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	set_global_defaults(t_global *data, t_map *map)
 	data->map->NO_path = NULL;
 	data->map->SO_path = NULL;
 	data->map->WE_path = NULL;
-	data->map->ceil_color = (t_rgba){.red = 0, .green = 0, .blue = 0};
-	data->map->floor_color = (t_rgba){.red = 0, .green = 0, .blue = 0};
+	data->map->ceil_color = 0;
+	data->map->floor_color = 0;
 	data->map->map_array = NULL;
-	data->img = NULL;
-	data->minimap_img = NULL;
+	data->game_img = NULL;
+	data->hud_img = NULL;
 	data->mlx = NULL;
 }
 
@@ -44,15 +44,11 @@ int	main(int ac, char **av)
 	data.mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "cub3d", false);
 	if (!data.mlx)
 		werror("mlx init failed.");
-	data.img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
-	data.cf_img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
-	data.minimap_img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
-	if (!data.img || !data.minimap_img || !data.cf_img)
-	{
+	data.game_img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
+	data.hud_img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
+	if (!data.game_img || !data.hud_img)
 		werror("mlx new img failed.");
-		exit(0);	
-	}
-	if (mlx_image_to_window(data.mlx, data.cf_img, 0, 0) < 0 || mlx_image_to_window(data.mlx, data.img, 0, 0) < 0 || mlx_image_to_window(data.mlx, data.minimap_img, 0, 0) < 0)
+	if (mlx_image_to_window(data.mlx, data.game_img, 0, 0) < 0 || mlx_image_to_window(data.mlx, data.hud_img, 0, 0) < 0)
 		werror("mlx new img to window failed.");
 	
 	minimap(&data);
