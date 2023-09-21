@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 17:48:39 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/21 17:17:00 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/21 18:26:40 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ void walls_3D(t_global *data,double distance, int i)
 	int wallbottom;
 	int wall_top;
 	int y;
-	
-	// clear_image(data);
+
 	raydistance = distance * cos( ray.angle - player.viewing_angle);
     distance_projection_plane = (WIN_WIDTH / 2) / tan(FOV / 2);
     wall_strip_height = (1/raydistance) * distance_projection_plane;
@@ -70,7 +69,7 @@ void walls_3D(t_global *data,double distance, int i)
 		color = 0xFFFF00FF;
 	y = wall_top;
 	int ADFSFAS = 0;
-	while (ADFSFAS < y && ADFSFAS < WIN_HEIGHT / 2)
+	while (ADFSFAS < wall_top && ADFSFAS < WIN_HEIGHT / 2)
 	{
 		mlx_put_pixel(data->img, i, ADFSFAS, ft_pixel(data->map->ceil_color.red, data->map->ceil_color.green, data->map->ceil_color.blue,255));
 		ADFSFAS++;

@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/21 15:45:04 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/21 17:26:38 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	main(int ac, char **av)
 	data.img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
 	data.cf_img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
 	data.minimap_img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
-	
 	if (!data.img || !data.minimap_img || !data.cf_img)
 	{
 		werror("mlx new img failed.");

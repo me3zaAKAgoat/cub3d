@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 00:39:37 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/21 17:19:49 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/21 18:41:39 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ void	cast_all_rays(t_global *data)
 	while (i < NUM_RAYS)
 	{
 		ray.distance = intersection_distance(data, data->player.x, data->player.y, ray.angle);
+		printf("ray distance %f\n", ray.distance);
+		printf("ray angle %f\n",  ray.distance * cos( ray.angle - data->player.viewing_angle));
 		bresenham(data->minimap_img,
 			(t_point){.x = data->player.x * MINIMAP_UNIT, .y = data->player.y * MINIMAP_UNIT},
 			(t_point){.x = (data->player.x + cos(ray.angle) * ray.distance) * MINIMAP_UNIT, .y = (data->player.y + sin(ray.angle) * ray.distance) * MINIMAP_UNIT}, 0xFF0000FF);
