@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 00:39:37 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/20 17:41:59 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/21 01:10:31 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ double normalize_angle(double angle)
 
 bool	is_facing_up(double angle)
 {
-	return (angle > 0 && angle < PI);
+	return (angle < 0 || angle > PI);
 }
 
 bool	is_facing_down(double angle)
@@ -61,14 +61,14 @@ double	horizontal_intersection_distance(t_map_element **map, double x, double y,
 	xstep *= -1 * (is_facing_right(ray_angle) && xstep < 0) + 1 * !(is_facing_right(ray_angle) && xstep < 0);
 	final_x = xintercept;
 	final_y = yintercept;
-
-	while (final_x >= 0 && final_x * MINIMAP_UNIT <= WIN_WIDTH && final_y >= 0 && final_y * MINIMAP_UNIT <= WIN_WIDTH)
+	while (final_x >= 0 && final_x <= 32 && final_y >= 0 && final_y <= 27)
 	{
-		if (is_wall(map, final_x, final_y - (is_facing_up(ray_angle) ? 1 : 0)))
+		if (is_wall(map, final_x, final_y - (is_facing_up(ray_angle) ? 0.03125 : 0)))
 			return (sqrt(pow(final_x - x, 2) + pow(final_y - y, 2)));
 		final_x += xstep;
 		final_y += ystep;
 	}
+	printf("(%f, %f)\n", final_x, final_y);
 	return (INT32_MAX);
 }
 
@@ -91,14 +91,14 @@ double	vertical_intersection_distance(t_map_element **map, double x, double y, d
 	ystep *= -1 * (is_facing_down(ray_angle) && ystep < 0) + 1 * !(is_facing_down(ray_angle) && ystep < 0);
 	final_x = xintercept;
 	final_y = yintercept;
-
-	while (final_x >= 0 && final_x * MINIMAP_UNIT <= WIN_WIDTH && final_y >= 0 && final_y * MINIMAP_UNIT <= WIN_WIDTH)
+	while (final_x >= 0 && final_x <= 32 && final_y >= 0 && final_y <= 27)
 	{
-		if (is_wall(map, final_x - (is_facing_left(ray_angle) ? 1 : 0), final_y))
+		if (is_wall(map, final_x - (is_facing_left(ray_angle) ? 0.03125 : 0), final_y))
 			return (sqrt(pow(final_x - x, 2) + pow(final_y - y, 2)));
 		final_x += xstep;
 		final_y += ystep;
 	}
+	printf("(%f, %f)\n", final_x, final_y);
 	return (INT32_MAX);
 }
 
@@ -110,10 +110,6 @@ double	intersection_distance(t_map_element **map, double x, double y, double ray
 	ray_angle = normalize_angle(ray_angle);
 	hdistance = horizontal_intersection_distance(map, x, y, ray_angle);
 	vdistance = vertical_intersection_distance(map, x, y, ray_angle);
-	// if (fmod(ray_angle, PI) == 0)
-	// 	return (vdistance);
-	// else if (fmod(ray_angle, PI / 2) == 0)
-	// 	return (hdistance);
 	if (hdistance < vdistance)
 		return (hdistance);
 	return (vdistance);
@@ -124,7 +120,6 @@ void	cast_all_rays(t_global *data)
 	int		i;
 	t_ray	ray;
 
-	puts("XD");
 	// ray.angle = data->player.viewing_angle - FOV / 2;
 	ray.angle = data->player.viewing_angle;
 	i = 0;
@@ -136,7 +131,6 @@ void	cast_all_rays(t_global *data)
 			(t_point){.x = data->player.x * MINIMAP_UNIT, .y = data->player.y * MINIMAP_UNIT},
 			(t_point){.x = (data->player.x + cos(ray.angle) * ray.distance) * MINIMAP_UNIT, .y = (data->player.y + sin(ray.angle) * ray.distance) * MINIMAP_UNIT}, 0xFF0000FF);
 		ray.angle += FOV / NUM_RAYS;
-		ray.angle = normalize_angle(ray.angle);
 		i++;
 	}
 }

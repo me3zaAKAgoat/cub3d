@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/20 01:08:59 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/20 22:57:48 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	char_to_map_element(char c)
 	}
 }
 
-double facing(t_map_element element)
+double initial_angle(t_map_element element)
 {
 	if (element == EAST)
 		return (0);
@@ -158,7 +158,7 @@ void	read_map(t_global *data, int fd)
 			{
 				data->player.x = x;
 				data->player.y = y;
-				data->player.viewing_angle = facing(data->map->map_array[y][x]);
+				data->player.viewing_angle = initial_angle(data->map->map_array[y][x]);
 			}
 			x++;
 		}

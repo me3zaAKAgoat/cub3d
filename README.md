@@ -14,6 +14,8 @@
 
 # Chores
 
+- [ ] might need map max width and max height
+- [ ] Orientation should be flipped the bigger the ray angle gets the more the ray turns anti clock wise
 - [ ] Sanitize AV and AC
 - [ ] Add sanitization of the map (all void is covered by walls)
   - check if any HORIZONTAL TERM is precedented with a WALL element
@@ -34,6 +36,9 @@
 - [ ] modularize square and circle drawing functions
 - [ ] should make a function to replace mlx pixel put that adds absolute value and a modulo window/image heigh to avoid undefined behaviour6
 - [ ] tehres duplication in minimap raycasting file
+- [ ] THE PLAYER DOES NOT GO WHERE THE VIEWING ANGLE IS DIRECTED !!!!!
+- [ ] put the width and the height of the map in a struct to help for checks in vertical and horizontal raycasters
+  - why is it needed anyways
 # Questions
 
 - how many units should my player be moving
@@ -44,3 +49,5 @@
 - should I use mlx key hook or mlx loop hook
   - which one is more costly and what does each one do best
 - for all the increment calculations what if the values are PI/2 or 0 what happens to tan then
+- should we rectangle our map
+- if we dont rectangle the map should we take teh max width/height or the min and why 

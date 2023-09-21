@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/20 16:11:35 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/21 01:11:37 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@
 #define WIN_HEIGHT 900
 
 /* Minimap */
-#define MINIMAP_UNIT 20
+#define MINIMAP_UNIT 30
 #define HITBOX_SIZE 1
 #define PLAYER_CIRCLE (MINIMAP_UNIT / 2)
 #define OFFSET_X (MINIMAP_UNIT / 2)
 #define OFFSET_Y (MINIMAP_UNIT / 2)
-#define MINIMAP_MOVE_SPEED .25
-#define ROTATION_SPEED .008
+#define MINIMAP_MOVE_SPEED .9
+#define ROTATION_SPEED .01
 /*        */
 
-#define FOV_DEG 90
+#define FOV_DEG 60
 #define PI 3.14159265359
 #define PI_BY_ONEEIGHTY 0.01745329251
 #define FOV FOV_DEG * PI_BY_ONEEIGHTY
@@ -69,13 +69,15 @@ typedef struct s_rgba
 
 typedef struct s_map
 {
-	char				*NO_path;
-	char				*SO_path;
-	char				*EA_path;
-	char				*WE_path;
-	t_rgba				floor_color;
-	t_rgba				ceil_color;
-	t_map_element		**map_array;
+	char			*NO_path;
+	char			*SO_path;
+	char			*EA_path;
+	char			*WE_path;
+	t_rgba			floor_color;
+	t_rgba			ceil_color;
+	t_map_element	**map_array;
+	int				map_width;
+	int				map_height;
 } t_map;
 
 typedef struct s_player
