@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/21 20:11:09 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/22 15:56:49 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 void	set_global_defaults(t_global *data, t_map *map)
 {
 	data->map = map;
-	data->map->EA_path = NULL;
-	data->map->NO_path = NULL;
-	data->map->SO_path = NULL;
-	data->map->WE_path = NULL;
+	data->map->ea_path = NULL;
+	data->map->no_path = NULL;
+	data->map->so_path = NULL;
+	data->map->wa_path = NULL;
+	data->map->height = 0;
+	data->map->width = 0;
 	data->map->ceil_color = 0;
 	data->map->floor_color = 0;
 	data->map->map_array = NULL;
@@ -50,8 +52,8 @@ int	main(int ac, char **av)
 		werror("mlx new img failed.");
 	if (mlx_image_to_window(data.mlx, data.game_img, 0, 0) < 0 || mlx_image_to_window(data.mlx, data.hud_img, 0, 0) < 0)
 		werror("mlx new img to window failed.");
-	
 	minimap(&data);
+	mlx_loop_hook(data.mlx, move_player, &data);
 	mlx_loop_hook(data.mlx, quit, data.mlx);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);

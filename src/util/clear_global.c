@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   clear_global.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 19:02:10 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/14 19:12:55 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/22 15:46:17 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void clear_global(t_global *data)
-{
-	int i;
 
-	free(data->map->NO_path);
-	free(data->map->EA_path);
-	free(data->map->SO_path);
-	free(data->map->WE_path);
+void	clear_global(t_global *data)
+{
+	int	i;
+
+	free(data->map->no_path);
+	free(data->map->ea_path);
+	free(data->map->so_path);
+	free(data->map->wa_path);
 	if (data->map->map_array)
 	{
 		i = 0;

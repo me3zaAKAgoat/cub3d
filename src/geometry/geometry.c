@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   geometry.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 00:49:21 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/19 03:19:05 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/22 15:42:11 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	bresenham(mlx_image_t *img, t_point a, t_point b, uint32_t color)
 	current = a;
 	while (current.x != b.x || current.y != b.y)
 	{
-		mlx_put_pixel(img, abs(current.x) % WIN_WIDTH, abs(current.y) % WIN_HEIGHT, color);
+		mlx_put_pixel(img, current.x, current.y, color);
 		err[1] = err[0] * 2;
 		check_ex(&current, delta, sign[0], err);
 		check_ey(&current, delta, sign[1], err);

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/18 00:39:37 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/21 22:18:18 by selhilal         ###   ########.fr       */
+/*   Created: 2023/09/22 15:42:48 by selhilal          #+#    #+#             */
+/*   Updated: 2023/09/22 15:43:00 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,22 +72,16 @@ double	vertical_intersection_distance(t_map_element **map, double x, double y, d
 	return (INT32_MAX);
 }
 
-double	intersection_distance(t_global *data, double x, double y, double ray_angle)
+double	intersection_distance(t_map_element **map, double x, double y, t_ray *ray)
 {
 	double	hdistance;
 	double	vdistance;
 
-	ray_angle = normalize_angle(ray_angle);
-	hdistance = horizontal_intersection_distance(data->map->map_array, x, y, ray_angle);
-	vdistance = vertical_intersection_distance(	data->map->map_array, x, y, ray_angle);
+	hdistance = horizontal_intersection_distance(map, x, y, ray->angle);
+	vdistance = vertical_intersection_distance(map, x, y, ray->angle);
 	if (hdistance < vdistance)
-		return (data->map->is_hit_vertical = 0, hdistance);
-	return (data->map->is_hit_vertical = 1,vdistance);
-}
-
-int ft_pixel(int r, int g, int b, int a)
-{
-    return (r * 256 * 256 * 256) + (g * 256 * 256) + (b * 256) + a;
+		return (ray->hit_vertical = false, hdistance);
+	return (ray->hit_vertical = true, vdistance);
 }
 
 void	cast_all_rays(t_global *data)
@@ -95,20 +89,18 @@ void	cast_all_rays(t_global *data)
 	int		i;
 	t_ray	ray;
 
-	ray.angle = data->player.viewing_angle - FOV / 2;
+	ray.angle = normalize_angle(data->player.viewing_angle - FOV / 2);
 	i = 0;
 	while (i < NUM_RAYS)
 	{
 		ray.id = i;
-		ray.distance = intersection_distance(data, data->player.x, data->player.y, ray.angle);
+		ray.distance = intersection_distance(data->map->map_array, data->player.x, data->player.y, &ray);
 		bresenham(data->hud_img,
-			(t_point){.x = data->player.x * MINIMAP_UNIT, .y = data->player.y * MINIMAP_UNIT},
-			(t_point){.x = (data->player.x + cos(ray.angle) * ray.distance) * MINIMAP_UNIT, .y = (data->player.y + sin(ray.angle) * ray.distance) * MINIMAP_UNIT}, 0xFF0000FF);
+			(t_point){.x = (data->player.x * UNIT_SIZE), .y = (data->player.y * UNIT_SIZE)},
+			(t_point){.x = ((data->player.x + cos(ray.angle) * ray.distance) * UNIT_SIZE), .y = ((data->player.y + sin(ray.angle) * ray.distance) * UNIT_SIZE)}, 0xF9DEC9FF);
 		project_wall(data, ray);
 		ray.angle += FOV / NUM_RAYS;
-		project_wall(data, ray);
+		ray.angle = normalize_angle(ray.angle);
 		i++;
 	}
-	
 }
-

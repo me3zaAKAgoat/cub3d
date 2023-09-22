@@ -6,13 +6,13 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/21 22:17:22 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/22 15:43:45 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-uint32_t	element_color(t_map_element element)
+uint32_t	map_element_color(t_map_element element)
 {
 	if (element == WALL)
 		return (0x121212FF);
@@ -26,9 +26,7 @@ uint32_t	element_color(t_map_element element)
 		return (0x0FFFFFFFF);
 }
 
-
-
-void	filled_circle(t_global *data, int xm, int ym, int r, uint32_t color)
+void	player_icon(t_global *data, int xm, int ym, int r, uint32_t color)
 {
 	xm -= r;
 	ym -= r;
@@ -71,7 +69,7 @@ void	square(t_global *data, int x, int y, uint32_t color, int rad)
 	}
 }
 
-void	draw_minimap(t_global *data)
+void	draw_minimap_background(t_global *data)
 {
 	int	x;
 	int	y;
@@ -83,80 +81,18 @@ void	draw_minimap(t_global *data)
 		while (data->map->map_array[y][x] != HORIZONTAL_TERM)
 		{
 			if (data->map->map_array[y][x] >= NORTH && data->map->map_array[y][x] <= SOUTH)
-				square(data, x * MINIMAP_UNIT, y * MINIMAP_UNIT, element_color(SURFACE_PLAYABLE), MINIMAP_UNIT);
+				square(data, x * UNIT_SIZE, y * UNIT_SIZE, map_element_color(SURFACE_PLAYABLE), UNIT_SIZE);
 			else
-				square(data, x * MINIMAP_UNIT, y * MINIMAP_UNIT, element_color(data->map->map_array[y][x]), MINIMAP_UNIT);
+				square(data, x * UNIT_SIZE, y * UNIT_SIZE, map_element_color(data->map->map_array[y][x]), UNIT_SIZE);
 			x++;
 		}
 		y++;
 	}
 }
 
-bool	is_wall(t_map_element **map, double x, double y)
-{
-	if (x < 0 || y < 0)
-		return (1);
-	if (map[(int)floor(y)][(int)floor(x)] == WALL)
-		return (1);
-	return (0);
-}
-
-void clear_image(t_global *data)
-{
-	int j;
-	int i = 0;
-	while(i < WIN_WIDTH)
-	{
-		j = 0;
-		while(j < WIN_HEIGHT)
-		{
-			mlx_put_pixel(data->game_img, i, j, 0x00000000);
-			j++;
-		}
-		i++;
-	}
-}
-
-void	move_player(mlx_key_data_t keydata, void *param)
-{
-	t_global	*data;
-
-	(void)keydata;
-	data = param;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_UP) || mlx_is_key_down(data->mlx, MLX_KEY_DOWN)
-		|| mlx_is_key_down(data->mlx, MLX_KEY_RIGHT) || mlx_is_key_down(data->mlx, MLX_KEY_LEFT)
-		|| mlx_is_key_down(data->mlx, MLX_KEY_Q) || mlx_is_key_down(data->mlx, MLX_KEY_D))
-	{
-		draw_minimap(data);
-		if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
-			data->player.viewing_angle -= ROTATION_SPEED;
-		if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-			data->player.viewing_angle += ROTATION_SPEED;
-		if (mlx_is_key_down(data->mlx, MLX_KEY_UP)
-			&& !is_wall(data->map->map_array 
-			, data->player.x + MINIMAP_MOVE_SPEED * cos(data->player.viewing_angle)
-			, data->player.y + MINIMAP_MOVE_SPEED * sin(data->player.viewing_angle)))
-		{
-			data->player.x += MINIMAP_MOVE_SPEED * cos(data->player.viewing_angle);
-			data->player.y += MINIMAP_MOVE_SPEED * sin(data->player.viewing_angle);
-		}
-		if (mlx_is_key_down(data->mlx, MLX_KEY_DOWN)
-			&& !is_wall(data->map->map_array
-			, data->player.x - MINIMAP_MOVE_SPEED * cos(data->player.viewing_angle)
-			, data->player.y - MINIMAP_MOVE_SPEED * sin(data->player.viewing_angle)))
-		{
-			data->player.x -= MINIMAP_MOVE_SPEED * cos(data->player.viewing_angle);
-			data->player.y -= MINIMAP_MOVE_SPEED * sin(data->player.viewing_angle);
-		}
-		cast_all_rays(data);
-		filled_circle(data, data->player.x * MINIMAP_UNIT, data->player.y * MINIMAP_UNIT, PLAYER_CIRCLE, element_color(NORTH));
-	}
-}
-
 void	minimap(t_global *data)
 {
-	draw_minimap(data);
+	draw_minimap_background(data);
 	cast_all_rays(data);
-	filled_circle(data, data->player.x * MINIMAP_UNIT, data->player.y * MINIMAP_UNIT, PLAYER_CIRCLE, element_color(NORTH));
-	mlx_key_hook(data->mlx, move_player, data);
+	player_icon(data, data->player.x * UNIT_SIZE, data->player.y * UNIT_SIZE, PLAYER_CIRCLE, map_element_color(NORTH));
 }

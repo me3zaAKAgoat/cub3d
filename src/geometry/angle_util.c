@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   angle_util.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 19:53:09 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/21 19:53:17 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/22 15:41:50 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-double normalize_angle(double angle)
+double	normalize_angle(double angle)
 {
-	angle = fmod(angle , 2 * PI);
+	angle = fmod(angle, 2 * PI);
 	if (angle < 0)
 		angle += 2 * PI;
 	return (angle);
