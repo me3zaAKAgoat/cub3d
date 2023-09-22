@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/22 02:17:18 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/22 19:01:02 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ typedef struct s_map
 	uint32_t		floor_color;
 	uint32_t		ceil_color;
 	t_map_element	**map_array;
-	int				width;
-	int				height;
+	size_t			width;
+	size_t			height;
 }	t_map;
 
 typedef struct s_player
@@ -101,13 +101,14 @@ typedef struct s_point
 
 /* Function Definitions */
 
-extern	size_t	horizontal_len(t_map_element *arr);
-extern	size_t	vertical_len(t_map_element **arr);
+extern	void		print_map(t_map_element **map);
+extern	size_t		horizontal_len(t_map_element *arr);
+extern	size_t		vertical_len(t_map_element **arr);
 extern	void		draw_minimap_background(t_global *data);
 extern	void		player_icon(t_global *data, int xm, int ym, int r, uint32_t color);
 extern	uint32_t	map_element_color(t_map_element element);
 extern	void		move_player(mlx_key_data_t keydata, void *param);
-extern	double	normalize_angle(double angle);
+extern	double		normalize_angle(double angle);
 extern	bool		is_facing_up(double angle);
 extern	bool		is_facing_down(double angle);
 extern	bool		is_facing_right(double angle);

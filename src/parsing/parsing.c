@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/22 02:23:17 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/22 19:05:13 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,10 +186,11 @@ void	read_map(t_global *data, int fd)
 	if (!data->map->map_array)
 		return (werror("Error\nNo map found."), exit(1));
 }
+
 void	set_map_dimensions(t_global *data)
 {
-	int	y;	
-	int	x;
+	size_t	y;	
+	size_t	x;
 
 	y = 0;
 	while (data->map->map_array[y])
@@ -206,10 +207,30 @@ void	set_map_dimensions(t_global *data)
 	data->map->height = y;
 }
 
-// void	pad_map_into_rectangle(t_global *data)
-// {
-// 	while (data->map->height)
-// }
+void	pad_map_into_rectangle(t_global *data)
+{
+	size_t	y;
+	size_t	x;
+	size_t	hlen;
+
+	y = 0;
+	while (data->map->map_array[y])
+	{
+		hlen = horizontal_len(data->map->map_array[y]);
+		if (hlen < data->map->width)
+		{
+			data->map->map_array[y] = ft_realloc(data->map->map_array[y], hlen, data->map->width);
+			x = hlen;
+			while (x < data->map->width)
+			{
+				data->map->map_array[y][x] = SURFACE_NOT_PLAYABLE;
+				x++;
+			}
+			data->map->map_array[y][x] = HORIZONTAL_TERM;
+		}
+		y++;
+	}
+}
 
 void	parse_config_file(t_global *data, char *filename)
 {
@@ -223,6 +244,9 @@ void	parse_config_file(t_global *data, char *filename)
 	}
 	textures_colors(data, fd);
 	read_map(data, fd);
-	// pad_map_into_rectangle(data);
+	set_map_dimensions(data);
+	pad_map_into_rectangle(data);
+	print_map(data->map->map_array);
+	printf("%ld %ld\n", data->map->width, data->map->height);
 	close(fd);
 }

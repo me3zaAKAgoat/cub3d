@@ -40,6 +40,7 @@
 - [ ] minimap casted rays are a bit jagged and are visibly imperfect !!
 - [ ] center player on minimap
 - [ ] add padding for the map from the left side (voids)
+
 # Questions
 
 - should we rectangle our map
