@@ -6,11 +6,9 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/22 17:48:06 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/22 22:01:09 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "cub3d.h"
 
 #include "cub3d.h"
 
@@ -188,30 +186,42 @@ void	read_map(t_global *data, int fd)
 	if (!data->map->map_array)
 		return (werror("Error\nNo map found."), exit(1));
 }
+
+void replace_line(t_global *data, int line, int maxWidth)
+{
+	int i;
+
+	i = 0;
+	while (data->map->map_array[line][i] != HORIZONTAL_TERM)
+	{
+		data->map->map_list[line][i] = data->map->map_array[line][i];
+		i++;
+	}
+	while (i < maxWidth - 1)
+	{
+		data->map->map_list[line][i] = SURFACE_NOT_PLAYABLE;
+		i++;
+	}
+	data->map->map_list[line][i] = HORIZONTAL_TERM;
+}
+
 void pad_map(t_global *data)
 {
 	int i;
 	int j;
-	int 
-
+	
 	i = 0;
 	j = 0;
 	data->map->map_list = ft_realloc(data->map->map_list, 0, (data->map->width + 2) * sizeof(int *));
 	if (!data->map->map_list)
 		return (werror("Error\nA heap allocation failed."), exit(1));
 	data->map->map_list[data->map->width + 1] = NULL;
-	data->map->map_list[i] = malloc((data->map->width + 2) * sizeof(int));
-	while (data)
+	while (i < data->map->height)
 	{
-		data->map->map_list[i] += SURFACE_NOT_PLAYABLE;
-		while(j < data->map->height)
-		{
-			data->map->map_array[j][i] += SURFACE_NOT_PLAYABLE;
-			j++;
-		}
+		data->map->map_list[i] = malloc((data->map->width + 2) * sizeof(int));
+			replace_line(data, i, data->map->width + 2);
 		i++;
 	}
-	
 }
 void	set_map_dimensions(t_global *data)
 {
@@ -246,6 +256,20 @@ void	parse_config_file(t_global *data, char *filename)
 	textures_colors(data, fd);
 	read_map(data, fd);
 	set_map_dimensions(data);
-	//pad_map(data);
-	close(fd);
+	pad_map(data);
+	//int i;
+	//int j;
+	//i = 0;
+	//printf("width: %d\n", data->map->width);
+	//while (data->map->map_list[i])
+	//{
+	//	j = 0;
+	//	while (data->map->map_list[i][j] != HORIZONTAL_TERM)
+	//	{
+	//		printf("%d", data->map->map_list[i][j]);
+	//		j++;
+	//	}
+	//	printf("\n");
+	//	i++;
+	//}
 }

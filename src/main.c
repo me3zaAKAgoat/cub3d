@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/22 15:56:49 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/22 21:49:08 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	set_global_defaults(t_global *data, t_map *map)
 	data->map->ceil_color = 0;
 	data->map->floor_color = 0;
 	data->map->map_array = NULL;
+	data->map->map_list = NULL;
 	data->game_img = NULL;
 	data->hud_img = NULL;
 	data->mlx = NULL;

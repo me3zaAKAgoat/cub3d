@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 15:42:48 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/22 15:43:00 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/22 21:57:48 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	cast_all_rays(t_global *data)
 	while (i < NUM_RAYS)
 	{
 		ray.id = i;
-		ray.distance = intersection_distance(data->map->map_array, data->player.x, data->player.y, &ray);
+		ray.distance = intersection_distance(data->map->map_list, data->player.x, data->player.y, &ray);
 		bresenham(data->hud_img,
 			(t_point){.x = (data->player.x * UNIT_SIZE), .y = (data->player.y * UNIT_SIZE)},
 			(t_point){.x = ((data->player.x + cos(ray.angle) * ray.distance) * UNIT_SIZE), .y = ((data->player.y + sin(ray.angle) * ray.distance) * UNIT_SIZE)}, 0xF9DEC9FF);

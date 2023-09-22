@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/22 15:43:45 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/22 21:58:26 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,15 @@ void	draw_minimap_background(t_global *data)
 	int	y;
 
 	y = 0;
-	while (data->map->map_array[y])
+	while (data->map->map_list[y])
 	{
 		x = 0;
-		while (data->map->map_array[y][x] != HORIZONTAL_TERM)
+		while (data->map->map_list[y][x] != HORIZONTAL_TERM)
 		{
-			if (data->map->map_array[y][x] >= NORTH && data->map->map_array[y][x] <= SOUTH)
+			if (data->map->map_list[y][x] >= NORTH && data->map->map_list[y][x] <= SOUTH)
 				square(data, x * UNIT_SIZE, y * UNIT_SIZE, map_element_color(SURFACE_PLAYABLE), UNIT_SIZE);
 			else
-				square(data, x * UNIT_SIZE, y * UNIT_SIZE, map_element_color(data->map->map_array[y][x]), UNIT_SIZE);
+				square(data, x * UNIT_SIZE, y * UNIT_SIZE, map_element_color(data->map->map_list[y][x]), UNIT_SIZE);
 			x++;
 		}
 		y++;
