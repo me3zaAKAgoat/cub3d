@@ -27,6 +27,7 @@ SOURCES = src/main.c\
 	src/geometry/projection.c\
 	src/geometry/angle_util.c\
 	src/movement/movement.c\
+	src/parsing/parsingmap.c
 
 HEADERS = includes/cub3d.h
 OBJECTS = $(SOURCES:.c=.o)

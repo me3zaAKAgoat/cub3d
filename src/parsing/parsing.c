@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/22 22:01:09 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/22 22:49:21 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,19 +257,18 @@ void	parse_config_file(t_global *data, char *filename)
 	read_map(data, fd);
 	set_map_dimensions(data);
 	pad_map(data);
-	//int i;
-	//int j;
-	//i = 0;
-	//printf("width: %d\n", data->map->width);
-	//while (data->map->map_list[i])
-	//{
-	//	j = 0;
-	//	while (data->map->map_list[i][j] != HORIZONTAL_TERM)
-	//	{
-	//		printf("%d", data->map->map_list[i][j]);
-	//		j++;
-	//	}
-	//	printf("\n");
-	//	i++;
-	//}
+	int i = 0;
+	int j;
+	while(data->map->map_list[i])
+	{
+		j = 0;
+		while(data->map->map_list[i][j] != HORIZONTAL_TERM)
+		{
+			printf("%d", data->map->map_list[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+	parsing_wall(data);
 }

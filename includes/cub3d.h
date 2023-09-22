@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/22 20:43:55 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/22 22:10:53 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,5 @@ extern	void		werror(char *msg);
 extern	int		ft_isnumber(char *str);
 extern	int		ft_isspace2(char c);
 extern	void		parse_config_file(t_global *data, char *filename);
-
+extern	void		parsing_wall(t_global *data);
 #endif
