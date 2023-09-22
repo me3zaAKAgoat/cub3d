@@ -37,10 +37,17 @@
 - [ ] match buttons to what the subject states
 - [ ] make a player hitbox
 - [ ] store ray facades in the ray structure itself to save the calculations
-
+- [ ] minimap casted rays are a bit jagged and are visibly imperfect !!
+- [ ] center player on minimap
+- [ ] add padding for the map from the left side (voids)
 # Questions
 
 - should we rectangle our map
 - !!!!!!!!!!!!!!!!! if we dont rectangle the map should we take teh max width/height or the min and why
 - even after fishbowl theres a go pro effect still
 - how to test peformance
+
+# Childish play
+
+- have boxes inside the map that act same as walls (valorant boxes)
+- find a way to turn valorant walls into pixel art form

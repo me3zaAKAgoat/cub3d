@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 19:02:10 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/22 00:22:40 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/22 01:05:30 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	clear_global(t_global *data)
 {
 	int	i;
 
-	free(data->map->NO_path);
-	free(data->map->EA_path);
-	free(data->map->SO_path);
-	free(data->map->WE_path);
+	free(data->map->no_path);
+	free(data->map->ea_path);
+	free(data->map->so_path);
+	free(data->map->wa_path);
 	if (data->map->map_array)
 	{
 		i = 0;

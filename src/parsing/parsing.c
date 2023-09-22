@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/21 20:16:41 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/22 02:23:17 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,27 @@ char	*skip_wspace(char *str)
 	return (str);
 }
 
-int	char_to_map_element(char c)
+size_t	horizontal_len(t_map_element *arr)
+{
+	size_t	len;
+
+	len = 0;
+	while (arr[len] != HORIZONTAL_TERM)
+		len++;
+	return (len);
+}
+
+size_t	vertical_len(t_map_element **arr)
+{
+	size_t	len;
+
+	len = 0;
+	while (arr[len])
+		len++;
+	return (len);
+}
+
+t_map_element	char_to_map_element(char c)
 {
 	if (c == '1')
 		return (WALL);
@@ -49,11 +69,11 @@ double initial_angle(t_map_element element)
 	if (element == EAST)
 		return (0);
 	else if (element == NORTH)
-		return (PI * .5);
+		return (PI * 1.5);
 	else if (element == WEST)
 		return (PI);
 	else
-		return (PI * 1.5);
+		return (PI * .5);
 }
 
 void	textures_colors(t_global *data, int fd)
@@ -69,31 +89,31 @@ void	textures_colors(t_global *data, int fd)
 	{
 		if (!ft_strncmp(skip_wspace(line), "NO", 2))
 		{
-			if (data->map->NO_path != NULL)
+			if (data->map->no_path != NULL)
 				return (werror("Error\nPath for NO recognized twice."), exit(1));
 			textures_recognized++;
-			data->map->NO_path = ft_strtrim(skip_wspace(line + 2), "\n");
+			data->map->no_path = ft_strtrim(skip_wspace(line + 2), "\n");
 		}
 		else if (!ft_strncmp(skip_wspace(line), "SO", 2))
 		{
-			if (data->map->SO_path != NULL)
+			if (data->map->so_path != NULL)
 				return (werror("Error\nPath for SO recognized twice."), exit(1));
 			textures_recognized++;
-			data->map->SO_path = ft_strtrim(skip_wspace(line + 2), "\n");
+			data->map->so_path = ft_strtrim(skip_wspace(line + 2), "\n");
 		}
 		else if (!ft_strncmp(skip_wspace(line), "WE", 2))
 		{
-			if (data->map->WE_path != NULL)
+			if (data->map->wa_path != NULL)
 				return (werror("Error\nPath for WE recognized twice."), exit(1));
 			textures_recognized++;
-			data->map->WE_path = ft_strtrim(skip_wspace(line + 2), "\n");
+			data->map->wa_path = ft_strtrim(skip_wspace(line + 2), "\n");
 		}
 		else if (!ft_strncmp(skip_wspace(line), "EA", 2))
 		{
-			if (data->map->EA_path != NULL)
+			if (data->map->ea_path != NULL)
 				return (werror("Error\nPath for EA recognized twice."), exit(1));
 			textures_recognized++;
-			data->map->EA_path = ft_strtrim(skip_wspace(line + 2), "\n");
+			data->map->ea_path = ft_strtrim(skip_wspace(line + 2), "\n");
 		}
 		else if (!ft_strncmp(skip_wspace(line), "C", 1))
 		{
@@ -102,7 +122,7 @@ void	textures_colors(t_global *data, int fd)
 			
 			if (!colors || strarr_len(colors) < 3 || !(ft_isnumber(colors[0]) && ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
 				return (werror("Error\nCeiling colors invalid."), exit(1));
-			data->map->ceil_color = RGBA(ft_atoi(colors[0]), ft_atoi(colors[1]), ft_atoi(colors[2]), 255);
+			data->map->ceil_color = (ft_atoi(colors[0]) << 24) | (ft_atoi(colors[1]) << 16) | (ft_atoi(colors[2]) << 8) | 255;
 			surfaces_recognized++;
 			split_clear(colors);
 		}
@@ -113,7 +133,7 @@ void	textures_colors(t_global *data, int fd)
 
 			if (!colors || strarr_len(colors) < 3 || !(ft_isnumber(colors[0]) && ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
 				return (werror("Error\nFloors colors invalid."), exit(1));
-			data->map->floor_color = RGBA(ft_atoi(colors[0]), ft_atoi(colors[1]), ft_atoi(colors[2]), 255);
+			data->map->floor_color = (ft_atoi(colors[0]) << 24) | (ft_atoi(colors[1]) << 16) | (ft_atoi(colors[2]) << 8) | 255;
 			surfaces_recognized++;
 			split_clear(colors);
 		}
@@ -166,6 +186,30 @@ void	read_map(t_global *data, int fd)
 	if (!data->map->map_array)
 		return (werror("Error\nNo map found."), exit(1));
 }
+void	set_map_dimensions(t_global *data)
+{
+	int	y;	
+	int	x;
+
+	y = 0;
+	while (data->map->map_array[y])
+	{
+		x = 0;
+		while (data->map->map_array[y][x] != HORIZONTAL_TERM)
+		{
+			if (x > data->map->width)
+				data->map->width = x;
+			x++;
+		}
+		y++;
+	}
+	data->map->height = y;
+}
+
+// void	pad_map_into_rectangle(t_global *data)
+// {
+// 	while (data->map->height)
+// }
 
 void	parse_config_file(t_global *data, char *filename)
 {
@@ -179,5 +223,6 @@ void	parse_config_file(t_global *data, char *filename)
 	}
 	textures_colors(data, fd);
 	read_map(data, fd);
+	// pad_map_into_rectangle(data);
 	close(fd);
 }
