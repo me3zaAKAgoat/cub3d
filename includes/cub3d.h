@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/22 19:01:02 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/22 22:54:36 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,13 @@
 
 # define MINIMAP_SIZE 250
 # define UNIT_SIZE 4
-# define HITBOX_SIZE 1
+# define HITBOX_SIZE .5
 # define PLAYER_CIRCLE (UNIT_SIZE / 2)
 # define OFFSET_X (UNIT_SIZE / 2)
 # define OFFSET_Y (UNIT_SIZE / 2)
-# define MOVE_SPEED 0.5
-# define ROTATION_SPEED .06
-# define FOV_DEG 60
-# define FOV FOV_DEG * .01745329251
+# define MOVE_SPEED 0.1
+# define ROTATION_SPEED .008
+# define FOV 40 * .01745329251
 # define PI 3.14159265359
 # define WALL_STRIP_WIDTH 1
 # define NUM_RAYS WIN_WIDTH / WALL_STRIP_WIDTH
@@ -93,6 +92,14 @@ typedef struct s_ray
 	bool	hit_vertical;
 }	t_ray;
 
+typedef enum e_move_direction
+{
+	forward,
+	backward,
+	right,
+	left
+}	t_move_direction;
+
 typedef struct s_point 
 {
 	int	x;
@@ -107,14 +114,14 @@ extern	size_t		vertical_len(t_map_element **arr);
 extern	void		draw_minimap_background(t_global *data);
 extern	void		player_icon(t_global *data, int xm, int ym, int r, uint32_t color);
 extern	uint32_t	map_element_color(t_map_element element);
-extern	void		move_player(mlx_key_data_t keydata, void *param);
+extern	void		move_player(void *param);
 extern	double		normalize_angle(double angle);
 extern	bool		is_facing_up(double angle);
 extern	bool		is_facing_down(double angle);
 extern	bool		is_facing_right(double angle);
 extern	bool		is_facing_left(double angle);
 extern	void		project_wall(t_global *data, t_ray ray);
-extern	bool		is_wall(t_map_element **map, double x, double y);
+extern	bool		is_wall(t_map *map, double x, double y);
 extern	void		cast_all_rays(t_global *data);
 extern	void		bresenham(mlx_image_t *img, t_point a, t_point b, uint32_t color);
 extern	void		clear_global(t_global *data);

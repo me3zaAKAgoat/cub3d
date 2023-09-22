@@ -34,18 +34,17 @@
 - [ ] efficency
   - make as many defined macros for constants to reduce calculations
   - check wether it would be better to keep scaled values as opposed to array size values
-- [ ] match buttons to what the subject states
 - [ ] make a player hitbox
-- [ ] store ray facades in the ray structure itself to save the calculations
+- [ ] store ray facades in the ray structure itself to save the calculations (is facing ...)
 - [ ] minimap casted rays are a bit jagged and are visibly imperfect !!
 - [ ] center player on minimap
-- [ ] add padding for the map from the left side (voids)
+- [x] match buttons to what the subject states
+- [x] add padding for the map from the left side (voids)
 
 # Questions
 
 - should we rectangle our map
 - !!!!!!!!!!!!!!!!! if we dont rectangle the map should we take teh max width/height or the min and why
-- even after fishbowl theres a go pro effect still
 - how to test peformance
 
 # Childish play

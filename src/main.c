@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/22 02:17:18 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/22 22:11:57 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ void	set_global_defaults(t_global *data, t_map *map)
 	data->mlx = NULL;
 }
 
-void	quit(void *param)
+void	quit(mlx_key_data_t keydata, void *param)
 {
-	if (mlx_is_key_down(param, MLX_KEY_ESCAPE))
-		mlx_close_window(param);
+	(void)keydata;
+	if (mlx_is_key_down((mlx_t *)param, MLX_KEY_ESCAPE))
+		mlx_close_window((mlx_t *)param);
 }
 
 int	main(int ac, char **av)
@@ -53,8 +54,8 @@ int	main(int ac, char **av)
 	if (mlx_image_to_window(data.mlx, data.game_img, 0, 0) < 0 || mlx_image_to_window(data.mlx, data.hud_img, 0, 0) < 0)
 		werror("mlx new img to window failed.");
 	minimap(&data);
-	mlx_key_hook(data.mlx, move_player, &data);
-	mlx_loop_hook(data.mlx, quit, data.mlx);
+	mlx_loop_hook(data.mlx, move_player, &data);
+	mlx_key_hook(data.mlx, quit, data.mlx);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
 	exit(EXIT_SUCCESS);

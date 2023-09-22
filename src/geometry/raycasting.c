@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 00:39:37 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/21 23:17:05 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/22 22:30:26 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #define RAY_LENGTH 5
 
-double	horizontal_intersection_distance(t_map_element **map, double x, double y, double ray_angle)
+double	horizontal_intersection_distance(t_map *map, double x, double y, double ray_angle)
 {
 	double xintercept;
 	double yintercept;
@@ -33,7 +33,7 @@ double	horizontal_intersection_distance(t_map_element **map, double x, double y,
 	xstep *= -1 * (is_facing_right(ray_angle) && xstep < 0) + 1 * !(is_facing_right(ray_angle) && xstep < 0);
 	final_x = xintercept;
 	final_y = yintercept;
-	while (final_x >= 0 && final_x <= 32 && final_y >= 0 && final_y <= 27)
+	while (final_x >= 0 && final_x <= map->width && final_y >= 0 && final_y <= map->height)
 	{
 		if (is_wall(map, final_x, final_y - (is_facing_up(ray_angle) ? 0.03125 : 0)))
 			return (sqrt(pow(final_x - x, 2) + pow(final_y - y, 2)));
@@ -43,7 +43,7 @@ double	horizontal_intersection_distance(t_map_element **map, double x, double y,
 	return (INT32_MAX);
 }
 
-double	vertical_intersection_distance(t_map_element **map, double x, double y, double ray_angle)
+double	vertical_intersection_distance(t_map *map, double x, double y, double ray_angle)
 {
 	double xintercept;
 	double yintercept;
@@ -62,7 +62,7 @@ double	vertical_intersection_distance(t_map_element **map, double x, double y, d
 	ystep *= -1 * (is_facing_down(ray_angle) && ystep < 0) + 1 * !(is_facing_down(ray_angle) && ystep < 0);
 	final_x = xintercept;
 	final_y = yintercept;
-	while (final_x >= 0 && final_x <= 32 && final_y >= 0 && final_y <= 27)
+	while (final_x >= 0 && final_x <= map->width && final_y >= 0 && final_y <= map->height)
 	{
 		if (is_wall(map, final_x - (is_facing_left(ray_angle) ? 0.03125 : 0), final_y))
 			return (sqrt(pow(final_x - x, 2) + pow(final_y - y, 2)));
@@ -72,7 +72,7 @@ double	vertical_intersection_distance(t_map_element **map, double x, double y, d
 	return (INT32_MAX);
 }
 
-double	intersection_distance(t_map_element **map, double x, double y, t_ray *ray)
+double	intersection_distance(t_map *map, double x, double y, t_ray *ray)
 {
 	double	hdistance;
 	double	vdistance;
@@ -94,7 +94,7 @@ void	cast_all_rays(t_global *data)
 	while (i < NUM_RAYS)
 	{
 		ray.id = i;
-		ray.distance = intersection_distance(data->map->map_array, data->player.x, data->player.y, &ray);
+		ray.distance = intersection_distance(data->map, data->player.x, data->player.y, &ray);
 		bresenham(data->hud_img,
 			(t_point){.x = (data->player.x * UNIT_SIZE), .y = (data->player.y * UNIT_SIZE)},
 			(t_point){.x = ((data->player.x + cos(ray.angle) * ray.distance) * UNIT_SIZE), .y = ((data->player.y + sin(ray.angle) * ray.distance) * UNIT_SIZE)}, 0xF9DEC9FF);
