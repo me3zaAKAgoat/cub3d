@@ -28,10 +28,10 @@
 - [ ] modularize square and circle drawing functions
 - [ ] there's duplication in minimap raycasting file
 - [ ] add more sanitization for surface colors
-- [ ] make a player hitbox
 - [ ] store ray facades in the ray structure itself to save the calculations (is facing ...)
 - [ ] minimap casted rays are a bit jagged and are visibly imperfect !!
-- [ ] center player on minimap
+- [ ] fix hitbox/wall collisions
+- [x] center player on minimap
 - [x] might need map max width and max height
 - [x] !!!!!!!! put the width and the height of the map in a struct to help for checks in vertical and horizontal raycasters
   - why is it needed anyways
