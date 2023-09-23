@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:24:11 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/22 17:19:58 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/23 15:44:16 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ void	*ft_realloc(void *ptr, size_t oldsize, size_t newsize)
 	if (!newptr)
 		return (NULL);
 	ft_memcpy(newptr, ptr, oldsize);
-	// free(ptr);
+	free(ptr);
 	return (newptr);
 }

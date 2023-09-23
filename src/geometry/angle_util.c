@@ -6,13 +6,13 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 19:53:09 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/22 15:41:50 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/23 15:40:28 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-double	normalize_angle(double angle)
+double	sanitize_angle(double angle)
 {
 	angle = fmod(angle, 2 * PI);
 	if (angle < 0)

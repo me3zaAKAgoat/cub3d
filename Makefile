@@ -1,5 +1,17 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2023/09/23 15:44:55 by selhilal          #+#    #+#              #
+#    Updated: 2023/09/23 18:47:41 by selhilal         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -O3 #-fsanitize=address -g
+CFLAGS = -Wall -Wextra -Werror -O3 #-fsanitize=address -g -O3
 NAME = cub3d
 LINKED_LIST = libraries/linked_list
 GET_NEXT_LINE = libraries/get_next_line
@@ -22,12 +34,14 @@ SOURCES = src/main.c\
 	src/util/clear_global.c\
 	src/minimap/minimap.c\
 	src/parsing/parsing.c\
+	src/parsing/map_parsing.c\
+	src/parsing/util.c\
 	src/geometry/raycasting.c\
-	src/geometry/geometry.c\
+	src/geometry/line_drawing.c\
 	src/geometry/projection.c\
 	src/geometry/angle_util.c\
 	src/movement/movement.c\
-	src/parsing/parsingmap.c
+	src/parsing/parsing_walls.c
 
 HEADERS = includes/cub3d.h
 OBJECTS = $(SOURCES:.c=.o)

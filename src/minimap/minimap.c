@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/22 21:58:26 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/23 15:42:00 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ uint32_t	map_element_color(t_map_element element)
 	if (element == WALL)
 		return (0x121212FF);
 	else if (element == SURFACE_NOT_PLAYABLE)
-		return (0x00000000);
+		return (0xFFFFFF40);
 	else if (element == SURFACE_PLAYABLE)
 		return (0x918567FF);
 	else if (element >= NORTH && element <= SOUTH)
@@ -40,8 +40,8 @@ void	player_icon(t_global *data, int xm, int ym, int r, uint32_t color)
 	while (x < 0)
 	{
 		for (int i = xm + x; i <= xm - x; i++) {
-			mlx_put_pixel(data->hud_img, OFFSET_X + i, OFFSET_Y + (ym + y), color);
-			mlx_put_pixel(data->hud_img, OFFSET_X + i, OFFSET_Y + (ym - y), color);
+			mlx_put_pixel(data->hud_img, i, (ym + y), color);
+			mlx_put_pixel(data->hud_img, i, (ym - y), color);
 		}
 
 		r = err;
@@ -51,48 +51,59 @@ void	player_icon(t_global *data, int xm, int ym, int r, uint32_t color)
 	}
 }
 
-void	square(t_global *data, int x, int y, uint32_t color, int rad)
+void	square(t_global *data, int x, int y, uint32_t color, int edge_size)
 {
 	int	left;
 	int	top;
 	int	right;
 	int	bottom;
 
-	left = x - rad / 2;
-	top = y - rad / 2;
-	right = x + rad / 2;
-	bottom = y + rad / 2;
+	left = x - edge_size / 2;
+	top = y - edge_size / 2;
+	right = x + edge_size / 2;
+	bottom = y + edge_size / 2;
 	for (int i = top; i <= bottom; i++)
 	{
 		for (int j = left; j <= right; j++)
-			mlx_put_pixel(data->hud_img, OFFSET_X + j, OFFSET_Y + i, color);
+		{
+			if (i < MINIMAP_SIZE && j < MINIMAP_SIZE)
+				mlx_put_pixel(data->hud_img, abs(j), abs(i), color);
+		}
 	}
 }
 
 void	draw_minimap_background(t_global *data)
 {
-	int	x;
-	int	y;
+	int x, y;
+	int left = data->player.x * UNIT_SIZE - MINIMAP_SIZE / 2;
+	int top = data->player.y * UNIT_SIZE - MINIMAP_SIZE / 2;
+	int right = data->player.x * UNIT_SIZE + MINIMAP_SIZE / 2;
+	int bottom = data->player.y * UNIT_SIZE + MINIMAP_SIZE / 2;
 
-	y = 0;
-	while (data->map->map_list[y])
+	y = (top - UNIT_SIZE) / UNIT_SIZE;
+	while (y <= (bottom + UNIT_SIZE) / UNIT_SIZE)
 	{
-		x = 0;
-		while (data->map->map_list[y][x] != HORIZONTAL_TERM)
+		x = (left - UNIT_SIZE) / UNIT_SIZE;
+		while (x <= (right + UNIT_SIZE) / UNIT_SIZE)
 		{
-			if (data->map->map_list[y][x] >= NORTH && data->map->map_list[y][x] <= SOUTH)
-				square(data, x * UNIT_SIZE, y * UNIT_SIZE, map_element_color(SURFACE_PLAYABLE), UNIT_SIZE);
-			else
-				square(data, x * UNIT_SIZE, y * UNIT_SIZE, map_element_color(data->map->map_list[y][x]), UNIT_SIZE);
+			if (x >= 0 && x <= (int)data->map->width && y >= 0 && y < (int)data->map->height)
+			{
+				int mapX = x * UNIT_SIZE;
+				int mapY = y * UNIT_SIZE;
+				if (data->map->map_array[y][x] >= NORTH && data->map->map_array[y][x] <= SOUTH)
+					square(data, mapX - left, mapY - top, map_element_color(SURFACE_PLAYABLE), UNIT_SIZE);
+				else
+					square(data, mapX - left, mapY - top, map_element_color(data->map->map_array[y][x]), UNIT_SIZE);
+			}
 			x++;
 		}
 		y++;
 	}
 }
 
-void	minimap(t_global *data)
+void minimap(t_global *data)
 {
+	square(data, MINIMAP_SIZE / 2, MINIMAP_SIZE / 2, 0xFFFFFF40, MINIMAP_SIZE);
 	draw_minimap_background(data);
-	cast_all_rays(data);
-	player_icon(data, data->player.x * UNIT_SIZE, data->player.y * UNIT_SIZE, PLAYER_CIRCLE, map_element_color(NORTH));
+	player_icon(data, MINIMAP_SIZE / 2, MINIMAP_SIZE / 2, PLAYER_CIRCLE, map_element_color(NORTH));
 }

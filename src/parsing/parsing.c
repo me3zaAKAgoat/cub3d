@@ -6,38 +6,11 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/22 22:49:21 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/23 20:28:59 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-char	*skip_wspace(char *str)
-{
-	while (*str && ft_isspace2(*str))
-		str++;
-	return (str);
-}
-
-size_t	horizontal_len(t_map_element *arr)
-{
-	size_t	len;
-
-	len = 0;
-	while (arr[len] != HORIZONTAL_TERM)
-		len++;
-	return (len);
-}
-
-size_t	vertical_len(t_map_element **arr)
-{
-	size_t	len;
-
-	len = 0;
-	while (arr[len])
-		len++;
-	return (len);
-}
 
 t_map_element	char_to_map_element(char c)
 {
@@ -64,19 +37,80 @@ t_map_element	char_to_map_element(char c)
 	}
 }
 
-double initial_angle(t_map_element element)
+int	parse_ceiling_color(t_global *data, char *line)
 {
-	if (element == EAST)
-		return (0);
-	else if (element == NORTH)
-		return (PI * 1.5);
-	else if (element == WEST)
-		return (PI);
-	else
-		return (PI * .5);
+	char	*tmp;
+	char	**colors;
+
+	tmp = ft_strtrim(skip_wspace(line + 1), "\n");
+	colors = ft_split(tmp, ',');
+	if (!colors || strarr_len(colors) < 3
+		|| !(ft_isnumber(colors[0])
+			&& ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
+	{
+		free(tmp);
+		split_clear(colors);
+		return (werror("Error\nCeiling colors invalid."), exit(1), 0);
+	}
+	data->map->ceil_color = (ft_atoi(colors[0]) << 24)
+		| (ft_atoi(colors[1]) << 16) | (ft_atoi(colors[2]) << 8) | 255;
+	free(tmp);
+	split_clear(colors);
+	return (1);
 }
 
-void	textures_colors(t_global *data, int fd)
+int	parse_floor_color(t_global *data, char *line)
+{
+	char	*tmp;
+	char	**colors;
+
+	tmp = ft_strtrim(skip_wspace(line + 1), "\n");
+	colors = ft_split(tmp, ',');
+	if (!colors || strarr_len(colors) < 3
+		|| !(ft_isnumber(colors[0])
+			&& ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
+	{
+		free(tmp);
+		split_clear(colors);
+		return (werror("Error\nFloors colors invalid."), exit(1), 0);
+	}
+	data->map->floor_color = (ft_atoi(colors[0]) << 24)
+		| (ft_atoi(colors[1]) << 16) | (ft_atoi(colors[2]) << 8) | 255;
+	free(tmp);
+	split_clear(colors);
+	return (1);
+}
+
+int	parse_texture(t_map *map, char *line)
+{
+	if (!ft_strncmp(skip_wspace(line), "NO", 2))
+	{
+		if (map->no_path != NULL)
+			return (werror("Error\nPath for NO recognized twice."), exit(1), 0);
+		map->no_path = ft_strtrim(skip_wspace(line + 2), "\n");
+	}
+	else if (!ft_strncmp(skip_wspace(line), "SO", 2))
+	{
+		if (map->so_path != NULL)
+			return (werror("Error\nPath for SO recognized twice."), exit(1), 0);
+		map->so_path = ft_strtrim(skip_wspace(line + 2), "\n");
+	}
+	else if (!ft_strncmp(skip_wspace(line), "WE", 2))
+	{
+		if (map->we_path != NULL)
+			return (werror("Error\nPath for WE recognized twice."), exit(1), 0);
+		map->we_path = ft_strtrim(skip_wspace(line + 2), "\n");
+	}
+	else if (!ft_strncmp(skip_wspace(line), "EA", 2))
+	{
+		if (map->ea_path != NULL)
+			return (werror("Error\nPath for EA recognized twice."), exit(1), 0);
+		map->ea_path = ft_strtrim(skip_wspace(line + 2), "\n");
+	}
+	return (1);
+}
+
+void	parse_assets(t_global *data, int fd)
 {
 	char	*line;
 	int		textures_recognized;
@@ -87,61 +121,18 @@ void	textures_colors(t_global *data, int fd)
 	line = get_next_line(fd);
 	while (line != NULL && textures_recognized + surfaces_recognized < 6)
 	{
-		if (!ft_strncmp(skip_wspace(line), "NO", 2))
-		{
-			if (data->map->no_path != NULL)
-				return (werror("Error\nPath for NO recognized twice."), exit(1));
-			textures_recognized++;
-			data->map->no_path = ft_strtrim(skip_wspace(line + 2), "\n");
-		}
-		else if (!ft_strncmp(skip_wspace(line), "SO", 2))
-		{
-			if (data->map->so_path != NULL)
-				return (werror("Error\nPath for SO recognized twice."), exit(1));
-			textures_recognized++;
-			data->map->so_path = ft_strtrim(skip_wspace(line + 2), "\n");
-		}
-		else if (!ft_strncmp(skip_wspace(line), "WE", 2))
-		{
-			if (data->map->wa_path != NULL)
-				return (werror("Error\nPath for WE recognized twice."), exit(1));
-			textures_recognized++;
-			data->map->wa_path = ft_strtrim(skip_wspace(line + 2), "\n");
-		}
-		else if (!ft_strncmp(skip_wspace(line), "EA", 2))
-		{
-			if (data->map->ea_path != NULL)
-				return (werror("Error\nPath for EA recognized twice."), exit(1));
-			textures_recognized++;
-			data->map->ea_path = ft_strtrim(skip_wspace(line + 2), "\n");
-		}
+		if (!ft_strncmp(skip_wspace(line), "NO", 2) || !ft_strncmp(skip_wspace(line), "SO", 2)
+			|| !ft_strncmp(skip_wspace(line), "WE", 2) || !ft_strncmp(skip_wspace(line), "EA", 2))
+			textures_recognized += parse_texture(data->map, line);
 		else if (!ft_strncmp(skip_wspace(line), "C", 1))
-		{
-			char	*tmp = ft_strtrim(skip_wspace(line + 1), "\n");
-			char	**colors = ft_split(tmp, ',');
-			
-			if (!colors || strarr_len(colors) < 3 || !(ft_isnumber(colors[0]) && ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
-				return (werror("Error\nCeiling colors invalid."), exit(1));
-			data->map->ceil_color = (ft_atoi(colors[0]) << 24) | (ft_atoi(colors[1]) << 16) | (ft_atoi(colors[2]) << 8) | 255;
-			surfaces_recognized++;
-			split_clear(colors);
-		}
+			surfaces_recognized += parse_ceiling_color(data, line);
 		else if (!ft_strncmp(skip_wspace(line), "F", 1))
-		{
-			char	*tmp = ft_strtrim(skip_wspace(line + 1), "\n");
-			char	**colors = ft_split(tmp, ',');
-
-			if (!colors || strarr_len(colors) < 3 || !(ft_isnumber(colors[0]) && ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
-				return (werror("Error\nFloors colors invalid."), exit(1));
-			data->map->floor_color = (ft_atoi(colors[0]) << 24) | (ft_atoi(colors[1]) << 16) | (ft_atoi(colors[2]) << 8) | 255;
-			surfaces_recognized++;
-			split_clear(colors);
-		}
+			surfaces_recognized += parse_floor_color(data, line);
 		else if (ft_strncmp(skip_wspace(line), "\n", 1))
 			break;
 		free(line);
 		line = get_next_line(fd);
-	};
+	}
 	free(line);
 	if (textures_recognized < 4)
 		return (werror("Error\nMissing textures."), exit(1));
@@ -149,99 +140,6 @@ void	textures_colors(t_global *data, int fd)
 		return (werror("Error\nMissing surface colors."), exit(1));
 }
 
-void	read_map(t_global *data, int fd)
-{
-	char	*line;
-	int		x;
-	int		y;
-
-	y = 0;
-	line = get_next_line(fd);
-	while (line != NULL && ft_strncmp(skip_wspace(line), "\n", 1))
-	{
-		x = 0;
-		data->map->map_array = ft_realloc(data->map->map_array, y * sizeof(int *), (y + 2) * sizeof(int *));
-		data->map->map_array[y + 1] = NULL;
-		if (!data->map->map_array)
-			return (werror("Error\nA heap allocation failed."), exit(1));
-		data->map->map_array[y] = malloc(ft_strlen(line) * sizeof(int));
-		if (!data->map->map_array[y])
-			return (werror("Error\nA heap allocation failed."), exit(1));
-		while (line[x])
-		{
-			data->map->map_array[y][x] = char_to_map_element(line[x]);
-			if (data->map->map_array[y][x] >= NORTH && data->map->map_array[y][x] <= SOUTH)
-			{
-				data->player.x = x;
-				data->player.y = y;
-				data->player.viewing_angle = initial_angle(data->map->map_array[y][x]);
-			}
-			x++;
-		}
-		y++;
-		free(line);
-		line = get_next_line(fd);
-	}
-	free(line);
-	if (!data->map->map_array)
-		return (werror("Error\nNo map found."), exit(1));
-}
-
-void replace_line(t_global *data, int line, int maxWidth)
-{
-	int i;
-
-	i = 0;
-	while (data->map->map_array[line][i] != HORIZONTAL_TERM)
-	{
-		data->map->map_list[line][i] = data->map->map_array[line][i];
-		i++;
-	}
-	while (i < maxWidth - 1)
-	{
-		data->map->map_list[line][i] = SURFACE_NOT_PLAYABLE;
-		i++;
-	}
-	data->map->map_list[line][i] = HORIZONTAL_TERM;
-}
-
-void pad_map(t_global *data)
-{
-	int i;
-	int j;
-	
-	i = 0;
-	j = 0;
-	data->map->map_list = ft_realloc(data->map->map_list, 0, (data->map->width + 2) * sizeof(int *));
-	if (!data->map->map_list)
-		return (werror("Error\nA heap allocation failed."), exit(1));
-	data->map->map_list[data->map->width + 1] = NULL;
-	while (i < data->map->height)
-	{
-		data->map->map_list[i] = malloc((data->map->width + 2) * sizeof(int));
-			replace_line(data, i, data->map->width + 2);
-		i++;
-	}
-}
-void	set_map_dimensions(t_global *data)
-{
-	int	y;	
-	int	x;
-
-	y = 0;
-	while (data->map->map_array[y])
-	{
-		x = 0;
-		while (data->map->map_array[y][x] != HORIZONTAL_TERM)
-		{
-			if (x > data->map->width)
-				data->map->width = x;
-			x++;
-		}
-		y++;
-	}
-	data->map->height = y;
-}
 
 void	parse_config_file(t_global *data, char *filename)
 {
@@ -253,22 +151,11 @@ void	parse_config_file(t_global *data, char *filename)
 		werror("Error\nCan't open config file.");
 		exit(1);
 	}
-	textures_colors(data, fd);
+	parse_assets(data, fd);
 	read_map(data, fd);
 	set_map_dimensions(data);
-	pad_map(data);
-	int i = 0;
-	int j;
-	while(data->map->map_list[i])
-	{
-		j = 0;
-		while(data->map->map_list[i][j] != HORIZONTAL_TERM)
-		{
-			printf("%d", data->map->map_list[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
-	parsing_wall(data);
+	pad_map_into_rectangle(data);
+	parssing_wall(data);
+	// print_map(data->map->map_array);
+	close(fd);
 }

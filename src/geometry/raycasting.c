@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 15:42:48 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/22 21:57:48 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/23 15:41:35 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #define RAY_LENGTH 5
 
-double	horizontal_intersection_distance(t_map_element **map, double x, double y, double ray_angle)
+double	horizontal_intersection_distance(t_map *map, double x, double y, t_ray *ray)
 {
 	double xintercept;
 	double yintercept;
@@ -22,20 +22,22 @@ double	horizontal_intersection_distance(t_map_element **map, double x, double y,
 	double ystep;
 	double final_x;
 	double final_y;
-	
+	double tan_ra;
+
+	tan_ra = tan(ray->angle);
 	yintercept = floor(y);
-	yintercept += is_facing_down(ray_angle) * 1;
-	xintercept = x + (yintercept - y) / tan(ray_angle);
+	yintercept += !ray->is_facing_up * 1;
+	xintercept = x + (yintercept - y) / tan_ra;
 	ystep = 1;
-	ystep *= -1 * is_facing_up(ray_angle) + 1 * !is_facing_up(ray_angle);
-	xstep = 1 / tan(ray_angle);
-	xstep *= -1 * (is_facing_left(ray_angle) && xstep > 0) + 1 * !(is_facing_left(ray_angle) && xstep > 0);
-	xstep *= -1 * (is_facing_right(ray_angle) && xstep < 0) + 1 * !(is_facing_right(ray_angle) && xstep < 0);
+	ystep *= -1 * ray->is_facing_up + 1 * !ray->is_facing_up;
+	xstep = 1 / tan_ra;
+	xstep *= -1 * (!ray->is_facing_right && xstep > 0) + 1 * !(!ray->is_facing_right && xstep > 0);
+	xstep *= -1 * (ray->is_facing_right && xstep < 0) + 1 * !(ray->is_facing_right && xstep < 0);
 	final_x = xintercept;
 	final_y = yintercept;
-	while (final_x >= 0 && final_x <= 32 && final_y >= 0 && final_y <= 27)
+	while (final_x >= 0 && final_x <= map->width && final_y >= 0 && final_y <= map->height)
 	{
-		if (is_wall(map, final_x, final_y - (is_facing_up(ray_angle) ? 0.03125 : 0)))
+		if (is_wall(map, final_x, final_y - (ray->is_facing_up ? 0.03125 : 0)))
 			return (sqrt(pow(final_x - x, 2) + pow(final_y - y, 2)));
 		final_x += xstep;
 		final_y += ystep;
@@ -43,7 +45,7 @@ double	horizontal_intersection_distance(t_map_element **map, double x, double y,
 	return (INT32_MAX);
 }
 
-double	vertical_intersection_distance(t_map_element **map, double x, double y, double ray_angle)
+double	vertical_intersection_distance(t_map *map, double x, double y, t_ray *ray)
 {
 	double xintercept;
 	double yintercept;
@@ -51,20 +53,22 @@ double	vertical_intersection_distance(t_map_element **map, double x, double y, d
 	double ystep;
 	double final_x;
 	double final_y;
+	double tan_ra;
 
+	tan_ra = tan(ray->angle);
 	xintercept = floor(x);
-	xintercept += is_facing_right(ray_angle) * 1;
-	yintercept = y + (xintercept - x) * tan(ray_angle);
+	xintercept += ray->is_facing_right * 1;
+	yintercept = y + (xintercept - x) * tan_ra;
 	xstep = 1;
-	xstep *= -1 * is_facing_left(ray_angle) + 1 * !is_facing_left(ray_angle);
-	ystep = 1 * tan(ray_angle);
-	ystep *= -1 * (is_facing_up(ray_angle) && ystep > 0) + 1 * !(is_facing_up(ray_angle) && ystep > 0);
-	ystep *= -1 * (is_facing_down(ray_angle) && ystep < 0) + 1 * !(is_facing_down(ray_angle) && ystep < 0);
+	xstep *= -1 * !ray->is_facing_right + 1 * !!ray->is_facing_right;
+	ystep = 1 * tan_ra;
+	ystep *= -1 * (ray->is_facing_up && ystep > 0) + 1 * !(ray->is_facing_up && ystep > 0);
+	ystep *= -1 * (!ray->is_facing_up && ystep < 0) + 1 * !(!ray->is_facing_up && ystep < 0);
 	final_x = xintercept;
 	final_y = yintercept;
-	while (final_x >= 0 && final_x <= 32 && final_y >= 0 && final_y <= 27)
+	while (final_x >= 0 && final_x <= map->width && final_y >= 0 && final_y <= map->height)
 	{
-		if (is_wall(map, final_x - (is_facing_left(ray_angle) ? 0.03125 : 0), final_y))
+		if (is_wall(map, final_x - (!ray->is_facing_right ? 0.03125 : 0), final_y))
 			return (sqrt(pow(final_x - x, 2) + pow(final_y - y, 2)));
 		final_x += xstep;
 		final_y += ystep;
@@ -72,35 +76,38 @@ double	vertical_intersection_distance(t_map_element **map, double x, double y, d
 	return (INT32_MAX);
 }
 
-double	intersection_distance(t_map_element **map, double x, double y, t_ray *ray)
+double	intersection_distance(t_map *map, double x, double y, t_ray *ray)
 {
 	double	hdistance;
 	double	vdistance;
 
-	hdistance = horizontal_intersection_distance(map, x, y, ray->angle);
-	vdistance = vertical_intersection_distance(map, x, y, ray->angle);
+	hdistance = horizontal_intersection_distance(map, x, y, ray);
+	vdistance = vertical_intersection_distance(map, x, y, ray);
 	if (hdistance < vdistance)
 		return (ray->hit_vertical = false, hdistance);
 	return (ray->hit_vertical = true, vdistance);
 }
 
-void	cast_all_rays(t_global *data)
+void	cast_rays(t_global *data)
 {
-	int		i;
 	t_ray	ray;
 
-	ray.angle = normalize_angle(data->player.viewing_angle - FOV / 2);
-	i = 0;
-	while (i < NUM_RAYS)
+	ray.angle = sanitize_angle(data->player.viewing_angle - FOV / 2);
+	ray.id = 0;
+	while (ray.id < NUM_RAYS)
 	{
-		ray.id = i;
-		ray.distance = intersection_distance(data->map->map_list, data->player.x, data->player.y, &ray);
-		bresenham(data->hud_img,
-			(t_point){.x = (data->player.x * UNIT_SIZE), .y = (data->player.y * UNIT_SIZE)},
-			(t_point){.x = ((data->player.x + cos(ray.angle) * ray.distance) * UNIT_SIZE), .y = ((data->player.y + sin(ray.angle) * ray.distance) * UNIT_SIZE)}, 0xF9DEC9FF);
+		ray.is_facing_right = is_facing_right(ray.angle);
+		ray.is_facing_up = is_facing_up(ray.angle);
+		ray.distance = intersection_distance(data->map, data->player.x, data->player.y, &ray);
 		project_wall(data, ray);
 		ray.angle += FOV / NUM_RAYS;
-		ray.angle = normalize_angle(ray.angle);
-		i++;
+		ray.angle = sanitize_angle(ray.angle);
+		ray.id++;
 	}
+}
+
+void	render_game(t_global *data)
+{
+	cast_rays(data);
+	minimap(data);
 }
