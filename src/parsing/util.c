@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 15:43:21 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/23 18:28:46 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/23 22:07:35 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	print_map(t_map_element **map)
 			printf("%d ", map[y][x]);
 			x++;
 		}
-		puts("");
+		puts("\n");
+		printf("y = %zu, x = %zu\n", y, x);
 		y++;
 	}
 }

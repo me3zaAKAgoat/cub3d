@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 15:49:18 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/23 20:45:07 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/23 23:12:33 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void parssing_wall(t_global *data)
     size_t j;
     i = 0;
     j = 0;
+    
     if(!check_firstline(data)|| !check_lastline(data)|| !check_left(data) || !check_right(data))
     {
         werror("Error\n2Map is not closed");

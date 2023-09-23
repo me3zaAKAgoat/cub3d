@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:02:05 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/23 18:50:49 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/23 23:01:19 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	pad_map_into_rectangle(t_global *data)
 
 static void	initialize_map_array(t_global *data, int y, char *line)
 {
-	data->map->map_array = ft_realloc(data->map->map_array, y * sizeof(int *), (y+ 2) * sizeof(int *));
+	data->map->map_array = ft_realloc(data->map->map_array, y * sizeof(int *), (y + 2) * sizeof(int *));
 	data->map->map_array[y + 1] = NULL;
 	if (!data->map->map_array)
 	{
