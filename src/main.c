@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/23 03:54:37 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/23 06:16:23 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ void	quit(mlx_key_data_t keydata, void *param)
 
 void	sanitization(int ac, char **av)
 {
-	(void)ac;
-	(void)av;
+	if (ac != 2)
+		return (werror("Error\nWrong number of arguments was given."), exit(1));
+	if (ft_strlen(av[1]) < 4 || ft_strncmp(av[1] + (ft_strlen(av[1]) - 4), ".cub", 4))
+		return (werror("Error\nConfig file must end in '.cub'."), exit(1));
 }
 
 int	main(int ac, char **av)

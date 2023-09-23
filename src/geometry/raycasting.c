@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 00:39:37 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/23 02:09:23 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/23 06:07:12 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,6 @@ void	cast_rays(t_global *data)
 		ray.is_facing_right = is_facing_right(ray.angle);
 		ray.is_facing_up = is_facing_up(ray.angle);
 		ray.distance = intersection_distance(data->map, data->player.x, data->player.y, &ray);
-		// bresenham(data->hud_img,
-		// 	(t_point){.x = (MINIMAP_SIZE / 2), .y = (MINIMAP_SIZE / 2)},
-		// 	(t_point){.x = ((data->player.x + cos(ray.angle) * ray.distance) * UNIT_SIZE), .y = ((data->player.y + sin(ray.angle) * ray.distance) * UNIT_SIZE)}, 0xF9DEC9FF);
 		project_wall(data, ray);
 		ray.angle += FOV / NUM_RAYS;
 		ray.angle = sanitize_angle(ray.angle);
@@ -109,14 +106,8 @@ void	cast_rays(t_global *data)
 	}
 }
 
-#include <time.h>
 void	render_game(t_global *data)
 {
-	clock_t start_time, end_time;
-	
-	start_time = clock();
 	cast_rays(data);
 	minimap(data);
-	end_time = clock();
-	printf("time rendering took: %f\n", (double)(end_time - start_time) / CLOCKS_PER_SEC);
 }

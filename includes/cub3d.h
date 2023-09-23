@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/23 04:01:46 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/23 06:35:55 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define PI 3.14159265359
 # define WALL_STRIP_WIDTH 1
 # define NUM_RAYS WIN_WIDTH / WALL_STRIP_WIDTH
+# define DDTPP (WIN_WIDTH / 2) / tan(FOV / 2) // dont if will use, norminette issue
 
 /* Types */
 

@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 19:03:21 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/22 00:20:14 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/23 06:21:15 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 uint32_t	wall_color(t_ray ray)
 {
-	if (is_facing_down(ray.angle) && !ray.hit_vertical)
+	if (!ray.is_facing_up && !ray.hit_vertical)
 		return (0x80207bFF);
-	else if (is_facing_up(ray.angle) && !ray.hit_vertical)
+	else if (ray.is_facing_up && !ray.hit_vertical)
 		return (0x22b52aFF);
-	else if (is_facing_left(ray.angle) && ray.hit_vertical)
+	else if (!ray.is_facing_right && ray.hit_vertical)
 		return (0xd6bb4dFF);
-	else if (is_facing_right(ray.angle) && ray.hit_vertical)
+	else if (ray.is_facing_right && ray.hit_vertical)
 		return (0xe67035FF);
 	return (0xFFFFFFFF);
 }

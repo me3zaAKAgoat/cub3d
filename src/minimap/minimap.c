@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/23 01:02:29 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/23 06:25:37 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void	draw_minimap_background(t_global *data)
 		y++;
 	}
 }
-
 
 void minimap(t_global *data)
 {
