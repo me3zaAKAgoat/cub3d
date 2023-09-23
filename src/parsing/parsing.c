@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/22 22:35:46 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/23 01:38:12 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ void	pad_map_into_rectangle(t_global *data)
 		hlen = horizontal_len(data->map->map_array[y]);
 		if (hlen < data->map->width)
 		{
-			data->map->map_array[y] = ft_realloc(data->map->map_array[y], hlen * sizeof(int), (data->map->width + 1) * sizeof(int));
+			data->map->map_array[y] = ft_realloc(data->map->map_array[y], hlen * sizeof(int), (data->map->width + 2) * sizeof(int));
 			if (!data->map->map_array[y])
 				return (werror("Error\nA heap allocation failed."), exit(1));
 			x = hlen;

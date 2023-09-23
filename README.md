@@ -14,7 +14,6 @@
 
 # Chores
 
-- [ ] might need map max width and max height
 - [ ] Sanitize AV and AC
 - [ ] Add sanitization of the map (all void is covered by walls)
   - check if any HORIZONTAL TERM is precedented with a WALL element
@@ -28,16 +27,14 @@
 - [ ] test parsing of different maps
 - [ ] modularize square and circle drawing functions
 - [ ] there's duplication in minimap raycasting file
-- [ ] !!!!!!!! put the width and the height of the map in a struct to help for checks in vertical and horizontal raycasters
-  - why is it needed anyways
 - [ ] add more sanitization for surface colors
-- [ ] efficency
-  - make as many defined macros for constants to reduce calculations
-  - check wether it would be better to keep scaled values as opposed to array size values
 - [ ] make a player hitbox
 - [ ] store ray facades in the ray structure itself to save the calculations (is facing ...)
 - [ ] minimap casted rays are a bit jagged and are visibly imperfect !!
 - [ ] center player on minimap
+- [x] might need map max width and max height
+- [x] !!!!!!!! put the width and the height of the map in a struct to help for checks in vertical and horizontal raycasters
+  - why is it needed anyways
 - [x] match buttons to what the subject states
 - [x] add padding for the map from the left side (voids)
 

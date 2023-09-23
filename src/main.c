@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/22 22:11:57 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/23 01:46:40 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int ac, char **av)
 		werror("mlx new img failed.");
 	if (mlx_image_to_window(data.mlx, data.game_img, 0, 0) < 0 || mlx_image_to_window(data.mlx, data.hud_img, 0, 0) < 0)
 		werror("mlx new img to window failed.");
-	minimap(&data);
+	render_game(&data);
 	mlx_loop_hook(data.mlx, move_player, &data);
 	mlx_key_hook(data.mlx, quit, data.mlx);
 	mlx_loop(data.mlx);

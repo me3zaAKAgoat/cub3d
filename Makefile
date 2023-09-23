@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address -g #-O3 
 NAME = cub3d
 LINKED_LIST = libraries/linked_list
 GET_NEXT_LINE = libraries/get_next_line
@@ -24,7 +24,7 @@ SOURCES = src/main.c\
 	src/parsing/parsing.c\
 	src/parsing/util.c\
 	src/geometry/raycasting.c\
-	src/geometry/geometry.c\
+	src/geometry/line_drawing.c\
 	src/geometry/projection.c\
 	src/geometry/angle_util.c\
 	src/movement/movement.c\

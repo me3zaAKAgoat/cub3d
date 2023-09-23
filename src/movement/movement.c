@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 22:27:54 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/22 23:00:48 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/23 01:46:51 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	is_wall(t_map *map, double x, double y)
 {
-	if (x < 0 || y < 0 || x > map->width || y > map->height)
+	if (x < 0 || y < 0 || x >= map->width || y >= map->height)
 		return (1);
 	if (map->map_array[(int)floor(y)][(int)floor(x)] == WALL || map->map_array[(int)floor(y)][(int)floor(x)] == SURFACE_NOT_PLAYABLE)
 		return (1);
@@ -52,8 +52,16 @@ bool	is_movement_key_down(t_global *data)
 void	move_player(void *param)
 {
 	t_global	*data;
+	double		fs_xstep;
+	double		fs_ystep;
+	double		lr_xstep;
+	double		lr_ystep;
 
 	data = param;
+	fs_xstep = MOVE_SPEED * cos(data->player.viewing_angle);
+	fs_ystep = MOVE_SPEED * sin(data->player.viewing_angle);
+	lr_xstep = MOVE_SPEED * cos(data->player.viewing_angle + M_PI_2);
+	lr_ystep = MOVE_SPEED * sin(data->player.viewing_angle + M_PI_2);
 	if (is_movement_key_down(data))
 	{
 		if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
@@ -62,26 +70,24 @@ void	move_player(void *param)
 			data->player.viewing_angle += ROTATION_SPEED;
 		if (mlx_is_key_down (data->mlx, MLX_KEY_W) && !collides(data, forward))
 		{
-			data->player.x += MOVE_SPEED * cos(data->player.viewing_angle);
-			data->player.y += MOVE_SPEED * sin(data->player.viewing_angle);
+			data->player.x += fs_xstep;
+			data->player.y += fs_ystep;
 		}
 		if (mlx_is_key_down(data->mlx, MLX_KEY_S) && !collides(data, backward))
 		{
-			data->player.x -= MOVE_SPEED * cos(data->player.viewing_angle);
-			data->player.y -= MOVE_SPEED * sin(data->player.viewing_angle);
+			data->player.x -= fs_xstep;
+			data->player.y -= fs_ystep;
 		}
 		if (mlx_is_key_down(data->mlx, MLX_KEY_D) && !collides(data, right))
 		{
-			data->player.x += MOVE_SPEED * cos(data->player.viewing_angle + M_PI_2);
-			data->player.y += MOVE_SPEED * sin(data->player.viewing_angle + M_PI_2);
+			data->player.x += lr_xstep;
+			data->player.y += lr_ystep;
 		}
 		if (mlx_is_key_down(data->mlx, MLX_KEY_A) && !collides(data, left))
 		{
-			data->player.x += MOVE_SPEED * cos(data->player.viewing_angle - M_PI_2);
-			data->player.y += MOVE_SPEED * sin(data->player.viewing_angle - M_PI_2);
+			data->player.x -= lr_xstep;
+			data->player.y -= lr_ystep;
 		}
-		draw_minimap_background(data);
-		cast_all_rays(data);
-		player_icon(data, data->player.x * UNIT_SIZE, data->player.y * UNIT_SIZE, PLAYER_CIRCLE, map_element_color(NORTH));
+		render_game(data);
 	}
 }
