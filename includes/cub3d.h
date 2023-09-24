@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/24 06:54:43 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/24 09:06:35 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@
 # define WIN_HEIGHT 900
 
 # define MINIMAP_SIZE 160
-# define UNIT_SIZE 4
+# define UNIT_SIZE 1
 # define HITBOX_SIZE 1
-# define PLAYER_CIRCLE (UNIT_SIZE / 2)
 # define MINIMAP_OFFSET_X 5
 # define MINIMAP_OFFSET_Y 5
 # define MOVE_SPEED .4
@@ -109,8 +108,16 @@ typedef struct s_point
 	int	y;
 }	t_point;
 
+typedef struct s_double_couple 
+{
+	double	x;
+	double	y;
+}	t_double_couple;
+
 /* Function Definitions */
 
+extern	double			dternary(bool statement, double fexpression, double sexpression);
+extern	int				iternary(bool statement, int fexpression, int sexpression);
 extern	double			initial_angle(t_map_element element);
 extern	t_map_element	char_to_map_element(char c);
 extern	size_t			horizontal_len(t_map_element *arr);

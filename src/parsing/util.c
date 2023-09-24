@@ -6,22 +6,22 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 18:58:58 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/23 04:01:34 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/24 09:04:00 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-double initial_angle(t_map_element element)
+double	initial_angle(t_map_element element)
 {
 	if (element == EAST)
 		return (0);
 	else if (element == NORTH)
-		return (PI * 1.5);
+		return (3 * M_PI_2);
 	else if (element == WEST)
 		return (PI);
 	else
-		return (PI * .5);
+		return (M_PI_2);
 }
 
 char	*skip_wspace(char *str)
@@ -33,8 +33,8 @@ char	*skip_wspace(char *str)
 
 void	print_map(t_map_element **map)
 {
-	size_t  y;
-	size_t  x;
+	size_t	y;
+	size_t	x;
 
 	y = 0;
 	while (map[y])

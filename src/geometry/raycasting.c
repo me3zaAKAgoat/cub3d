@@ -6,72 +6,64 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 00:39:37 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/23 06:07:12 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/24 09:07:18 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-#define RAY_LENGTH 5
-
 double	horizontal_intersection_distance(t_map *map, double x, double y, t_ray *ray)
 {
-	double xintercept;
-	double yintercept;
-	double xstep;
-	double ystep;
-	double final_x;
-	double final_y;
-	double tan_ra;
+	t_double_couple	intercept;
+	t_double_couple	step;
+	t_double_couple	final;
+	double			tan_ra;
 
 	tan_ra = tan(ray->angle);
-	yintercept = floor(y);
-	yintercept += !ray->is_facing_up * 1;
-	xintercept = x + (yintercept - y) / tan_ra;
-	ystep = 1;
-	ystep *= -1 * ray->is_facing_up + 1 * !ray->is_facing_up;
-	xstep = 1 / tan_ra;
-	xstep *= -1 * (!ray->is_facing_right && xstep > 0) + 1 * !(!ray->is_facing_right && xstep > 0);
-	xstep *= -1 * (ray->is_facing_right && xstep < 0) + 1 * !(ray->is_facing_right && xstep < 0);
-	final_x = xintercept;
-	final_y = yintercept;
-	while (final_x >= 0 && final_x <= map->width && final_y >= 0 && final_y <= map->height)
+	intercept.y = floor(y);
+	intercept.y += iternary(!ray->is_facing_up, 1, 0);
+	intercept.x = x + (intercept.y - y) / tan_ra;
+	step.y = 1;
+	step.y *= iternary(ray->is_facing_up, -1, 1);
+	step.x = 1 / tan_ra;
+	step.x *= iternary(!ray->is_facing_right && step.x > 0, -1, 1);
+	step.x *= iternary(ray->is_facing_right && step.x < 0, -1, 1);
+	final.x = intercept.x;
+	final.y = intercept.y;
+	while (final.x >= 0 && final.x <= map->width && final.y >= 0 && final.y <= map->height)
 	{
-		if (is_wall(map, final_x, final_y - (ray->is_facing_up ? 0.03125 : 0)))
-			return (sqrt(pow(final_x - x, 2) + pow(final_y - y, 2)));
-		final_x += xstep;
-		final_y += ystep;
+		if (is_wall(map, final.x, final.y - dternary(ray->is_facing_up, 0.03125, 0)))
+			return (sqrt(pow(final.x - x, 2) + pow(final.y - y, 2)));
+		final.x += step.x;
+		final.y += step.y;
 	}
 	return (INT32_MAX);
 }
 
 double	vertical_intersection_distance(t_map *map, double x, double y, t_ray *ray)
 {
-	double xintercept;
-	double yintercept;
-	double xstep;
-	double ystep;
-	double final_x;
-	double final_y;
-	double tan_ra;
+	t_double_couple	intercept;
+	t_double_couple	step;
+	t_double_couple	final;
+	double			tan_ra;
 
 	tan_ra = tan(ray->angle);
-	xintercept = floor(x);
-	xintercept += ray->is_facing_right * 1;
-	yintercept = y + (xintercept - x) * tan_ra;
-	xstep = 1;
-	xstep *= -1 * !ray->is_facing_right + 1 * !!ray->is_facing_right;
-	ystep = 1 * tan_ra;
-	ystep *= -1 * (ray->is_facing_up && ystep > 0) + 1 * !(ray->is_facing_up && ystep > 0);
-	ystep *= -1 * (!ray->is_facing_up && ystep < 0) + 1 * !(!ray->is_facing_up && ystep < 0);
-	final_x = xintercept;
-	final_y = yintercept;
-	while (final_x >= 0 && final_x <= map->width && final_y >= 0 && final_y <= map->height)
+	intercept.x = floor(x);
+	intercept.x += iternary(ray->is_facing_right, 1, 0);
+	intercept.y = y + (intercept.x - x) * tan_ra;
+	step.x = 1;
+	step.x *= iternary(!ray->is_facing_right, -1, 1);
+	step.y = 1 * tan_ra;
+	step.y *= iternary(ray->is_facing_up && step.y > 0, -1, 1);
+	step.y *= iternary(!ray->is_facing_up && step.y < 0, -1, 1);
+	final.x = intercept.x;
+	final.y = intercept.y;
+	while (final.x >= 0 && final.x <= map->width && final.y >= 0 && final.y <= map->height)
 	{
-		if (is_wall(map, final_x - (!ray->is_facing_right ? 0.03125 : 0), final_y))
-			return (sqrt(pow(final_x - x, 2) + pow(final_y - y, 2)));
-		final_x += xstep;
-		final_y += ystep;
+		if (is_wall(map, final.x - dternary(!ray->is_facing_right, 0.03125, 0), final.y))
+			return (sqrt(pow(final.x - x, 2) + pow(final.y - y, 2)));
+		final.x += step.x;
+		final.y += step.y;
 	}
 	return (INT32_MAX);
 }

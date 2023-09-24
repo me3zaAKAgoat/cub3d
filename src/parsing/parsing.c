@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/24 02:39:06 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/24 09:04:16 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ void	parse_assets(t_global *data, int fd)
 	else if (surfaces_recognized < 2)
 		return (werror("Error\nMissing surface colors."), exit(1));
 }
-
 
 void	parse_config_file(t_global *data, char *filename)
 {

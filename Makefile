@@ -17,6 +17,7 @@ SOURCES = src/main.c\
 	src/util/ft_isspace2.c\
 	src/util/strutil.c\
 	src/util/werror.c\
+	src/util/ternary.c\
 	src/util/ft_isnumber.c\
 	src/util/ft_realloc.c\
 	src/util/clear_global.c\
