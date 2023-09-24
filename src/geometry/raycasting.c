@@ -6,83 +6,75 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 15:42:48 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/23 15:41:35 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/24 14:57:16 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-#define RAY_LENGTH 5
-
-double	horizontal_intersection_distance(t_map *map, double x, double y, t_ray *ray)
+double	horizontal_intersection_distance(t_global *data, double x, double y, t_ray *ray)
 {
-	double xintercept;
-	double yintercept;
-	double xstep;
-	double ystep;
-	double final_x;
-	double final_y;
-	double tan_ra;
+	t_double_couple	intercept;
+	t_double_couple	step;
+	t_double_couple	final;
+	double			tan_ra;
 
 	tan_ra = tan(ray->angle);
-	yintercept = floor(y);
-	yintercept += !ray->is_facing_up * 1;
-	xintercept = x + (yintercept - y) / tan_ra;
-	ystep = 1;
-	ystep *= -1 * ray->is_facing_up + 1 * !ray->is_facing_up;
-	xstep = 1 / tan_ra;
-	xstep *= -1 * (!ray->is_facing_right && xstep > 0) + 1 * !(!ray->is_facing_right && xstep > 0);
-	xstep *= -1 * (ray->is_facing_right && xstep < 0) + 1 * !(ray->is_facing_right && xstep < 0);
-	final_x = xintercept;
-	final_y = yintercept;
-	while (final_x >= 0 && final_x <= map->width && final_y >= 0 && final_y <= map->height)
+	intercept.y = floor(y);
+	intercept.y += iternary(!ray->is_facing_up, 1, 0);
+	intercept.x = x + (intercept.y - y) / tan_ra;
+	step.y = 1;
+	step.y *= iternary(ray->is_facing_up, -1, 1);
+	step.x = 1 / tan_ra;
+	step.x *= iternary(!ray->is_facing_right && step.x > 0, -1, 1);
+	step.x *= iternary(ray->is_facing_right && step.x < 0, -1, 1);
+	final.x = intercept.x;
+	final.y = intercept.y;
+	while (final.x >= 0 && final.x <= data->map->width && final.y >= 0 && final.y <= data->map->height)
 	{
-		if (is_wall(map, final_x, final_y - (ray->is_facing_up ? 0.03125 : 0)))
-			return (sqrt(pow(final_x - x, 2) + pow(final_y - y, 2)));
-		final_x += xstep;
-		final_y += ystep;
+		if (is_wall(data, final.x, final.y - dternary(ray->is_facing_up, 0.03125, 0)))
+			return (sqrt(pow(final.x - x, 2) + pow(final.y - y, 2)));
+		final.x += step.x;
+		final.y += step.y;
 	}
 	return (INT32_MAX);
 }
 
-double	vertical_intersection_distance(t_map *map, double x, double y, t_ray *ray)
+double	vertical_intersection_distance(t_global *data, double x, double y, t_ray *ray)
 {
-	double xintercept;
-	double yintercept;
-	double xstep;
-	double ystep;
-	double final_x;
-	double final_y;
-	double tan_ra;
+	t_double_couple	intercept;
+	t_double_couple	step;
+	t_double_couple	final;
+	double			tan_ra;
 
 	tan_ra = tan(ray->angle);
-	xintercept = floor(x);
-	xintercept += ray->is_facing_right * 1;
-	yintercept = y + (xintercept - x) * tan_ra;
-	xstep = 1;
-	xstep *= -1 * !ray->is_facing_right + 1 * !!ray->is_facing_right;
-	ystep = 1 * tan_ra;
-	ystep *= -1 * (ray->is_facing_up && ystep > 0) + 1 * !(ray->is_facing_up && ystep > 0);
-	ystep *= -1 * (!ray->is_facing_up && ystep < 0) + 1 * !(!ray->is_facing_up && ystep < 0);
-	final_x = xintercept;
-	final_y = yintercept;
-	while (final_x >= 0 && final_x <= map->width && final_y >= 0 && final_y <= map->height)
+	intercept.x = floor(x);
+	intercept.x += iternary(ray->is_facing_right, 1, 0);
+	intercept.y = y + (intercept.x - x) * tan_ra;
+	step.x = 1;
+	step.x *= iternary(!ray->is_facing_right, -1, 1);
+	step.y = 1 * tan_ra;
+	step.y *= iternary(ray->is_facing_up && step.y > 0, -1, 1);
+	step.y *= iternary(!ray->is_facing_up && step.y < 0, -1, 1);
+	final.x = intercept.x;
+	final.y = intercept.y;
+	while (final.x >= 0 && final.x <= data->map->width && final.y >= 0 && final.y <= data->map->height)
 	{
-		if (is_wall(map, final_x - (!ray->is_facing_right ? 0.03125 : 0), final_y))
-			return (sqrt(pow(final_x - x, 2) + pow(final_y - y, 2)));
-		final_x += xstep;
-		final_y += ystep;
+		if (is_wall(data, final.x - dternary(!ray->is_facing_right, 0.03125, 0), final.y))
+			return (sqrt(pow(final.x - x, 2) + pow(final.y - y, 2)));
+		final.x += step.x;
+		final.y += step.y;
 	}
 	return (INT32_MAX);
 }
 
-double	intersection_distance(t_map *map, double x, double y, t_ray *ray)
+double	intersection_distance(t_global *data, double x, double y, t_ray *ray)
 {
 	double	hdistance;
 	double	vdistance;
 
-	hdistance = horizontal_intersection_distance(map, x, y, ray);
-	vdistance = vertical_intersection_distance(map, x, y, ray);
+	hdistance = horizontal_intersection_distance(data, x, y, ray);
+	vdistance = vertical_intersection_distance(data, x, y, ray);
 	if (hdistance < vdistance)
 		return (ray->hit_vertical = false, hdistance);
 	return (ray->hit_vertical = true, vdistance);
@@ -98,7 +90,7 @@ void	cast_rays(t_global *data)
 	{
 		ray.is_facing_right = is_facing_right(ray.angle);
 		ray.is_facing_up = is_facing_up(ray.angle);
-		ray.distance = intersection_distance(data->map, data->player.x, data->player.y, &ray);
+		ray.distance = intersection_distance(data, data->player.x, data->player.y, &ray);
 		project_wall(data, ray);
 		ray.angle += FOV / NUM_RAYS;
 		ray.angle = sanitize_angle(ray.angle);

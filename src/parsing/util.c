@@ -6,28 +6,27 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 15:43:21 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/23 22:07:35 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/24 14:37:32 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "cub3d.h"
 
-double initial_angle(t_map_element element)
+double	initial_angle(t_map_element element)
 {
 	if (element == EAST)
 		return (0);
 	else if (element == NORTH)
-		return (PI * 1.5);
+		return (3 * M_PI_2);
 	else if (element == WEST)
 		return (PI);
 	else
-		return (PI * .5);
+		return (M_PI_2);
 }
 
 char	*skip_wspace(char *str)
 {
-	if (!str)
-		return (NULL);
 	while (*str && ft_isspace2(*str))
 		str++;
 	return (str);
@@ -35,10 +34,11 @@ char	*skip_wspace(char *str)
 
 void	print_map(t_map_element **map)
 {
-	size_t  y;
-	size_t  x;
+	size_t	y;
+	size_t	x;
 
 	y = 0;
+	//mlx_load_png();
 	while (map[y])
 	{
 		x = 0;
@@ -47,8 +47,7 @@ void	print_map(t_map_element **map)
 			printf("%d ", map[y][x]);
 			x++;
 		}
-		puts("\n");
-		printf("y = %zu, x = %zu\n", y, x);
+		puts("");
 		y++;
 	}
 }

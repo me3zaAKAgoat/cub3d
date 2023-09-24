@@ -6,12 +6,12 @@
 #    By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/23 15:44:55 by selhilal          #+#    #+#              #
-#    Updated: 2023/09/23 18:47:41 by selhilal         ###   ########.fr        #
+#    Updated: 2023/09/24 13:37:58 by selhilal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -O3 #-fsanitize=address -g -O3
+CFLAGS = -Wall -Wextra -Werror -O3 #-fsanitize=address -g #-O3
 NAME = cub3d
 LINKED_LIST = libraries/linked_list
 GET_NEXT_LINE = libraries/get_next_line
@@ -29,6 +29,7 @@ SOURCES = src/main.c\
 	src/util/ft_isspace2.c\
 	src/util/strutil.c\
 	src/util/werror.c\
+	src/util/ternary.c\
 	src/util/ft_isnumber.c\
 	src/util/ft_realloc.c\
 	src/util/clear_global.c\

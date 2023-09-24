@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   ternary.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/12 16:24:11 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/24 13:22:52 by selhilal         ###   ########.fr       */
+/*   Created: 2023/09/24 13:23:31 by selhilal          #+#    #+#             */
+/*   Updated: 2023/09/24 13:23:39 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	*ft_realloc(void *ptr, size_t oldsize, size_t newsize)
+int	iternary(bool statement, int fexpression, int sexpression)
 {
-	char	*newptr;
+	return (fexpression * statement + sexpression * !statement);
+}
 
-	if (newsize <= oldsize)
-		return (ptr);
-	newptr = malloc(newsize);
-	if (!newptr)
-		return (NULL);
-	if (ptr)
-	{
-		ft_memcpy(newptr, ptr, oldsize);
-		free(ptr);
-	}
-	return (newptr);
+double	dternary(bool statement, double fexpression, double sexpression)
+{
+	return (fexpression * statement + sexpression * !statement);
 }

@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/23 15:42:00 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/24 13:26:22 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	player_icon(t_global *data, int xm, int ym, int r, uint32_t color)
 	int	y;
 	int	err;
 
+	if (r < 2)
+		return (mlx_put_pixel(data->hud_img, xm, ym, color));
 	x = -r;
 	y = 0;
 	err = 2 - 2 * r;
@@ -105,5 +107,5 @@ void minimap(t_global *data)
 {
 	square(data, MINIMAP_SIZE / 2, MINIMAP_SIZE / 2, 0xFFFFFF40, MINIMAP_SIZE);
 	draw_minimap_background(data);
-	player_icon(data, MINIMAP_SIZE / 2, MINIMAP_SIZE / 2, PLAYER_CIRCLE, map_element_color(NORTH));
+	player_icon(data, MINIMAP_SIZE / 2, MINIMAP_SIZE / 2, UNIT_SIZE / 2, map_element_color(NORTH));
 }

@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 15:49:18 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/23 23:12:33 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/24 13:56:47 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,11 @@ int check_left(t_global *data)
 {
     size_t i;
     i = 0;
-    while(data->map->map_array[i][0]  && i < data->map->height && data->map->map_array[i][0] != WALL )
+    printf("data->map->height = %zu\n",data->map->width);
+    //KYN PROBLEM HNA
+    while(data->map->map_array[i][data->map->width]  && i < data->map->width && data->map->map_array[i][data->map->width] != WALL)
     {
-        if (data->map->map_array[i][0] != WALL && data->map->map_array[i][0] != SURFACE_NOT_PLAYABLE)
+        if (data->map->map_array[i][data->map->width] != WALL && data->map->map_array[i][data->map->width] != SURFACE_NOT_PLAYABLE)
             return (0);
         i++;
     }

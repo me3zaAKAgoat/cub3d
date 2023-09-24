@@ -6,17 +6,17 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 15:44:29 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/23 15:42:22 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/24 14:59:01 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-bool	is_wall(t_map *map, double x, double y)
+bool	is_wall(t_global *data, double x, double y)
 {
-	if (x < 0 || y < 0 || x >= map->width || y >= map->height)
+	if (x < 0 || y < 0 || x >= data->map->width || y >= data->map->height)
 		return (1);
-	if (map->map_array[(int)floor(y)][(int)floor(x)] == WALL || map->map_array[(int)floor(y)][(int)floor(x)] == SURFACE_NOT_PLAYABLE)
+	if (data->map->map_array[(int)floor(y)][(int)floor(x)] != SURFACE_PLAYABLE || (data->map->map_array[(int)floor(y)][(int)floor(data->player.x)] == WALL && data->map->map_array[(int)floor(data->player.y)][(int)floor(x)] == WALL))
 		return (1);
 	return (0);
 }
@@ -25,19 +25,19 @@ bool	is_wall(t_map *map, double x, double y)
 bool	collides(t_global *data, t_move_direction move)
 {
 	if (move == forward)
-		return (is_wall(data->map
+		return (is_wall(data
 		, data->player.x + MOVE_SPEED * cos(data->player.viewing_angle)
 		, data->player.y + MOVE_SPEED * sin(data->player.viewing_angle)));
 	else if (move == backward)
-		return (is_wall(data->map
+		return (is_wall(data
 		, data->player.x - MOVE_SPEED * cos(data->player.viewing_angle )
 		, data->player.y - MOVE_SPEED * sin(data->player.viewing_angle )));
 	else if (move == right)
-		return (is_wall(data->map
+		return (is_wall(data
 		, data->player.x + MOVE_SPEED * cos(data->player.viewing_angle + M_PI_2)
 		, data->player.y + MOVE_SPEED * sin(data->player.viewing_angle + M_PI_2)));
 	else
-		return (is_wall(data->map
+		return (is_wall(data
 		, data->player.x + MOVE_SPEED * cos(data->player.viewing_angle - M_PI_2)
 		, data->player.y + MOVE_SPEED * sin(data->player.viewing_angle - M_PI_2)));
 }
