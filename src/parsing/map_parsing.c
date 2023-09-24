@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 03:56:08 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/23 04:08:51 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/24 06:49:33 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,11 @@ void	pad_map_into_rectangle(t_global *data)
 	}
 }
 
-static void	initialize_map_array(t_global *data, int y, char *line)
+/* the mathematical relation inside the second
+	malloc of this funciton decides wether to
+	pad a 1 for the horizontal terminator based
+	on wether theres a newline or not */
+void	initialize_map_array(t_global *data, int y, char *line)
 {
 	data->map->map_array = ft_realloc(data->map->map_array, y * sizeof(int *), (y + 2) * sizeof(int *));
 	data->map->map_array[y + 1] = NULL;
@@ -88,7 +92,7 @@ static void	initialize_map_array(t_global *data, int y, char *line)
 		werror("Error\nA heap allocation failed.");
 		exit(1);
 	}
-	data->map->map_array[y] = malloc(ft_strlen(line) * sizeof(int));
+	data->map->map_array[y] = malloc((ft_strlen(line) + 1 * (line[ft_strlen(line) - 1] != '\n')) * sizeof(int));
 	if (!data->map->map_array[y])
 	{
 		werror("Error\nA heap allocation failed.");
@@ -96,7 +100,7 @@ static void	initialize_map_array(t_global *data, int y, char *line)
 	}
 }
 
-static void	process_map_line(t_global *data, int x, int y, char *line)
+void	process_map_line(t_global *data, int x, int y, char *line)
 {
 	while (line[x])
 	{
@@ -109,6 +113,21 @@ static void	process_map_line(t_global *data, int x, int y, char *line)
 		}
 		x++;
 	}
+	if (line[ft_strlen(line) - 1] != '\n')
+		data->map->map_array[y][x] = HORIZONTAL_TERM;
+}
+
+char	*skip_empty_lines(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	while (line != NULL && !ft_strncmp(skip_wspace(line), "\n", 1))
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+	return (line);
 }
 
 void	read_map(t_global *data, int fd)
@@ -118,7 +137,7 @@ void	read_map(t_global *data, int fd)
 	int		y;
 
 	y = 0;
-	line = get_next_line(fd);
+	line = skip_empty_lines(fd);
 	while (line != NULL && ft_strncmp(skip_wspace(line), "\n", 1))
 	{
 		x = 0;
