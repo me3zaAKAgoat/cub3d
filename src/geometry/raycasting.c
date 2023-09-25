@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 00:39:37 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/24 09:07:18 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/25 04:39:18 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ double	horizontal_intersection_distance(t_map *map, double x, double y, t_ray *r
 	while (final.x >= 0 && final.x <= map->width && final.y >= 0 && final.y <= map->height)
 	{
 		if (is_wall(map, final.x, final.y - dternary(ray->is_facing_up, 0.03125, 0)))
+		{
+			ray->wall_hit_x = final.x;
 			return (sqrt(pow(final.x - x, 2) + pow(final.y - y, 2)));
+		}
 		final.x += step.x;
 		final.y += step.y;
 	}
@@ -61,7 +64,10 @@ double	vertical_intersection_distance(t_map *map, double x, double y, t_ray *ray
 	while (final.x >= 0 && final.x <= map->width && final.y >= 0 && final.y <= map->height)
 	{
 		if (is_wall(map, final.x - dternary(!ray->is_facing_right, 0.03125, 0), final.y))
+		{
+			ray->wall_hit_y = final.y;
 			return (sqrt(pow(final.x - x, 2) + pow(final.y - y, 2)));
+		}	
 		final.x += step.x;
 		final.y += step.y;
 	}
@@ -91,7 +97,7 @@ void	cast_rays(t_global *data)
 		ray.is_facing_right = is_facing_right(ray.angle);
 		ray.is_facing_up = is_facing_up(ray.angle);
 		ray.distance = intersection_distance(data->map, data->player.x, data->player.y, &ray);
-		project_wall(data, ray);
+		project_wall(data, &ray);
 		ray.angle += FOV / NUM_RAYS;
 		ray.angle = sanitize_angle(ray.angle);
 		ray.id++;

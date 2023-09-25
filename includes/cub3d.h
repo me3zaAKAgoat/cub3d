@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/24 09:06:35 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/25 04:36:46 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@
 # define WIN_HEIGHT 900
 
 # define MINIMAP_SIZE 160
-# define UNIT_SIZE 1
+# define UNIT_SIZE 6
+# define TEXTURE_SIZE 64
 # define HITBOX_SIZE 1
 # define MINIMAP_OFFSET_X 5
 # define MINIMAP_OFFSET_Y 5
@@ -82,6 +83,7 @@ typedef struct s_global
 	mlx_t		*mlx;
 	mlx_image_t	*game_img;
 	mlx_image_t	*hud_img;
+	xpm_t		*wallt;
 }	t_global;
 
 typedef struct s_ray
@@ -92,6 +94,8 @@ typedef struct s_ray
 	bool	is_facing_up;
 	bool	is_facing_right;
 	bool	hit_vertical;
+	double	wall_hit_x;
+	double	wall_hit_y;
 }	t_ray;
 
 typedef enum e_move_direction
@@ -139,7 +143,7 @@ extern	bool			is_facing_up(double angle);
 extern	bool			is_facing_down(double angle);
 extern	bool			is_facing_right(double angle);
 extern	bool			is_facing_left(double angle);
-extern	void			project_wall(t_global *data, t_ray ray);
+extern	void			project_wall(t_global *data, t_ray *ray);
 extern	bool			is_wall(t_map *map, double x, double y);
 extern	void			cast_rays(t_global *data);
 extern	void			bresenham(mlx_image_t *img, t_point a, t_point b, uint32_t color);

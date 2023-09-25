@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/24 09:04:16 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/25 03:08:58 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,6 @@ void	parse_config_file(t_global *data, char *filename)
 	read_map(data, fd);
 	set_map_dimensions(data);
 	pad_map_into_rectangle(data);
-	print_map(data->map->map_array);
+	// print_map(data->map->map_array);
 	close(fd);
 }
