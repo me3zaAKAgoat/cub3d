@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/24 15:20:26 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/25 01:19:57 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,15 @@
 # define WIN_WIDTH 1600
 # define WIN_HEIGHT 900
 
+
+
+#define PLAYER_SIZE 2
 # define MINIMAP_SIZE 160
 # define UNIT_SIZE 1
 # define HITBOX_SIZE 1
 # define MINIMAP_OFFSET_X 5
 # define MINIMAP_OFFSET_Y 5
-# define MOVE_SPEED .4
+# define MOVE_SPEED .1
 # define ROTATION_SPEED .03
 # define FOV 40 * .01745329251
 # define PI 3.14159265359
@@ -77,9 +80,13 @@ typedef struct s_player
 
 typedef struct s_global
 {
+	uint32_t *tab;
+	int x;
+	int y;
 	t_map		*map;
 	t_player	player;
 	mlx_t		*mlx;
+	uint32_t	*texturs[4];
 	mlx_image_t	*game_img;
 	mlx_image_t	*hud_img;
 }	t_global;

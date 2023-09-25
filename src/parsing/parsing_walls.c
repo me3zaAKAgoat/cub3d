@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 15:49:18 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/24 13:56:47 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/24 23:10:28 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int leftthemap(t_global *data, size_t i, size_t j)
             j--;
         else
         {
-            puts("upthemap");
             printf("the error %d\n", data->map->map_array[i][j]);
             return (0);
         }
@@ -154,7 +153,6 @@ void parssing_wall(t_global *data)
                {
                    if(!leftthemap(data,i,j)|| !rightthemap(data,i,j) || !downthemap(data,i,j) || !upthemap(data,i,j))
                    {
-                    printf("i = %zu j = %zu\n",i,j);
                        werror("Error\n3 Map is not closed");
                        exit(1);
                    }

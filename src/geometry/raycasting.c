@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 15:42:48 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/24 14:57:16 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/25 00:52:09 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,11 @@ double	vertical_intersection_distance(t_global *data, double x, double y, t_ray 
 	while (final.x >= 0 && final.x <= data->map->width && final.y >= 0 && final.y <= data->map->height)
 	{
 		if (is_wall(data, final.x - dternary(!ray->is_facing_right, 0.03125, 0), final.y))
+		{
+			data->x = final.x;
+			data->y = final.y;
 			return (sqrt(pow(final.x - x, 2) + pow(final.y - y, 2)));
+		}
 		final.x += step.x;
 		final.y += step.y;
 	}

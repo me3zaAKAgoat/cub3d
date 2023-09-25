@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 15:43:21 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/24 14:37:32 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/24 15:28:08 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	print_map(t_map_element **map)
 	size_t	x;
 
 	y = 0;
-	//mlx_load_png();
 	while (map[y])
 	{
 		x = 0;

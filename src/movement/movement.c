@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 15:44:29 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/24 14:59:01 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/25 01:12:34 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@ bool	is_wall(t_global *data, double x, double y)
 {
 	if (x < 0 || y < 0 || x >= data->map->width || y >= data->map->height)
 		return (1);
-	if (data->map->map_array[(int)floor(y)][(int)floor(x)] != SURFACE_PLAYABLE || (data->map->map_array[(int)floor(y)][(int)floor(data->player.x)] == WALL && data->map->map_array[(int)floor(data->player.y)][(int)floor(x)] == WALL))
+	if (data->map->map_array[(int)floor(y)][(int)floor(x)] != SURFACE_PLAYABLE || data->map->map_array[(int)floor(data->player.y)][(int)floor(x)] == WALL || data->map->map_array[(int)floor(y)][(int)floor(data->player.x)] == WALL)
 		return (1);
 	return (0);
 }
-
 
 bool	collides(t_global *data, t_move_direction move)
 {
@@ -62,7 +61,6 @@ void	move_player(void *param)
 	static mlx_image_t *x;
 	start_time = clock();
 	/* fps logic */
-	
 	data = param;
 	fs_xstep = MOVE_SPEED * cos(data->player.viewing_angle);
 	fs_ystep = MOVE_SPEED * sin(data->player.viewing_angle);
