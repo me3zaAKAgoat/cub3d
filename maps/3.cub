@@ -1,7 +1,8 @@
-NO ./assets/textures/Bark.xpm
-SO ./assets/textures/Bricks.xpm
-WE ./assets/textures/Dirt.xpm
-EA ./assets/textures/Coal.xpm
+NO ./assets/bluestone.xpm42
+SO ./assets/bluestone.xpm42
+WE ./assets/bluestone.xpm42
+EA ./assets/bluestone.xpm42
+
 
 C 51,53,51
 F 36,85,30

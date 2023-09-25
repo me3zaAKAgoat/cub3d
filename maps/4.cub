@@ -1,7 +1,7 @@
-NO ./assets/textures/NOWALL.xpm
-SO ./assets/textures/SOWALL.xpm
-WE ./assets/textures/WEWALL.xpm
-EA ./assets/textures/EAWALL.xpm
+NO ./assets/wardevil.xpm42
+SO ./assets/wardevil.xpm42
+WE ./assets/wardevil.xpm42
+EA ./assets/wardevil.xpm42
 
 C 52,174,235
 F 71,73,74

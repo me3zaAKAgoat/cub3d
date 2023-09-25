@@ -14,12 +14,13 @@
 
 # Chores
 
-- [ ] Sanitize AV and AC
+- [x] Sanitize AV and AC
 - [ ] Add sanitization of the map (all void is covered by walls)
   - check if any HORIZONTAL TERM is precedented with a WALL element
   - check if any array starts with a WALL element
   - check if any VOID is surrounded by VOID and WALL element
   - check if first and last array are all WALL or VOID elements
+- [ ] sanitize if the map contains a player or not also!!
 - [ ] Thouroughly check for any makefile errors !!
 - [ ] find out a way to exit and clean all heap memory gracefully in order to fully utilize leak detectors as they flag even heap memory in use at exit 
 - [ ] check that all functions that use malloc are failure safe
@@ -30,6 +31,7 @@
 - [ ] add more sanitization for surface colors
 - [ ] minimap casted rays are a bit jagged and are visibly imperfect !!
 - [ ] use ray casting to do wall collisions
+  - get the viewing angle and then calculate the rays hit and then decide wether to move or not move depending on 
 
 ## prio
 

@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 19:03:21 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/25 11:05:19 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/25 13:05:26 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ xpm_t		*decide_texture(t_global *data, t_ray *ray)
 		return (data->map->we_file);
 	else if (ray->is_facing_right && ray->hit_vertical)
 		return (data->map->ea_file);
-	else
-		return (NULL);
+	return (NULL);
 }
 
 uint32_t	extract_color(xpm_t *xpm_file, int x_offset, int y_offset)
