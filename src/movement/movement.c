@@ -6,39 +6,50 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 15:44:29 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/25 01:12:34 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/25 18:43:53 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-bool	is_wall(t_global *data, double x, double y)
+bool	is_wall(t_map *map, double x, double y)
 {
-	if (x < 0 || y < 0 || x >= data->map->width || y >= data->map->height)
+	if (x < 0 || y < 0 || x >= map->width || y >= map->height)
 		return (1);
-	if (data->map->map_array[(int)floor(y)][(int)floor(x)] != SURFACE_PLAYABLE || data->map->map_array[(int)floor(data->player.y)][(int)floor(x)] == WALL || data->map->map_array[(int)floor(y)][(int)floor(data->player.x)] == WALL)
+	if (map->map_array[(int)floor(y)][(int)floor(x)] == WALL)
+		return (1);
+	return (0);
+}
+bool	check_collision(double x, double y, t_global *data)
+{
+	double old_x;
+	double old_y;
+	old_x = data->player.x;
+	old_y = data->player.y;
+	// if (x < 0 || y < 0 || x >= data->map->width || y >= data->map->height)
+	if ((data->map->map_array[(int)floor(y)][(int)floor(old_x)] == WALL) && (data->map->map_array[(int)floor(old_y)][(int)floor(x)] \
+		== WALL))
+		return (1);
+	if (data->map->map_array[(int)(y)][(int)(x)] == WALL)
 		return (1);
 	return (0);
 }
 
+
 bool	collides(t_global *data, t_move_direction move)
 {
 	if (move == forward)
-		return (is_wall(data
-		, data->player.x + MOVE_SPEED * cos(data->player.viewing_angle)
-		, data->player.y + MOVE_SPEED * sin(data->player.viewing_angle)));
+		return (check_collision(data->player.x + (MOVE_SPEED + 0.2) * cos(data->player.viewing_angle)
+		, data->player.y + (MOVE_SPEED + 0.2) * sin(data->player.viewing_angle), data));
 	else if (move == backward)
-		return (is_wall(data
-		, data->player.x - MOVE_SPEED * cos(data->player.viewing_angle )
-		, data->player.y - MOVE_SPEED * sin(data->player.viewing_angle )));
+		return (check_collision(data->player.x - (MOVE_SPEED + 0.2) * cos(data->player.viewing_angle )
+		, data->player.y - (MOVE_SPEED + 0.2) * sin(data->player.viewing_angle ), data));
 	else if (move == right)
-		return (is_wall(data
-		, data->player.x + MOVE_SPEED * cos(data->player.viewing_angle + M_PI_2)
-		, data->player.y + MOVE_SPEED * sin(data->player.viewing_angle + M_PI_2)));
+		return (check_collision(data->player.x + (MOVE_SPEED + 0.2) * cos(data->player.viewing_angle + M_PI_2)
+		, data->player.y + (MOVE_SPEED + 0.2) * sin(data->player.viewing_angle + M_PI_2), data));
 	else
-		return (is_wall(data
-		, data->player.x + MOVE_SPEED * cos(data->player.viewing_angle - M_PI_2)
-		, data->player.y + MOVE_SPEED * sin(data->player.viewing_angle - M_PI_2)));
+		return (check_collision(data->player.x + (MOVE_SPEED + 0.2) * cos(data->player.viewing_angle - M_PI_2)
+		, data->player.y+ (MOVE_SPEED + 0.2) * sin(data->player.viewing_angle - M_PI_2), data));
 }
 
 bool	is_movement_key_down(t_global *data)
@@ -61,6 +72,7 @@ void	move_player(void *param)
 	static mlx_image_t *x;
 	start_time = clock();
 	/* fps logic */
+	
 	data = param;
 	fs_xstep = MOVE_SPEED * cos(data->player.viewing_angle);
 	fs_ystep = MOVE_SPEED * sin(data->player.viewing_angle);

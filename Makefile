@@ -6,12 +6,12 @@
 #    By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/23 15:44:55 by selhilal          #+#    #+#              #
-#    Updated: 2023/09/24 23:44:08 by selhilal         ###   ########.fr        #
+#    Updated: 2023/09/25 14:58:42 by selhilal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror #-O3 -g -fsanitize=address  #-O3
+CFLAGS = -O3 #-Wall -Wextra -Werror -fsanitize=address -g #-O3
 NAME = cub3d
 LINKED_LIST = libraries/linked_list
 GET_NEXT_LINE = libraries/get_next_line
@@ -42,7 +42,6 @@ SOURCES = src/main.c\
 	src/geometry/projection.c\
 	src/geometry/angle_util.c\
 	src/movement/movement.c\
-	src/parsing/parsing_walls.c
 
 HEADERS = includes/cub3d.h
 OBJECTS = $(SOURCES:.c=.o)

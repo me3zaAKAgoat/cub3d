@@ -6,11 +6,11 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:02:05 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/24 13:24:56 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/25 15:12:41 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
- #include "cub3d.h"
+#include "cub3d.h"
 
 size_t	horizontal_len(t_map_element *arr)
 {
@@ -32,7 +32,7 @@ size_t	vertical_len(t_map_element **arr)
 	return (len);
 }
 
-void	set_map_dimensions(t_global *data)
+void	get_map_dimensions(t_global *data)
 {
 	size_t	y;	
 	size_t	x;
@@ -52,7 +52,7 @@ void	set_map_dimensions(t_global *data)
 	data->map->height = y;
 }
 
-void	pad_map_into_rectangle(t_global *data)
+void	uniform_arrays_width(t_global *data)
 {
 	size_t	y;
 	size_t	x;
@@ -79,10 +79,6 @@ void	pad_map_into_rectangle(t_global *data)
 	}
 }
 
-/* the mathematical relation inside the second
-	malloc of this funciton decides wether to
-	pad a 1 for the horizontal terminator based
-	on wether theres a newline or not */
 void	initialize_map_array(t_global *data, int y, char *line)
 {
 	data->map->map_array = ft_realloc(data->map->map_array, y * sizeof(int *), (y + 2) * sizeof(int *));
@@ -130,7 +126,7 @@ char	*skip_empty_lines(int fd)
 	return (line);
 }
 
-void	read_map(t_global *data, int fd)
+void	parse_map(t_global *data, int fd)
 {
 	char	*line;
 	int		x;

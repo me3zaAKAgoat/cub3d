@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/25 01:19:57 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/25 18:01:16 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,14 @@
 # define WIN_WIDTH 1600
 # define WIN_HEIGHT 900
 
-
-
-#define PLAYER_SIZE 2
 # define MINIMAP_SIZE 160
-# define UNIT_SIZE 1
+# define UNIT_SIZE 6
+# define TEXTURE_SIZE 64
 # define HITBOX_SIZE 1
 # define MINIMAP_OFFSET_X 5
 # define MINIMAP_OFFSET_Y 5
-# define MOVE_SPEED .1
-# define ROTATION_SPEED .03
+# define MOVE_SPEED .09
+# define ROTATION_SPEED .04
 # define FOV 40 * .01745329251
 # define PI 3.14159265359
 # define WALL_STRIP_WIDTH 1
@@ -60,10 +58,10 @@ typedef enum e_map_element
 
 typedef struct s_map
 {
-	char			*no_path;
-	char			*so_path;
-	char			*ea_path;
-	char			*we_path;
+	xpm_t			*no_file;
+	xpm_t			*so_file;
+	xpm_t			*ea_file;
+	xpm_t			*we_file;
 	uint32_t		floor_color;
 	uint32_t		ceil_color;
 	t_map_element	**map_array;
@@ -80,13 +78,9 @@ typedef struct s_player
 
 typedef struct s_global
 {
-	uint32_t *tab;
-	int x;
-	int y;
 	t_map		*map;
 	t_player	player;
 	mlx_t		*mlx;
-	uint32_t	*texturs[4];
 	mlx_image_t	*game_img;
 	mlx_image_t	*hud_img;
 }	t_global;
@@ -99,6 +93,8 @@ typedef struct s_ray
 	bool	is_facing_up;
 	bool	is_facing_right;
 	bool	hit_vertical;
+	double	wall_hit_x;
+	double	wall_hit_y;
 }	t_ray;
 
 typedef enum e_move_direction
@@ -129,9 +125,9 @@ extern	double			initial_angle(t_map_element element);
 extern	t_map_element	char_to_map_element(char c);
 extern	size_t			horizontal_len(t_map_element *arr);
 extern	size_t			vertical_len(t_map_element **arr);
-extern	void			read_map(t_global *data, int fd);
-extern	void			set_map_dimensions(t_global *data);
-extern	void			pad_map_into_rectangle(t_global *data);
+extern	void			parse_map(t_global *data, int fd);
+extern	void			get_map_dimensions(t_global *data);
+extern	void			uniform_arrays_width(t_global *data);
 extern	char			*skip_wspace(char *str);
 extern	void			render_game(t_global *data);
 extern	void			print_map(t_map_element **map);
@@ -146,8 +142,8 @@ extern	bool			is_facing_up(double angle);
 extern	bool			is_facing_down(double angle);
 extern	bool			is_facing_right(double angle);
 extern	bool			is_facing_left(double angle);
-extern	void			project_wall(t_global *data, t_ray ray);
-extern	bool			is_wall(t_global *data, double x, double y);
+extern	void			project_ray(t_global *data, t_ray *ray);
+extern	bool			is_wall(t_map *map, double x, double y);
 extern	void			cast_rays(t_global *data);
 extern	void			bresenham(mlx_image_t *img, t_point a, t_point b, uint32_t color);
 extern	void			clear_global(t_global *data);
@@ -158,5 +154,5 @@ extern	void			werror(char *msg);
 extern	int				ft_isnumber(char *str);
 extern	int				ft_isspace2(char c);
 extern	void			parse_config_file(t_global *data, char *filename);
-extern	void			parssing_wall(t_global *data);
+
 #endif
