@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/25 18:01:16 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/25 21:55:46 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define WIN_HEIGHT 900
 
 # define MINIMAP_SIZE 160
-# define UNIT_SIZE 6
+# define UNIT_SIZE 20
 # define TEXTURE_SIZE 64
 # define HITBOX_SIZE 1
 # define MINIMAP_OFFSET_X 5
@@ -53,7 +53,9 @@ typedef enum e_map_element
 	EAST,
 	WEST,
 	SOUTH,
-	HORIZONTAL_TERM
+	HORIZONTAL_TERM,
+	DOOR,
+	door_open,
 }	t_map_element;
 
 typedef struct s_map
@@ -79,6 +81,7 @@ typedef struct s_player
 typedef struct s_global
 {
 	t_map		*map;
+	int 		is_door;
 	t_player	player;
 	mlx_t		*mlx;
 	mlx_image_t	*game_img;
@@ -154,5 +157,6 @@ extern	void			werror(char *msg);
 extern	int				ft_isnumber(char *str);
 extern	int				ft_isspace2(char c);
 extern	void			parse_config_file(t_global *data, char *filename);
-
+extern void 			parssing_wall(t_global *data);
+extern void 			ft_door(t_global *data, int flag);
 #endif

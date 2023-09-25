@@ -1,7 +1,7 @@
-NO  ./assets/textures/backrooms.png
-WE  ./assets/textures/backrooms.png
-EA  ./assets/textures/backrooms.png
-SO  ./assets/textures/backrooms.png
+NO ./assets/88.xpm42
+SO ./assets/wall.xpm42
+WE ./assets/wall.xpm42
+EA ./assets/bluestone.xpm42
 
 F 105,92,36
 C 148,147,85
@@ -25,7 +25,7 @@ C 148,147,85
               1000000000000000000010001
               1000000000000000000000001
               1000000000000000000010001
-              1000000000000000000010001
+              100000000000000000010001
               10010000000000W0010010001
               1000100000000000100010001
               1000000000000000000010001

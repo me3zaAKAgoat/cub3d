@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/25 15:12:20 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/25 22:06:13 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ t_map_element	char_to_map_element(char c)
 		return (SOUTH);
 	else if (c == '\n')
 		return (HORIZONTAL_TERM);
+	else if(c == '6')
+		return (DOOR);
+	else if(c == '7')
+		return (door_open);
 	else
 	{
 		werror("Error\nUnrecognizable map element.");
@@ -92,7 +96,7 @@ int	parse_texture(t_map *map, char *line)
 		dst = &map->so_file;
 	else if (!ft_strncmp(skip_wspace(line), "WE", 2))
 		dst = &map->we_file;
-	else
+	else if (!ft_strncmp(skip_wspace(line), "EA", 2))
 		dst = &map->ea_file;
 	if (*dst != NULL)
 		return (werror("Error\nA Path was recognized twice."), exit(1), 0);
@@ -148,5 +152,7 @@ void	parse_config_file(t_global *data, char *filename)
 	parse_map(data, fd);
 	get_map_dimensions(data);
 	uniform_arrays_width(data);
+	//parssing_wall(data);
+	//print_map(data->map->map_array);
 	close(fd);
 }

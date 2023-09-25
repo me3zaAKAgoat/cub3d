@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 19:03:21 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/25 18:30:43 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/25 22:21:54 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,14 @@ xpm_t		*decide_texture(t_global *data, t_ray *ray)
 		return (data->map->we_file);
 	else if (ray->is_facing_right && ray->hit_vertical)
 		return (data->map->ea_file);
-	else
-		return (NULL);
+	////if door in map 
+	//else if (data->map->map_array[(int)(ray->wall_hit_y)][(int)(ray->wall_hit_x)] == DOOR)
+	//{
+	//	puts("door");
+	//	if (data->is_door)
+	//		return (mlx_load_xpm42("./assets/door.xpm42"));
+	//}
+	return (NULL);
 }
 
 uint32_t	extract_color(xpm_t *xpm_file, int x_offset, int y_offset)

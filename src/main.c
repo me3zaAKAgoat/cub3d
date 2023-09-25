@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/25 15:09:52 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/25 21:47:40 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ void	set_global_defaults(t_global *data, t_map *map)
 
 void	quit(mlx_key_data_t keydata, void *param)
 {
-	(void)keydata;
+	t_global	*data;
+	
+	data = param;
 	if (mlx_is_key_down((mlx_t *)param, MLX_KEY_ESCAPE))
 		mlx_close_window((mlx_t *)param);
 }

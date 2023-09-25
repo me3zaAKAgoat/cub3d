@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/25 15:14:09 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/25 22:18:56 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ uint32_t	map_element_color(t_map_element element)
 {
 	if (element == WALL)
 		return (0x121212FF);
+	else if (element == DOOR)
+		return (0x00FF00FF);
 	else if (element == SURFACE_NOT_PLAYABLE)
 		return (0xFFFFFF40);
 	else if (element == SURFACE_PLAYABLE)

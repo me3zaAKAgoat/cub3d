@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 15:44:29 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/25 18:43:53 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/25 21:59:34 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ bool	is_wall(t_map *map, double x, double y)
 {
 	if (x < 0 || y < 0 || x >= map->width || y >= map->height)
 		return (1);
-	if (map->map_array[(int)floor(y)][(int)floor(x)] == WALL)
+	if (map->map_array[(int)floor(y)][(int)floor(x)] == WALL || map->map_array[(int)floor(y)][(int)floor(x)] == DOOR)
 		return (1);
 	return (0);
 }
@@ -26,15 +26,13 @@ bool	check_collision(double x, double y, t_global *data)
 	double old_y;
 	old_x = data->player.x;
 	old_y = data->player.y;
-	// if (x < 0 || y < 0 || x >= data->map->width || y >= data->map->height)
-	if ((data->map->map_array[(int)floor(y)][(int)floor(old_x)] == WALL) && (data->map->map_array[(int)floor(old_y)][(int)floor(x)] \
-		== WALL))
+	if ((data->map->map_array[(int)floor(y)][(int)floor(old_x)] == WALL && (data->map->map_array[(int)floor(old_y)][(int)floor(x)] \
+		== WALL) || data->map->map_array[(int)floor(y)][(int)floor(x)] == DOOR ))
 		return (1);
 	if (data->map->map_array[(int)(y)][(int)(x)] == WALL)
 		return (1);
 	return (0);
 }
-
 
 bool	collides(t_global *data, t_move_direction move)
 {
@@ -56,9 +54,12 @@ bool	is_movement_key_down(t_global *data)
 {
 	return (mlx_is_key_down(data->mlx, MLX_KEY_W) || mlx_is_key_down(data->mlx, MLX_KEY_S)
 		|| mlx_is_key_down(data->mlx, MLX_KEY_D) || mlx_is_key_down(data->mlx, MLX_KEY_A)
-		|| mlx_is_key_down(data->mlx, MLX_KEY_LEFT) || mlx_is_key_down(data->mlx, MLX_KEY_RIGHT));
+		|| mlx_is_key_down(data->mlx, MLX_KEY_LEFT) || mlx_is_key_down(data->mlx, MLX_KEY_RIGHT)
+		|| mlx_is_key_down(data->mlx, MLX_KEY_O) || mlx_is_key_down(data->mlx, MLX_KEY_C));
 }
 #include <time.h>
+
+
 void	move_player(void *param)
 {
 	t_global	*data;
@@ -84,6 +85,16 @@ void	move_player(void *param)
 			data->player.viewing_angle -= ROTATION_SPEED;
 		if (mlx_is_key_down (data->mlx, MLX_KEY_RIGHT))
 			data->player.viewing_angle += ROTATION_SPEED;
+		if(mlx_is_key_down(data->mlx, MLX_KEY_C) && !data->is_door)
+		{
+			data->is_door = 1;
+			ft_door(data, 1);
+		}
+		 if(mlx_is_key_down(data->mlx, MLX_KEY_O) && data->is_door)
+		{
+			data->is_door = 0;
+			ft_door(data, 0);
+		}
 		if (mlx_is_key_down (data->mlx, MLX_KEY_W) && !collides(data, forward))
 		{
 			data->player.x += fs_xstep;

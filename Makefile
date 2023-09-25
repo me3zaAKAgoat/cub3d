@@ -6,7 +6,7 @@
 #    By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/23 15:44:55 by selhilal          #+#    #+#              #
-#    Updated: 2023/09/25 14:58:42 by selhilal         ###   ########.fr        #
+#    Updated: 2023/09/25 21:17:53 by selhilal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,8 @@ SOURCES = src/main.c\
 	src/geometry/projection.c\
 	src/geometry/angle_util.c\
 	src/movement/movement.c\
+	src/parsing/parsing_walls.c\
+	Bonus/Door.c
 
 HEADERS = includes/cub3d.h
 OBJECTS = $(SOURCES:.c=.o)
