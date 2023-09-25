@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/25 22:06:13 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/25 22:43:28 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,6 @@ void	parse_config_file(t_global *data, char *filename)
 	parse_map(data, fd);
 	get_map_dimensions(data);
 	uniform_arrays_width(data);
-	//parssing_wall(data);
-	//print_map(data->map->map_array);
+	print_map(data->map->map_array);
 	close(fd);
 }
