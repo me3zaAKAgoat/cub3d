@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 00:39:37 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/25 04:39:18 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/25 11:05:02 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	cast_rays(t_global *data)
 		ray.is_facing_right = is_facing_right(ray.angle);
 		ray.is_facing_up = is_facing_up(ray.angle);
 		ray.distance = intersection_distance(data->map, data->player.x, data->player.y, &ray);
-		project_wall(data, &ray);
+		project_ray(data, &ray);
 		ray.angle += FOV / NUM_RAYS;
 		ray.angle = sanitize_angle(ray.angle);
 		ray.id++;

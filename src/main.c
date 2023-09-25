@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/25 03:30:16 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/25 09:39:51 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	set_global_defaults(t_global *data, t_map *map)
 {
 	data->map = map;
-	data->map->ea_path = NULL;
-	data->map->no_path = NULL;
-	data->map->so_path = NULL;
-	data->map->we_path = NULL;
+	data->map->ea_file = NULL;
+	data->map->no_file = NULL;
+	data->map->so_file = NULL;
+	data->map->we_file = NULL;
 	data->map->height = 0;
 	data->map->width = 0;
 	data->map->ceil_color = 0;
@@ -52,7 +52,6 @@ int	main(int ac, char **av)
 	set_global_defaults(&data, &map);
 	sanitization(ac, av);
 	parse_config_file(&data, av[1]);
-	data.wallt = mlx_load_xpm42("assets/bricksx64.xpm42");
 	data.mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "cub3d", false);
 	if (!data.mlx)
 		werror("mlx init failed.");

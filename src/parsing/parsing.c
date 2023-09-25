@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/25 03:08:58 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/25 09:39:32 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,30 +83,24 @@ int	parse_floor_color(t_global *data, char *line)
 
 int	parse_texture(t_map *map, char *line)
 {
+	xpm_t	**dst;
+	char	*str;
+
 	if (!ft_strncmp(skip_wspace(line), "NO", 2))
-	{
-		if (map->no_path != NULL)
-			return (werror("Error\nPath for NO recognized twice."), exit(1), 0);
-		map->no_path = ft_strtrim(skip_wspace(line + 2), "\n");
-	}
+		dst = &map->no_file;
 	else if (!ft_strncmp(skip_wspace(line), "SO", 2))
-	{
-		if (map->so_path != NULL)
-			return (werror("Error\nPath for SO recognized twice."), exit(1), 0);
-		map->so_path = ft_strtrim(skip_wspace(line + 2), "\n");
-	}
+		dst = &map->so_file;
 	else if (!ft_strncmp(skip_wspace(line), "WE", 2))
-	{
-		if (map->we_path != NULL)
-			return (werror("Error\nPath for WE recognized twice."), exit(1), 0);
-		map->we_path = ft_strtrim(skip_wspace(line + 2), "\n");
-	}
-	else if (!ft_strncmp(skip_wspace(line), "EA", 2))
-	{
-		if (map->ea_path != NULL)
-			return (werror("Error\nPath for EA recognized twice."), exit(1), 0);
-		map->ea_path = ft_strtrim(skip_wspace(line + 2), "\n");
-	}
+		dst = &map->we_file;
+	else
+		dst = &map->ea_file;
+	if (*dst != NULL)
+		return (werror("Error\nA Path was recognized twice."), exit(1), 0);
+	str = ft_strtrim(skip_wspace(line + 2), "\n");
+	*dst = mlx_load_xpm42(str);
+	if (!*dst)
+		return (werror("Error\nFailed to load a texture."), exit(1), 0);
+	free(str);
 	return (1);
 }
 
@@ -151,9 +145,8 @@ void	parse_config_file(t_global *data, char *filename)
 		exit(1);
 	}
 	parse_assets(data, fd);
-	read_map(data, fd);
-	set_map_dimensions(data);
-	pad_map_into_rectangle(data);
-	// print_map(data->map->map_array);
+	parse_map(data, fd);
+	get_map_dimensions(data);
+	uniform_arrays_width(data);
 	close(fd);
 }

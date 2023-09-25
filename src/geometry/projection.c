@@ -3,29 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   projection.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 19:03:21 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/25 04:56:14 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/25 11:05:19 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-uint32_t	wall_color(t_ray *ray, uint32_t r, uint32_t g, uint32_t b)
+xpm_t		*decide_texture(t_global *data, t_ray *ray)
 {
 	if (!ray->is_facing_up && !ray->hit_vertical)
-		return ((r << 24 | g << 16 | b << 8 | 255));
+		return (data->map->so_file);
 	else if (ray->is_facing_up && !ray->hit_vertical)
-		return ((r << 24 | g << 16 | b << 8 | 255));
+		return (data->map->no_file);
 	else if (!ray->is_facing_right && ray->hit_vertical)
-		return (((r - 30) << 24 | (g - 30) << 16 | (b - 30) << 8 | 255));
+		return (data->map->we_file);
 	else if (ray->is_facing_right && ray->hit_vertical)
-		return (((r - 30) << 24 | (g - 30) << 16 | (b - 30) << 8 | 255));
-	return (0xFFFFFFFF);
+		return (data->map->ea_file);
+	else
+		return (NULL);
 }
 
-void	project_wall(t_global *data, t_ray *ray)
+uint32_t	extract_color(xpm_t *xpm_file, int x_offset, int y_offset)
+{
+	int			pixel_index;
+	uint32_t	r;
+	uint32_t	g;
+	uint32_t	b;
+
+	pixel_index = y_offset * xpm_file->texture.width + x_offset;
+	r = xpm_file->texture.pixels[pixel_index * xpm_file->texture.bytes_per_pixel];
+	g = xpm_file->texture.pixels[pixel_index * xpm_file->texture.bytes_per_pixel + 1];
+	b = xpm_file->texture.pixels[pixel_index * xpm_file->texture.bytes_per_pixel + 2];
+	return (r << 24 | g << 16 | b << 8 | 255);
+}
+
+void	project_ray(t_global *data, t_ray *ray)
 {
 	double	correct_distance;
 	double	distance_to_pplane;
@@ -44,22 +59,18 @@ void	project_wall(t_global *data, t_ray *ray)
 	wall_bottom = iternary(wall_bottom > WIN_HEIGHT, WIN_HEIGHT, wall_bottom);
 	while (y < wall_top)
 		mlx_put_pixel(data->game_img, ray->id, y++, data->map->ceil_color);
-	int textureOffsetX;
+	xpm_t	*xpm_file;;
+	xpm_file = decide_texture(data, ray);
+	int t_offset_x;
 	if (ray->hit_vertical)
-		textureOffsetX = (int)(ray->wall_hit_y * data->wallt->texture.width) % data->wallt->texture.width;
+		t_offset_x = (int)(ray->wall_hit_y * xpm_file->texture.width) % xpm_file->texture.width;
 	else
-		textureOffsetX = (int)(ray->wall_hit_x * data->wallt->texture.width) % data->wallt->texture.width;
-
+		t_offset_x = (int)(ray->wall_hit_x * xpm_file->texture.width) % xpm_file->texture.width;
 	while (y < wall_bottom)
 	{
 		int		distance_from_top = y + ((wall_strip_height) - WIN_HEIGHT) / 2;
-		int		texture_y = (double)(distance_from_top * data->wallt->texture.height) / (double)(wall_strip_height);
-
-		int		pixel_index = texture_y * data->wallt->texture.width + textureOffsetX;
-		uint8_t	red = data->wallt->texture.pixels[pixel_index * data->wallt->texture.bytes_per_pixel];
-		uint8_t	green = data->wallt->texture.pixels[pixel_index * data->wallt->texture.bytes_per_pixel + 1];
-		uint8_t	blue = data->wallt->texture.pixels[pixel_index * data->wallt->texture.bytes_per_pixel + 2];
-		mlx_put_pixel(data->game_img, ray->id, y, wall_color(ray, red, green, blue));
+		int		t_offset_y = (double)(distance_from_top * xpm_file->texture.height) / (double)(wall_strip_height);
+		mlx_put_pixel(data->game_img, ray->id, y, extract_color(xpm_file, t_offset_x, t_offset_y));
 		y++;
 	}
 	while (y < WIN_HEIGHT)

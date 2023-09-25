@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 19:02:10 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/23 03:54:37 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/25 09:40:06 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@ void	clear_global(t_global *data)
 {
 	int	i;
 
-	free(data->map->no_path);
-	free(data->map->ea_path);
-	free(data->map->so_path);
-	free(data->map->we_path);
+	mlx_delete_xpm42(data->map->no_file);
+	mlx_delete_xpm42(data->map->ea_file);
+	mlx_delete_xpm42(data->map->so_file);
+	mlx_delete_xpm42(data->map->we_file);
 	if (data->map->map_array)
 	{
 		i = 0;

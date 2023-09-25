@@ -29,13 +29,16 @@
 - [ ] there's duplication in minimap raycasting file
 - [ ] add more sanitization for surface colors
 - [ ] minimap casted rays are a bit jagged and are visibly imperfect !!
+- [ ] use ray casting to do wall collisions
 
 ## prio
 
 - [ ] fix hitbox/wall collisions
 - [ ] remove fps counter pre ship
-- [ ] put textures on maps
+- [x] put textures on maps
 - [ ] change the parsing so it stores the texture not the path to the xpmf file
+- [ ] check all failure cases that could be caused by textures
+- [ ] begin the exit protocol that clears global
 
 # Questions
 

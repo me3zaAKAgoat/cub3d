@@ -1,7 +1,7 @@
-NO ./assets/textures/NOWALL.xpm
-SO ./assets/textures/SOWALL.xpm
-WE ./assets/textures/WEWALL.xpm
-EA ./assets/textures/EAWALL.xpm
+NO ./assets/x.xpm42
+SO ./assets/x.xpm42
+WE ./assets/x.xpm42
+EA ./assets/x.xpm42
 
 C 46,71,99
 F 71,73,74

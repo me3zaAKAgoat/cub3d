@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/25 04:36:46 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/25 11:28:24 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ typedef enum e_map_element
 
 typedef struct s_map
 {
-	char			*no_path;
-	char			*so_path;
-	char			*ea_path;
-	char			*we_path;
+	xpm_t			*no_file;
+	xpm_t			*so_file;
+	xpm_t			*ea_file;
+	xpm_t			*we_file;
 	uint32_t		floor_color;
 	uint32_t		ceil_color;
 	t_map_element	**map_array;
@@ -83,7 +83,6 @@ typedef struct s_global
 	mlx_t		*mlx;
 	mlx_image_t	*game_img;
 	mlx_image_t	*hud_img;
-	xpm_t		*wallt;
 }	t_global;
 
 typedef struct s_ray
@@ -126,9 +125,9 @@ extern	double			initial_angle(t_map_element element);
 extern	t_map_element	char_to_map_element(char c);
 extern	size_t			horizontal_len(t_map_element *arr);
 extern	size_t			vertical_len(t_map_element **arr);
-extern	void			read_map(t_global *data, int fd);
-extern	void			set_map_dimensions(t_global *data);
-extern	void			pad_map_into_rectangle(t_global *data);
+extern	void			parse_map(t_global *data, int fd);
+extern	void			get_map_dimensions(t_global *data);
+extern	void			uniform_arrays_width(t_global *data);
 extern	char			*skip_wspace(char *str);
 extern	void			render_game(t_global *data);
 extern	void			print_map(t_map_element **map);
@@ -143,7 +142,7 @@ extern	bool			is_facing_up(double angle);
 extern	bool			is_facing_down(double angle);
 extern	bool			is_facing_right(double angle);
 extern	bool			is_facing_left(double angle);
-extern	void			project_wall(t_global *data, t_ray *ray);
+extern	void			project_ray(t_global *data, t_ray *ray);
 extern	bool			is_wall(t_map *map, double x, double y);
 extern	void			cast_rays(t_global *data);
 extern	void			bresenham(mlx_image_t *img, t_point a, t_point b, uint32_t color);
