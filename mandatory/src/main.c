@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/25 09:39:51 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/26 18:40:05 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	sanitization(int ac, char **av)
 {
 	if (ac != 2)
 		return (werror("Error\nWrong number of arguments was given."), exit(1));
-	if (ft_strlen(av[1]) < 4 || ft_strncmp(av[1] + (ft_strlen(av[1]) - 4), ".cub", 4))
+	if (ft_strlen(av[1]) < 4 || \
+			ft_strncmp(av[1] + (ft_strlen(av[1]) - 4), ".cub", 4))
 		return (werror("Error\nConfig file must end in '.cub'."), exit(1));
 }
 
@@ -59,7 +60,8 @@ int	main(int ac, char **av)
 	data.hud_img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!data.game_img || !data.hud_img)
 		werror("mlx new img failed.");
-	if (mlx_image_to_window(data.mlx, data.game_img, 0, 0) < 0 || mlx_image_to_window(data.mlx, data.hud_img, 0, 0) < 0)
+	if (mlx_image_to_window(data.mlx, data.game_img, 0, 0) < 0
+		|| mlx_image_to_window(data.mlx, data.hud_img, 0, 0) < 0)
 		werror("mlx new img to window failed.");
 	render_game(&data);
 	mlx_loop_hook(data.mlx, move_player, &data);

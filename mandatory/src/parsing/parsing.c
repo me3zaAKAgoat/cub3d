@@ -6,36 +6,11 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/26 16:48:19 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/26 18:19:34 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-t_map_element	char_to_map_element(char c)
-{
-	if (c == '1')
-		return (WALL);
-	else if (c == '0')
-		return (SURFACE_PLAYABLE);
-	else if (ft_isspace2(c))
-		return (SURFACE_NOT_PLAYABLE);
-	else if (c == 'N')
-		return (NORTH);
-	else if (c == 'W')
-		return (WEST);
-	else if (c == 'E')
-		return (EAST);
-	else if (c == 'S')
-		return (SOUTH);
-	else if (c == '\n')
-		return (HORIZONTAL_TERM);
-	else
-	{
-		werror("Error\nUnrecognizable map element.");
-		exit(1);
-	}
-}
 
 int	parse_ceiling_color(t_global *data, char *line)
 {
@@ -115,16 +90,14 @@ void	parse_assets(t_global *data, int fd)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		if (!ft_strncmp(skip_wspace(line), "NO", 2) || !ft_strncmp(skip_wspace(line), "SO", 2)
-			|| !ft_strncmp(skip_wspace(line), "WE", 2) || !ft_strncmp(skip_wspace(line), "EA", 2))
+		if (is_texture_line(line))
 			textures_recognized += parse_texture(data->map, line);
 		else if (!ft_strncmp(skip_wspace(line), "C", 1))
 			surfaces_recognized += parse_ceiling_color(data, line);
 		else if (!ft_strncmp(skip_wspace(line), "F", 1))
 			surfaces_recognized += parse_floor_color(data, line);
-		else if (ft_strncmp(skip_wspace(line), "\n", 1))
-			break;
-		if (textures_recognized == 4 && surfaces_recognized == 2)
+		else if (ft_strncmp(skip_wspace(line), "\n", 1)
+			|| (textures_recognized == 4 && surfaces_recognized == 2))
 			break ;
 		free(line);
 		line = get_next_line(fd);

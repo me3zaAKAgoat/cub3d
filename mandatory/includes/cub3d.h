@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/26 16:30:31 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/26 18:26:42 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@
 # define WIN_HEIGHT 900
 
 # define MINIMAP_SIZE 160
-# define UNIT_SIZE 12
+# define UNIT_SIZE 6
 # define TEXTURE_SIZE 64
 # define HITBOX_SIZE .2
 # define MINIMAP_OFFSET_X 5
 # define MINIMAP_OFFSET_Y 5
 # define MOVE_SPEED .2
 # define ROTATION_SPEED .01
-# define FOV 40 * .01745329251
+# define FOV 60 * .01745329251
 # define PI 3.14159265359
 # define WALL_STRIP_WIDTH 1
 # define NUM_RAYS WIN_WIDTH / WALL_STRIP_WIDTH
@@ -117,8 +117,32 @@ typedef struct s_double_couple
 	double	y;
 }	t_double_couple;
 
+typedef struct s_wall_data
+{
+	int	bottom;
+	int	top;
+	int	strip_height;
+}	t_wall_data;
+
+typedef struct s_distance
+{
+	double	no_fishbowl;
+	double	to_projection_plane;
+	int		from_top;
+}	t_distance;
+
 /* Function Definitions */
 
+extern	size_t			horizontal_len(t_map_element *arr);
+extern	size_t			vertical_len(t_map_element **arr);
+extern	void			get_map_dimensions(t_global *data);
+extern	bool			is_texture_line(char *line);
+extern	t_map_element	char_to_map_element(char c);
+extern	bool			contacts_void_above(t_map *map, size_t x, size_t y);
+extern	bool			contacts_void_down(t_map *map, size_t x, size_t y);
+extern	bool			contacts_void_right(t_map *map, size_t x, size_t y);
+extern	bool			contacts_void_left(t_map *map, size_t x, size_t y);
+extern	bool			contacts_void(t_map *map, size_t x, size_t y);
 extern	void			sanitize_map(t_map *map);
 extern	double			horizontal_intersection_distance(t_map *map, double x, double y, t_ray *ray);
 extern	double			vertical_intersection_distance(t_map *map, double x, double y, t_ray *ray);

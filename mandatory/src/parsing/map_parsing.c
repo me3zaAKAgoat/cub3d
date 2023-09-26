@@ -6,51 +6,11 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 03:56:08 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/25 08:49:10 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/26 18:34:49 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-size_t	horizontal_len(t_map_element *arr)
-{
-	size_t	len;
-
-	len = 0;
-	while (arr[len] != HORIZONTAL_TERM)
-		len++;
-	return (len);
-}
-
-size_t	vertical_len(t_map_element **arr)
-{
-	size_t	len;
-
-	len = 0;
-	while (arr[len])
-		len++;
-	return (len);
-}
-
-void	get_map_dimensions(t_global *data)
-{
-	size_t	y;	
-	size_t	x;
-
-	y = 0;
-	while (data->map->map_array[y])
-	{
-		x = 0;
-		while (data->map->map_array[y][x] != HORIZONTAL_TERM)
-		{
-			if (x > data->map->width)
-				data->map->width = x;
-			x++;
-		}
-		y++;
-	}
-	data->map->height = y;
-}
 
 void	uniform_arrays_width(t_global *data)
 {
@@ -64,7 +24,8 @@ void	uniform_arrays_width(t_global *data)
 		hlen = horizontal_len(data->map->map_array[y]);
 		if (hlen < data->map->width)
 		{
-			data->map->map_array[y] = ft_realloc(data->map->map_array[y], hlen * sizeof(int), (data->map->width + 2) * sizeof(int));
+			data->map->map_array[y] = ft_realloc(data->map->map_array[y],
+					hlen * sizeof(int), (data->map->width + 2) * sizeof(int));
 			if (!data->map->map_array[y])
 				return (werror("Error\nA heap allocation failed."), exit(1));
 			x = hlen;
@@ -81,14 +42,16 @@ void	uniform_arrays_width(t_global *data)
 
 void	initialize_map_array(t_global *data, int y, char *line)
 {
-	data->map->map_array = ft_realloc(data->map->map_array, y * sizeof(int *), (y + 2) * sizeof(int *));
+	data->map->map_array = ft_realloc(data->map->map_array,
+			y * sizeof(int *), (y + 2) * sizeof(int *));
 	data->map->map_array[y + 1] = NULL;
 	if (!data->map->map_array)
 	{
 		werror("Error\nA heap allocation failed.");
 		exit(1);
 	}
-	data->map->map_array[y] = malloc((ft_strlen(line) + 1 * (line[ft_strlen(line) - 1] != '\n')) * sizeof(int));
+	data->map->map_array[y] = malloc((ft_strlen(line)
+				+ 1 * (line[ft_strlen(line) - 1] != '\n')) * sizeof(int));
 	if (!data->map->map_array[y])
 	{
 		werror("Error\nA heap allocation failed.");
@@ -101,11 +64,13 @@ void	process_map_line(t_global *data, int x, int y, char *line)
 	while (line[x])
 	{
 		data->map->map_array[y][x] = char_to_map_element(line[x]);
-		if (data->map->map_array[y][x] >= NORTH && data->map->map_array[y][x] <= SOUTH)
+		if (data->map->map_array[y][x] >= NORTH
+			&& data->map->map_array[y][x] <= SOUTH)
 		{
 			data->player.x = x;
 			data->player.y = y;
-			data->player.viewing_angle = initial_angle(data->map->map_array[y][x]);
+			data->player.viewing_angle = \
+				initial_angle(data->map->map_array[y][x]);
 		}
 		x++;
 	}

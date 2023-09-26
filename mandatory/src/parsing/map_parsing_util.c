@@ -1,51 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util.c                                             :+:      :+:    :+:   */
+/*   map_parsing_util.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/22 18:58:58 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/24 09:04:00 by echoukri         ###   ########.fr       */
+/*   Created: 2023/09/26 18:23:12 by echoukri          #+#    #+#             */
+/*   Updated: 2023/09/26 18:33:35 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-double	initial_angle(t_map_element element)
+size_t	horizontal_len(t_map_element *arr)
 {
-	if (element == EAST)
-		return (0);
-	else if (element == NORTH)
-		return (3 * M_PI_2);
-	else if (element == WEST)
-		return (PI);
-	else
-		return (M_PI_2);
+	size_t	len;
+
+	len = 0;
+	while (arr[len] != HORIZONTAL_TERM)
+		len++;
+	return (len);
 }
 
-char	*skip_wspace(char *str)
+size_t	vertical_len(t_map_element **arr)
 {
-	while (*str && ft_isspace2(*str))
-		str++;
-	return (str);
+	size_t	len;
+
+	len = 0;
+	while (arr[len])
+		len++;
+	return (len);
 }
 
-void	print_map(t_map_element **map)
+void	get_map_dimensions(t_global *data)
 {
-	size_t	y;
+	size_t	y;	
 	size_t	x;
 
 	y = 0;
-	while (map[y])
+	while (data->map->map_array[y])
 	{
 		x = 0;
-		while (map[y][x] != HORIZONTAL_TERM)
+		while (data->map->map_array[y][x] != HORIZONTAL_TERM)
 		{
-			printf("%d ", map[y][x]);
+			if (x > data->map->width)
+				data->map->width = x;
 			x++;
 		}
-		puts("");
 		y++;
 	}
+	data->map->height = y;
 }
