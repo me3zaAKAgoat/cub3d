@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 22:27:54 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/23 06:12:02 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/26 14:06:21 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,42 @@ bool	is_wall(t_map *map, double x, double y)
 	return (0);
 }
 
+bool	hitbox_compromised(t_map *map, double x, double y)
+{
+	t_ray	ray;
+
+	ray.angle = 0;
+	while (ray.angle <= PI * 2)
+	{
+		ray.is_facing_right = is_facing_right(ray.angle);
+		ray.is_facing_up = is_facing_up(ray.angle);
+		ray.distance = intersection_distance(map, x, y, &ray);
+		if (ray.distance < HITBOX_SIZE)
+		{
+			printf("%f\n", ray.distance);
+			return (true);
+		}
+		ray.angle += M_PI_4 / 10;
+	}
+	return (false);
+}
 
 bool	collides(t_global *data, t_move_direction move)
 {
 	if (move == forward)
-		return (is_wall(data->map
+		return (hitbox_compromised(data->map
 		, data->player.x + MOVE_SPEED * cos(data->player.viewing_angle)
 		, data->player.y + MOVE_SPEED * sin(data->player.viewing_angle)));
 	else if (move == backward)
-		return (is_wall(data->map
+		return (hitbox_compromised(data->map
 		, data->player.x - MOVE_SPEED * cos(data->player.viewing_angle )
 		, data->player.y - MOVE_SPEED * sin(data->player.viewing_angle )));
 	else if (move == right)
-		return (is_wall(data->map
+		return (hitbox_compromised(data->map
 		, data->player.x + MOVE_SPEED * cos(data->player.viewing_angle + M_PI_2)
 		, data->player.y + MOVE_SPEED * sin(data->player.viewing_angle + M_PI_2)));
 	else
-		return (is_wall(data->map
+		return (hitbox_compromised(data->map
 		, data->player.x + MOVE_SPEED * cos(data->player.viewing_angle - M_PI_2)
 		, data->player.y + MOVE_SPEED * sin(data->player.viewing_angle - M_PI_2)));
 }

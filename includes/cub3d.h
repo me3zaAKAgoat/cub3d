@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/25 13:12:40 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/26 14:08:02 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@
 # define WIN_HEIGHT 900
 
 # define MINIMAP_SIZE 160
-# define UNIT_SIZE 6
+# define UNIT_SIZE 12
 # define TEXTURE_SIZE 64
-# define HITBOX_SIZE 1
+# define HITBOX_SIZE .2
 # define MINIMAP_OFFSET_X 5
 # define MINIMAP_OFFSET_Y 5
 # define MOVE_SPEED .2
@@ -119,6 +119,10 @@ typedef struct s_double_couple
 
 /* Function Definitions */
 
+
+extern	double			horizontal_intersection_distance(t_map *map, double x, double y, t_ray *ray);
+extern	double			vertical_intersection_distance(t_map *map, double x, double y, t_ray *ray);
+extern	double			intersection_distance(t_map *map, double x, double y, t_ray *ray);
 extern	double			dternary(bool statement, double fexpression, double sexpression);
 extern	int				iternary(bool statement, int fexpression, int sexpression);
 extern	double			initial_angle(t_map_element element);
