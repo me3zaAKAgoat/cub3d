@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/26 14:08:02 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/26 16:30:31 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ typedef struct s_double_couple
 
 /* Function Definitions */
 
-
+extern	void			sanitize_map(t_map *map);
 extern	double			horizontal_intersection_distance(t_map *map, double x, double y, t_ray *ray);
 extern	double			vertical_intersection_distance(t_map *map, double x, double y, t_ray *ray);
 extern	double			intersection_distance(t_map *map, double x, double y, t_ray *ray);

@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/25 09:39:32 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/26 16:48:19 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	parse_assets(t_global *data, int fd)
 	textures_recognized = 0;
 	surfaces_recognized = 0;
 	line = get_next_line(fd);
-	while (line != NULL && textures_recognized + surfaces_recognized < 6)
+	while (line != NULL)
 	{
 		if (!ft_strncmp(skip_wspace(line), "NO", 2) || !ft_strncmp(skip_wspace(line), "SO", 2)
 			|| !ft_strncmp(skip_wspace(line), "WE", 2) || !ft_strncmp(skip_wspace(line), "EA", 2))
@@ -124,6 +124,8 @@ void	parse_assets(t_global *data, int fd)
 			surfaces_recognized += parse_floor_color(data, line);
 		else if (ft_strncmp(skip_wspace(line), "\n", 1))
 			break;
+		if (textures_recognized == 4 && surfaces_recognized == 2)
+			break ;
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -148,5 +150,6 @@ void	parse_config_file(t_global *data, char *filename)
 	parse_map(data, fd);
 	get_map_dimensions(data);
 	uniform_arrays_width(data);
+	sanitize_map(data->map);
 	close(fd);
 }
