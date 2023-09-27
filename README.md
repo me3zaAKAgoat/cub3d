@@ -35,13 +35,13 @@
 
 ## prio
 
-- [ ] parsing should account for doors !!
+- [x] parsing should account for doors !!
 - [ ] check that the view angle and all the important macros are the same on bonus and mandatory 
 - [ ] !!!!!!!! can phase through walls in collisions.
 - [ ] fix hitbox/wall collisions
 - [ ] remove fps counter pre ship
 - [x] put textures on maps
-- [ ] change the parsing so it stores the texture not the path to the xpmf file
+- [x] change the parsing so it stores the texture not the path to the xpmf file
 - [ ] check all failure cases that could be caused by textures
 - [ ] begin the exit protocol that clears global
 
