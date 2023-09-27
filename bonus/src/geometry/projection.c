@@ -6,19 +6,30 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 19:03:21 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/27 16:23:36 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 18:53:27 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+bool	is_door(t_global *data, t_ray *ray)
+{
+	if (ray->hit_vertical
+		&& data->map->map_array[(int)floor(ray->wall_hit_vertical.y)]
+		[(int)floor(ray->wall_hit_vertical.x + iternary(!ray->is_facing_right, -1, 0))] == DOOR_CLOSED)
+		return (true);
+	else if (!ray->hit_vertical
+		&& data->map->map_array[(int)floor(ray->wall_hit_horizontal.y + iternary(ray->is_facing_up, -1, 0))]
+		[(int)floor(ray->wall_hit_horizontal.x)] == DOOR_CLOSED)
+		return (true);
+	return (false);
+}
+
 xpm_t	*decide_texture(t_global *data, t_ray *ray)
 {
-	if (ray->hit_vertical && data->map->map_array[(int)floor(ray->wall_hit_vertical.y)][(int)floor(ray->wall_hit_vertical.x)] == DOOR_CLOSED)
+	if (is_door(data, ray))
 		return (data->map->door_file);
-	else if (!ray->hit_vertical && data->map->map_array[(int)floor(ray->wall_hit_horizontal.y)][(int)floor(ray->wall_hit_horizontal.x)] == DOOR_CLOSED)
-		return (data->map->door_file);
-	else if (!ray->is_facing_up && !ray->hit_vertical)
+	if (!ray->is_facing_up && !ray->hit_vertical)
 		return (data->map->so_file);
 	else if (ray->is_facing_up && !ray->hit_vertical)
 		return (data->map->no_file);

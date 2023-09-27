@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 15:49:18 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/26 18:14:09 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 17:23:04 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	sanitize_map(t_map *map)
 		{
 			if (is_player(map, x, y))
 				player_count++;
-			if ((map->map_array[y][x] == SURFACE_PLAYABLE 
+			if ((map->map_array[y][x] == SURFACE_PLAYABLE || map->map_array[y][x] == DOOR_CLOSED
 				|| is_player(map, x, y)) && contacts_void(map, x, y))
 				return (werror("Error\nMap not well enclosed."), exit(1));
 			x++;

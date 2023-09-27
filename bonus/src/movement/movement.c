@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 22:27:54 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/27 16:52:31 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 17:20:37 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ void	interact_with_door(t_global *data)
 	t_map_element	*down;
 	t_map_element	*right;
 	t_map_element	*left;
+	t_map_element	*center;
 
+	center = data->map->map_array[(int)data->player.y] + (int)data->player.x;
 	up = data->map->map_array[(int)data->player.y + 1] + (int)data->player.x;
 	down = data->map->map_array[(int)data->player.y - 1] + (int)data->player.x;
 	right = data->map->map_array[(int)data->player.y] + (int)data->player.x + 1;
@@ -55,6 +57,8 @@ void	interact_with_door(t_global *data)
 		*right = iternary(*right == DOOR_CLOSED, DOOR_OPEN, DOOR_CLOSED);
 	else if (*left == DOOR_CLOSED || *left == DOOR_OPEN)
 		*left = iternary(*left == DOOR_CLOSED, DOOR_OPEN, DOOR_CLOSED);
+	else if (*center == DOOR_CLOSED || *center == DOOR_OPEN)
+		*center = iternary(*center == DOOR_CLOSED, DOOR_OPEN, DOOR_CLOSED);
 }
 
 bool	hitbox_compromised(t_map *map, double x, double y)
