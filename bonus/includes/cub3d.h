@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/27 16:28:34 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 18:25:24 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define WIN_HEIGHT 900
 
 # define MINIMAP_SIZE 160
-# define UNIT_SIZE 6
+# define UNIT_SIZE 10
 # define TEXTURE_SIZE 64
 # define HITBOX_SIZE .2
 # define MINIMAP_OFFSET_X 5

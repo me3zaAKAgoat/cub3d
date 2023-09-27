@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/27 16:51:19 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 17:44:38 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ void	simple_key_handlers(mlx_key_data_t keydata, void *param)
 	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(data->mlx);
 	if (mlx_is_key_down(data->mlx, MLX_KEY_SPACE))
-	{
 		interact_with_door(data);
-		// render_game(data);
-	}
 	if (mlx_is_key_down(data->mlx, MLX_KEY_TAB))
 	{
 		data->cursor_enabled = !data->cursor_enabled;

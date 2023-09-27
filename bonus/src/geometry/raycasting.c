@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 00:39:37 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/27 16:19:40 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 18:28:48 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ void	render_game(t_global *data)
 	
 	minimap(data);
 	cast_rays(data);
+
+	
 	/* fps logic */
 	end_time = clock();
 	mlx_delete_image(data->mlx, x);
