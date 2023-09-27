@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 18:58:58 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/26 21:19:32 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 20:24:22 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ double	initial_angle(t_map_element element)
 	else if (element == NORTH)
 		return (3 * M_PI_2);
 	else if (element == WEST)
-		return (PI);
+		return (M_PI);
 	else
 		return (M_PI_2);
 }

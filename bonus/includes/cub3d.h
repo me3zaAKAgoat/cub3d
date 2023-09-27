@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/27 18:25:24 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 21:37:25 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@
 # define MINIMAP_SIZE 160
 # define UNIT_SIZE 10
 # define TEXTURE_SIZE 64
-# define HITBOX_SIZE .2
+# define HITBOX_SIZE .6
 # define MINIMAP_OFFSET_X 5
 # define MINIMAP_OFFSET_Y 5
 # define MOVE_SPEED .2
 # define ROTATION_SPEED .01
 # define FOV 40 * .01745329251
-# define PI 3.14159265359
 # define WALL_STRIP_WIDTH 1
 # define NUM_RAYS WIN_WIDTH / WALL_STRIP_WIDTH
 # define DDTPP (WIN_WIDTH / 2) / tan(FOV / 2) // dont if will use, norminette issue
@@ -137,6 +136,7 @@ typedef struct s_distance
 
 /* Function Definitions */
 
+extern	double			intersection_distance_kms(t_map *map, double x, double y, t_ray *ray);
 extern	void			cursor_handler(double x, double y, void *param);
 extern	void			interact_with_door(t_global *data);
 extern	size_t			horizontal_len(t_map_element *arr);
