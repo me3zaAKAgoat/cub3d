@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 22:27:54 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/27 16:53:18 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 17:06:45 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	is_wall(t_map *map, double x, double y)
 {
-	if (x < 0 || y < 0 || x >= map->width || y >= map->height)
+	if (x <= 0 || y <= 0 || x >= map->width || y >= map->height)
 		return (1);
 	if (map->map_array[(int)floor(y)][(int)floor(x)] == WALL || map->map_array[(int)floor(y)][(int)floor(x)] == SURFACE_NOT_PLAYABLE)
 		return (1);

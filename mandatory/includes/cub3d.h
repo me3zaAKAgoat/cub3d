@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/27 16:28:27 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 17:08:43 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 # define MINIMAP_OFFSET_Y 5
 # define MOVE_SPEED .2
 # define ROTATION_SPEED .01
-# define FOV 60 * .01745329251
+# define FOV 40 * .01745329251
 # define PI 3.14159265359
 # define WALL_STRIP_WIDTH 1
 # define NUM_RAYS WIN_WIDTH / WALL_STRIP_WIDTH

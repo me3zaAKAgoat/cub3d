@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/26 21:20:57 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 16:51:19 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	set_global_defaults(t_global *data, t_map *map)
 	data->map->ceil_color = 0;
 	data->map->floor_color = 0;
 	data->map->map_array = NULL;
-	data->map->door_is_open = false;
 	data->game_img = NULL;
 	data->hud_img = NULL;
 	data->mlx = NULL;
+	data->cursor_enabled = false;
 }
 
 void	simple_key_handlers(mlx_key_data_t keydata, void *param)
@@ -41,7 +41,12 @@ void	simple_key_handlers(mlx_key_data_t keydata, void *param)
 	if (mlx_is_key_down(data->mlx, MLX_KEY_SPACE))
 	{
 		interact_with_door(data);
-		render_game(data);
+		// render_game(data);
+	}
+	if (mlx_is_key_down(data->mlx, MLX_KEY_TAB))
+	{
+		data->cursor_enabled = !data->cursor_enabled;
+		mlx_set_cursor_mode(data->mlx, iternary(data->cursor_enabled, MLX_MOUSE_NORMAL, MLX_MOUSE_HIDDEN));
 	}
 }
 
@@ -72,9 +77,11 @@ int	main(int ac, char **av)
 	if (mlx_image_to_window(data.mlx, data.game_img, 0, 0) < 0
 		|| mlx_image_to_window(data.mlx, data.hud_img, 0, 0) < 0)
 		werror("mlx new img to window failed.");
+	mlx_set_cursor_mode(data.mlx, iternary(data.cursor_enabled, MLX_MOUSE_NORMAL, MLX_MOUSE_HIDDEN));
 	render_game(&data);
-	mlx_loop_hook(data.mlx, move_player, &data);
+	mlx_cursor_hook(data.mlx, cursor_handler, &data);
 	mlx_key_hook(data.mlx, simple_key_handlers, &data);
+	mlx_loop_hook(data.mlx, move_player, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
 	exit(EXIT_SUCCESS);

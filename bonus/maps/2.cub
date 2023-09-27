@@ -1,8 +1,8 @@
-NO ./assets/bluestone.xpm42
-SO ./assets/redstone.xpm42
-WE ./assets/bricksx64.xpm42
+NO ./assets/x.xpm42
+SO ./assets/x.xpm42
+WE ./assets/x.xpm42
 EA ./assets/x.xpm42
-D ./assets/door.xpm42
+D  ./assets/door.xpm42
 
 C 46,71,99
 F 71,73,74

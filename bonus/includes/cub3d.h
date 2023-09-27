@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/26 21:01:40 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 16:28:34 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ typedef struct s_map
 	t_map_element	**map_array;
 	size_t			width;
 	size_t			height;
-	bool			door_is_open;
 }	t_map;
 
 typedef struct s_player
@@ -87,6 +86,7 @@ typedef struct s_global
 	mlx_t		*mlx;
 	mlx_image_t	*game_img;
 	mlx_image_t	*hud_img;
+	bool		cursor_enabled;
 }	t_global;
 
 typedef struct s_double_couple 
@@ -137,6 +137,7 @@ typedef struct s_distance
 
 /* Function Definitions */
 
+extern	void			cursor_handler(double x, double y, void *param);
 extern	void			interact_with_door(t_global *data);
 extern	size_t			horizontal_len(t_map_element *arr);
 extern	size_t			vertical_len(t_map_element **arr);

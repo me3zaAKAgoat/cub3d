@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 00:39:37 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/26 20:20:11 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 16:19:40 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,23 @@ void	cast_rays(t_global *data)
 	}
 }
 
+#include <time.h>
 void	render_game(t_global *data)
 {
+	/* fps logic */
+	clock_t start_time, end_time;
+	static mlx_image_t *x;
+	start_time = clock();
+	/* fps logic */
+	
 	minimap(data);
 	cast_rays(data);
+	/* fps logic */
+	end_time = clock();
+	mlx_delete_image(data->mlx, x);
+	double dfps = 1 / ((double)(end_time - start_time) / CLOCKS_PER_SEC);
+	char *fps = ft_itoa(dfps);
+	x = mlx_put_string(data->mlx, dfps > 300 ? "300" : fps, WIN_WIDTH - 50, 10);
+	free(fps);
+	/* fps logic */
 }
