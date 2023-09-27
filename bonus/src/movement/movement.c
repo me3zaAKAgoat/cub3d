@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 22:27:54 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/27 21:38:02 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 21:49:04 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	cursor_handler(double x, double y, void *param)
 {
 	t_global	*data;
 	
+	(void)y;
 	data = param;
 	if (data->cursor_enabled)
 		return ;
@@ -49,7 +50,6 @@ void	interact_with_door(t_global *data)
 		door = data->map->map_array[(int)ray.wall_hit_vertical.y] + (int)ray.wall_hit_vertical.x + iternary(!ray.is_facing_right, -1, 0);
 	if (!ray.hit_vertical)
 		door = data->map->map_array[(int)ray.wall_hit_horizontal.y + iternary(ray.is_facing_up, -1, 0)] + (int)ray.wall_hit_horizontal.x;
-	printf("%f\n", ray.distance);
 	if (ray.distance < 2)
 	{
 		if (*door == DOOR_CLOSED)
