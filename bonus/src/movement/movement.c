@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 22:27:54 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/27 17:20:37 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 21:38:02 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,64 +38,38 @@ void	cursor_handler(double x, double y, void *param)
 }
 void	interact_with_door(t_global *data)
 {
-	t_map_element	*up;
-	t_map_element	*down;
-	t_map_element	*right;
-	t_map_element	*left;
-	t_map_element	*center;
+	t_ray			ray;
+	t_map_element	*door;
 
-	center = data->map->map_array[(int)data->player.y] + (int)data->player.x;
-	up = data->map->map_array[(int)data->player.y + 1] + (int)data->player.x;
-	down = data->map->map_array[(int)data->player.y - 1] + (int)data->player.x;
-	right = data->map->map_array[(int)data->player.y] + (int)data->player.x + 1;
-	left = data->map->map_array[(int)data->player.y] + (int)data->player.x - 1;
-	if (*up == DOOR_CLOSED || *up == DOOR_OPEN)
-		*up = iternary(*up == DOOR_CLOSED, DOOR_OPEN, DOOR_CLOSED);
-	else if (*down == DOOR_CLOSED || *down == DOOR_OPEN)
-		*down = iternary(*down == DOOR_CLOSED, DOOR_OPEN, DOOR_CLOSED);
-	else if (*right == DOOR_CLOSED || *right == DOOR_OPEN)
-		*right = iternary(*right == DOOR_CLOSED, DOOR_OPEN, DOOR_CLOSED);
-	else if (*left == DOOR_CLOSED || *left == DOOR_OPEN)
-		*left = iternary(*left == DOOR_CLOSED, DOOR_OPEN, DOOR_CLOSED);
-	else if (*center == DOOR_CLOSED || *center == DOOR_OPEN)
-		*center = iternary(*center == DOOR_CLOSED, DOOR_OPEN, DOOR_CLOSED);
+	ray.angle = sanitize_angle(data->player.viewing_angle);
+	ray.is_facing_right = is_facing_right(ray.angle);
+	ray.is_facing_up = is_facing_up(ray.angle);
+	ray.distance = intersection_distance_kms(data->map, data->player.x, data->player.y, &ray);
+	if (ray.hit_vertical)
+		door = data->map->map_array[(int)ray.wall_hit_vertical.y] + (int)ray.wall_hit_vertical.x + iternary(!ray.is_facing_right, -1, 0);
+	if (!ray.hit_vertical)
+		door = data->map->map_array[(int)ray.wall_hit_horizontal.y + iternary(ray.is_facing_up, -1, 0)] + (int)ray.wall_hit_horizontal.x;
+	printf("%f\n", ray.distance);
+	if (ray.distance < 2)
+	{
+		if (*door == DOOR_CLOSED)
+			*door = DOOR_OPEN;
+		else if (*door == DOOR_OPEN)
+			*door = DOOR_CLOSED;
+	}
 }
 
-bool	hitbox_compromised(t_map *map, double x, double y)
+bool	hitbox_compromised(t_global *data, double viewing_angle)
 {
 	t_ray	ray;
 
-	ray.angle = 0;
-	while (ray.angle <= PI * 2)
-	{
-		ray.is_facing_right = is_facing_right(ray.angle);
-		ray.is_facing_up = is_facing_up(ray.angle);
-		ray.distance = intersection_distance(map, x, y, &ray);
-		if (ray.distance < HITBOX_SIZE)
-			return (true);
-		ray.angle += M_PI_4 / 10;
-	}
+	ray.angle = sanitize_angle(viewing_angle);
+	ray.is_facing_right = is_facing_right(ray.angle);
+	ray.is_facing_up = is_facing_up(ray.angle);
+	ray.distance = intersection_distance(data->map, data->player.x, data->player.y, &ray);
+	if (ray.distance < HITBOX_SIZE)
+		return (true);
 	return (false);
-}
-
-bool	collides(t_global *data, t_move_direction move)
-{
-	if (move == forward)
-		return (hitbox_compromised(data->map
-		, data->player.x + MOVE_SPEED * cos(data->player.viewing_angle)
-		, data->player.y + MOVE_SPEED * sin(data->player.viewing_angle)));
-	else if (move == backward)
-		return (hitbox_compromised(data->map
-		, data->player.x - MOVE_SPEED * cos(data->player.viewing_angle )
-		, data->player.y - MOVE_SPEED * sin(data->player.viewing_angle )));
-	else if (move == right)
-		return (hitbox_compromised(data->map
-		, data->player.x + MOVE_SPEED * cos(data->player.viewing_angle + M_PI_2)
-		, data->player.y + MOVE_SPEED * sin(data->player.viewing_angle + M_PI_2)));
-	else
-		return (hitbox_compromised(data->map
-		, data->player.x + MOVE_SPEED * cos(data->player.viewing_angle - M_PI_2)
-		, data->player.y + MOVE_SPEED * sin(data->player.viewing_angle - M_PI_2)));
 }
 
 bool	is_movement_key_down(t_global *data)
@@ -121,24 +95,24 @@ void	move_player(void *param)
 	{
 		if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
 			data->player.viewing_angle -= ROTATION_SPEED;
-		if (mlx_is_key_down (data->mlx, MLX_KEY_RIGHT))
+		if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
 			data->player.viewing_angle += ROTATION_SPEED;
-		if (mlx_is_key_down (data->mlx, MLX_KEY_W) && !collides(data, forward))
+		if (mlx_is_key_down(data->mlx, MLX_KEY_W) && !hitbox_compromised(data, data->player.viewing_angle))
 		{
 			data->player.x += fs_xstep;
 			data->player.y += fs_ystep;
 		}
-		if (mlx_is_key_down(data->mlx, MLX_KEY_S) && !collides(data, backward))
+		if (mlx_is_key_down(data->mlx, MLX_KEY_S) && !hitbox_compromised(data, data->player.viewing_angle + M_PI))
 		{
 			data->player.x -= fs_xstep;
 			data->player.y -= fs_ystep;
 		}
-		if (mlx_is_key_down(data->mlx, MLX_KEY_D) && !collides(data, right))
+		if (mlx_is_key_down(data->mlx, MLX_KEY_D) && !hitbox_compromised(data, data->player.viewing_angle + M_PI_2))
 		{
 			data->player.x += lr_xstep;
 			data->player.y += lr_ystep;
 		}
-		if (mlx_is_key_down(data->mlx, MLX_KEY_A) && !collides(data, left))
+		if (mlx_is_key_down(data->mlx, MLX_KEY_A) && !hitbox_compromised(data, data->player.viewing_angle - M_PI_2))
 		{
 			data->player.x -= lr_xstep;
 			data->player.y -= lr_ystep;
