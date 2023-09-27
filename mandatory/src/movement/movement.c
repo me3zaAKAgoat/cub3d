@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 22:27:54 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/26 17:09:51 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 16:53:18 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ bool	is_movement_key_down(t_global *data)
 		|| mlx_is_key_down(data->mlx, MLX_KEY_D) || mlx_is_key_down(data->mlx, MLX_KEY_A)
 		|| mlx_is_key_down(data->mlx, MLX_KEY_LEFT) || mlx_is_key_down(data->mlx, MLX_KEY_RIGHT));
 }
-#include <time.h>
 void	move_player(void *param)
 {
 	t_global	*data;
@@ -72,12 +71,7 @@ void	move_player(void *param)
 	double		fs_ystep;
 	double		lr_xstep;
 	double		lr_ystep;
-	
-	/* fps logic */
-	clock_t start_time, end_time;
-	static mlx_image_t *x;
-	start_time = clock();
-	/* fps logic */
+
 	
 	data = param;
 	fs_xstep = MOVE_SPEED * cos(data->player.viewing_angle);
@@ -110,15 +104,6 @@ void	move_player(void *param)
 			data->player.x -= lr_xstep;
 			data->player.y -= lr_ystep;
 		}
-		render_game(data);
 	}
-	
-	/* fps logic */
-	end_time = clock();
-	mlx_delete_image(data->mlx, x);
-	double dfps = 1 / ((double)(end_time - start_time) / CLOCKS_PER_SEC);
-	char *fps = ft_itoa(dfps);
-	x = mlx_put_string(data->mlx, dfps > 300 ? "300" : fps, WIN_WIDTH - 50, 10);
-	free(fps);
-	/* fps logic */
+	render_game(data);
 }

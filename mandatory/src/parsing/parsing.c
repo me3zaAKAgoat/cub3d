@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/26 18:19:34 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 16:42:12 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	parse_texture(t_map *map, char *line)
 		dst = &map->we_file;
 	else
 		dst = &map->ea_file;
+		resize
+	map->ea_file->texture.
 	if (*dst != NULL)
 		return (werror("Error\nA Path was recognized twice."), exit(1), 0);
 	str = ft_strtrim(skip_wspace(line + 2), "\n");

@@ -1,7 +1,7 @@
-NO ./assets/bluestone.xpm42
-SO ./assets/redstone.xpm42
-WE ./assets/bricksx64.xpm42
-EA ./assets/x.xpm42
+NO ./assets/wardevil.xpm42
+SO ./assets/wardevil.xpm42
+WE ./assets/wardevil.xpm42
+EA ./assets/wardevil.xpm42
 
 C 46,71,99
 F 71,73,74
