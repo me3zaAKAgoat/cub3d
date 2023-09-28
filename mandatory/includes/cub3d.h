@@ -6,7 +6,7 @@
 /*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/28 13:30:46 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/28 13:42:07 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@
 # include "libft.h"
 # include "get_next_line.h"
 # include "linked_list.h"
-
-#define malloc(...) NULL
 
 /* Macros */
 

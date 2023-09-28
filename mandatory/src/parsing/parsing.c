@@ -6,7 +6,7 @@
 /*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/28 13:25:14 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/28 13:55:06 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,43 +16,50 @@ int	parse_ceiling_color(t_global *data, char *line)
 {
 	char	*tmp;
 	char	**colors;
+	int		r;
+	int		g;
+	int		b;
 
 	tmp = ft_strtrim(skip_wspace(line + 1), "\n");
 	colors = ft_split(tmp, ',');
-	if (!colors || strarr_len(colors) < 3
+	if (!colors)
+		return (werror("Error\nA heap allocation failed."), exit(1), 0);
+	if (strarr_len(colors) < 3
 		|| !(ft_isnumber(colors[0])
-			&& ft_isnumber(colors[1]) && ft_isnumber(colors[2]))
-		|| ft_atoi(colors[0]) > 255 || ft_atoi(colors[1]) > 255 || ft_atoi(colors[2]) > 255)
-	{
-		free(tmp);
-		split_clear(colors);
-		return (werror("Error\nCeiling colors invalid."), exit(1), 0);
-	}
-	data->map->ceil_color = (ft_atoi(colors[0]) << 24)
-		| (ft_atoi(colors[1]) << 16) | (ft_atoi(colors[2]) << 8) | 255;
+			&& ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
+		return (free(tmp), split_clear(colors), werror("Error\nCeiling colors invalid."), exit(1), 0);
+	r = ft_atoi(colors[0]);
+	g = ft_atoi(colors[1]);
+	b = ft_atoi(colors[2]);
+	if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0)
+		return (werror("Error\nCeiling colors are out of bound."), exit(1), 0);
+	data->map->ceil_color = r << 24 | g << 16 | b << 8 | 255;
 	free(tmp);
 	split_clear(colors);
 	return (1);
 }
-
 int	parse_floor_color(t_global *data, char *line)
 {
 	char	*tmp;
 	char	**colors;
+	int		r;
+	int		g;
+	int		b;
 
 	tmp = ft_strtrim(skip_wspace(line + 1), "\n");
 	colors = ft_split(tmp, ',');
-	if (!colors || strarr_len(colors) < 3
+	if (!colors)
+		return (werror("Error\nA heap allocation failed."), exit(1), 0);
+	if (strarr_len(colors) < 3
 		|| !(ft_isnumber(colors[0])
-			&& ft_isnumber(colors[1]) && ft_isnumber(colors[2]))
-		|| ft_atoi(colors[0]) > 255 || ft_atoi(colors[1]) > 255 || ft_atoi(colors[2]) > 255)
-	{
-		free(tmp);
-		split_clear(colors);
-		return (werror("Error\nFloors colors invalid."), exit(1), 0);
-	}
-	data->map->floor_color = (ft_atoi(colors[0]) << 24)
-		| (ft_atoi(colors[1]) << 16) | (ft_atoi(colors[2]) << 8) | 255;
+			&& ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
+		return (free(tmp), split_clear(colors), werror("Error\nFloor colors invalid."), exit(1), 0);
+	r = ft_atoi(colors[0]);
+	g = ft_atoi(colors[1]);
+	b = ft_atoi(colors[2]);
+	if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0)
+		return (werror("Error\nCeiling colors are out of bound."), exit(1), 0);
+	data->map->floor_color = r << 24 | g << 16 | b << 8 | 255;
 	free(tmp);
 	split_clear(colors);
 	return (1);

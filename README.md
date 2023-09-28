@@ -1,17 +1,3 @@
-- parse the map into a 2d array consisting of integers each with a value that I can compare to 3 macros : WALL, PLAYER, TERRAIN
-- sanitize the input file's name and content
-- figure out the structures needed :
-
-- Map data :
-
-  - TEXTURES : NO, SO, WE, EA
-  - COLORS : floor, ceil
-  - 2d array holding 2d map data
-
-- player data : angle from initial looking position
-- MLX data : win, image
-
-
 # Chores
 
 - [ ] Thouroughly check for any makefile errors !!
@@ -21,6 +7,8 @@
 - [ ] add more sanitization for surface colors
 - [ ] look for all function that use malloc and check if they're failure safe
 - [ ] norminette
+- [ ] set lower bound for colors
+- [ ] theres a segfault in maps where the player spawns looking at a wall
 
 ## prio
 
