@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 22:27:54 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/27 21:49:04 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/28 01:38:36 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	interact_with_door(t_global *data)
 	ray.is_facing_up = is_facing_up(ray.angle);
 	ray.distance = intersection_distance_kms(data->map, data->player.x, data->player.y, &ray);
 	if (ray.hit_vertical)
-		door = data->map->map_array[(int)ray.wall_hit_vertical.y] + (int)ray.wall_hit_vertical.x + iternary(!ray.is_facing_right, -1, 0);
+		door = data->map->map_array[(int)ray.wall_hit_ver.y] + (int)ray.wall_hit_ver.x + iternary(!ray.is_facing_right, -1, 0);
 	if (!ray.hit_vertical)
 		door = data->map->map_array[(int)ray.wall_hit_horizontal.y + iternary(ray.is_facing_up, -1, 0)] + (int)ray.wall_hit_horizontal.x;
 	if (ray.distance < 2)

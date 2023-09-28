@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -O3 -Wall -Wextra -Werror
+CFLAGS = -O3 
 NAME = cub3d
 LINKED_LIST = libraries/linked_list
 GET_NEXT_LINE = libraries/get_next_line
@@ -32,6 +32,7 @@ SOURCES = src/main.c\
 	src/geometry/line_drawing.c\
 	src/geometry/projection.c\
 	src/geometry/angle_util.c\
+	src/geometry/intersection_utilis.c\
 	src/movement/movement.c\
 	src/movement/door_logic.c\
 
