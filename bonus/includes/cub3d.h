@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/27 21:37:25 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/28 13:10:27 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,18 @@
 # define WIN_HEIGHT 900
 
 # define MINIMAP_SIZE 160
-# define UNIT_SIZE 10
+# define UNIT_SIZE 6
 # define TEXTURE_SIZE 64
 # define HITBOX_SIZE .6
 # define MINIMAP_OFFSET_X 5
 # define MINIMAP_OFFSET_Y 5
 # define MOVE_SPEED .2
-# define ROTATION_SPEED .01
+# define ROTATION_SPEED .06
 # define FOV 40 * .01745329251
 # define WALL_STRIP_WIDTH 1
 # define NUM_RAYS WIN_WIDTH / WALL_STRIP_WIDTH
 # define DDTPP (WIN_WIDTH / 2) / tan(FOV / 2) // dont if will use, norminette issue
+# define PLAYER_COLOR 0x67E2CBFF
 
 /* Types */
 
@@ -136,6 +137,16 @@ typedef struct s_distance
 
 /* Function Definitions */
 
+extern	void			interact_with_door(t_global *data);
+extern	void			horizontal_intersection_init_kms(t_double_couple *intercept,
+	t_double_couple *step, t_double_couple xy, t_ray *ray);
+extern	void			vertical_intersection_init_kms(t_double_couple *intercept,
+	t_double_couple *step, t_double_couple xy, t_ray *ray);
+extern	void			horizontal_intersection_init(t_double_couple *intercept,
+		t_double_couple *step, t_double_couple xy, t_ray *ray);
+
+extern	void			vertical_intersection_init(t_double_couple *intercept,
+		t_double_couple *step, t_double_couple xy, t_ray *ray);
 extern	double			intersection_distance_kms(t_map *map, double x, double y, t_ray *ray);
 extern	void			cursor_handler(double x, double y, void *param);
 extern	void			interact_with_door(t_global *data);
@@ -168,7 +179,6 @@ extern	void			print_map(t_map_element **map);
 extern	size_t			horizontal_len(t_map_element *arr);
 extern	size_t			vertical_len(t_map_element **arr);
 extern	void			draw_minimap_background(t_global *data);
-extern	void			player_icon(t_global *data, int xm, int ym, int r, uint32_t color);
 extern	uint32_t		map_element_color(t_map_element element);
 extern	void			move_player(void *param);
 extern	double			sanitize_angle(double angle);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sanitization.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 15:49:18 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/26 18:14:09 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/28 09:47:10 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	sanitize_map(t_map *map)
 		{
 			if (is_player(map, x, y))
 				player_count++;
-			if ((map->map_array[y][x] == SURFACE_PLAYABLE 
+			if ((map->map_array[y][x] == SURFACE_PLAYABLE
 				|| is_player(map, x, y)) && contacts_void(map, x, y))
 				return (werror("Error\nMap not well enclosed."), exit(1));
 			x++;

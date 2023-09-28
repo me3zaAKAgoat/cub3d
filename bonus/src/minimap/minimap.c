@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/27 18:46:09 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/28 12:57:37 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,99 +17,104 @@ uint32_t	map_element_color(t_map_element element)
 	if (element == WALL)
 		return (0x121212FF);
 	else if (element == DOOR_CLOSED)
-		return (0x0be3dfFF);
+		return (0xf57542FF);
 	else if (element == DOOR_OPEN)
-		return (0x8e3fe8FF);
+		return (0x4bde53FF);
 	else if (element == SURFACE_NOT_PLAYABLE)
 		return (0xFFFFFF40);
 	else if (element == SURFACE_PLAYABLE)
-		return (0x918567FF);
-	else if (element >= NORTH && element <= SOUTH)
-		return (0x75003bFF);
+		return (0x7F7F7FFF);
 	else
 		return (0x0FFFFFFFF);
 }
 
-void	player_icon(t_global *data, int xm, int ym, int r, uint32_t color)
+void	player_icon(t_global *data, int xm, int ym, int r)
 {
-	xm -= r;
-	ym -= r;
 	int	x;
 	int	y;
+	int	i;
 	int	err;
 
+	xm -= r;
+	ym -= r;
 	if (r < 2)
-		return (mlx_put_pixel(data->hud_img, xm, ym, color));
+		return (mlx_put_pixel(data->hud_img, xm, ym, PLAYER_COLOR));
 	x = -r;
 	y = 0;
 	err = 2 - 2 * r;
 	while (x < 0)
 	{
-		for (int i = xm + x; i <= xm - x; i++) {
-			mlx_put_pixel(data->hud_img, i, (ym + y), color);
-			mlx_put_pixel(data->hud_img, i, (ym - y), color);
+		i = xm + x;
+		while (i <= xm - x)
+		{
+			mlx_put_pixel(data->hud_img, i, (ym + y), PLAYER_COLOR);
+			mlx_put_pixel(data->hud_img, i, (ym - y), PLAYER_COLOR);
+			i++;
 		}
-
 		r = err;
-		if (r <= y) err += ++y * 2 + 1;
+		if (r <= y)
+			err += ++y * 2 + 1;
 		if (r > x || err > y)
 			err += ++x * 2 + 1;
 	}
 }
 
-void	square(t_global *data, int x, int y, uint32_t color, int edge_size)
+void	square(t_global *data, t_double_couple xy, uint32_t color, int edge_size)
 {
-	int	left;
-	int	top;
-	int	right;
-	int	bottom;
+	int		left;
+	int		top;
+	int		right;
+	int		bottom;
+	t_point	iterators;
 
-	left = x - edge_size / 2;
-	top = y - edge_size / 2;
-	right = x + edge_size / 2;
-	bottom = y + edge_size / 2;
-	for (int i = top; i <= bottom; i++)
+	left = xy.x - edge_size / 2;
+	top = xy.y - edge_size / 2;
+	right = xy.x + edge_size / 2;
+	bottom = xy.y + edge_size / 2;
+	iterators.y = top;
+	while (iterators.y <= bottom)
 	{
-		for (int j = left; j <= right; j++)
+		iterators.x = left;
+		while (iterators.x <= right)
 		{
-			if (i < MINIMAP_SIZE && j < MINIMAP_SIZE)
-				mlx_put_pixel(data->hud_img, abs(j), abs(i), color);
+			if (iterators.x < MINIMAP_SIZE && iterators.y < MINIMAP_SIZE)
+				mlx_put_pixel(data->hud_img, abs(iterators.x), abs(iterators.y), color);
+			iterators.x++;
 		}
+		iterators.y++;
 	}
 }
 
 void	draw_minimap_background(t_global *data)
 {
-	int x, y;
+	t_point iterators;
 	int left = data->player.x * UNIT_SIZE - MINIMAP_SIZE / 2;
 	int top = data->player.y * UNIT_SIZE - MINIMAP_SIZE / 2;
 	int right = data->player.x * UNIT_SIZE + MINIMAP_SIZE / 2;
 	int bottom = data->player.y * UNIT_SIZE + MINIMAP_SIZE / 2;
 
-	y = (top - UNIT_SIZE) / UNIT_SIZE;
-	while (y <= (bottom + UNIT_SIZE) / UNIT_SIZE)
+	iterators.y = (top - UNIT_SIZE) / UNIT_SIZE;
+	while (iterators.y <= (bottom + UNIT_SIZE) / UNIT_SIZE)
 	{
-		x = (left - UNIT_SIZE) / UNIT_SIZE;
-		while (x <= (right + UNIT_SIZE) / UNIT_SIZE)
+		iterators.x = (left - UNIT_SIZE) / UNIT_SIZE;
+		while (iterators.x <= (right + UNIT_SIZE) / UNIT_SIZE)
 		{
-			if (x >= 0 && x <= (int)data->map->width && y >= 0 && y < (int)data->map->height)
+			if (iterators.x >= 0 && iterators.x <= (int)data->map->width && iterators.y >= 0 && iterators.y < (int)data->map->height)
 			{
-				int mapX = x * UNIT_SIZE;
-				int mapY = y * UNIT_SIZE;
-				if (data->map->map_array[y][x] >= NORTH && data->map->map_array[y][x] <= SOUTH)
-					square(data, mapX - left, mapY - top, map_element_color(SURFACE_PLAYABLE), UNIT_SIZE);
+				if (data->map->map_array[iterators.y][iterators.x] >= NORTH && data->map->map_array[iterators.y][iterators.x] <= SOUTH)
+					square(data, (t_double_couple){.x = iterators.x * UNIT_SIZE - left, .y = iterators.y * UNIT_SIZE - top}, map_element_color(SURFACE_PLAYABLE), UNIT_SIZE);
 				else
-					square(data, mapX - left, mapY - top, map_element_color(data->map->map_array[y][x]), UNIT_SIZE);
+					square(data, (t_double_couple){.x = iterators.x * UNIT_SIZE - left, .y = iterators.y * UNIT_SIZE - top}, map_element_color(data->map->map_array[iterators.y][iterators.x]), UNIT_SIZE);
 			}
-			x++;
+			iterators.x++;
 		}
-		y++;
+		iterators.y++;
 	}
 }
 
 void minimap(t_global *data)
 {
-	square(data, MINIMAP_SIZE / 2, MINIMAP_SIZE / 2, 0xFFFFFF40, MINIMAP_SIZE);
+	square(data, (t_double_couple){.x = MINIMAP_SIZE / 2, .y = MINIMAP_SIZE / 2}, 0xFFFFFF40, MINIMAP_SIZE);
 	draw_minimap_background(data);
-	player_icon(data, MINIMAP_SIZE / 2, MINIMAP_SIZE / 2, UNIT_SIZE / 2, map_element_color(NORTH));
+	player_icon(data, MINIMAP_SIZE / 2, MINIMAP_SIZE / 2, UNIT_SIZE / 2);
 }

@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -O3 -Wall -Wextra -Werror
+CFLAGS = -O3 #-Wall -Wextra -Werror
 NAME = cub3d
 LINKED_LIST = libraries/linked_list
 GET_NEXT_LINE = libraries/get_next_line
@@ -21,7 +21,6 @@ SOURCES = src/main.c\
 	src/util/ft_isnumber.c\
 	src/util/ft_realloc.c\
 	src/util/clear_global.c\
-	src/minimap/minimap.c\
 	src/parsing/parsing.c\
 	src/parsing/map_parsing.c\
 	src/parsing/map_parsing_util.c\

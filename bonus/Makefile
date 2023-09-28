@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -O3 -Wall -Wextra -Werror
+CFLAGS = -O3 #-Wall -Wextra -Werror
 NAME = cub3d
 LINKED_LIST = libraries/linked_list
 GET_NEXT_LINE = libraries/get_next_line
@@ -29,11 +29,13 @@ SOURCES = src/main.c\
 	src/parsing/sanitization_util.c\
 	src/parsing/util.c\
 	src/geometry/raycasting.c\
+	src/geometry/raycasting_util.c\
 	src/geometry/line_drawing.c\
 	src/geometry/projection.c\
 	src/geometry/angle_util.c\
 	src/movement/movement.c\
 	src/movement/door_logic.c\
+	src/movement/door_logic_util.c\
 
 HEADERS = includes/cub3d.h
 OBJECTS = $(SOURCES:.c=.o)
