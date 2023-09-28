@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/27 17:44:38 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/27 21:51:27 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ void	simple_key_handlers(mlx_key_data_t keydata, void *param)
 	t_global	*data;
 
 	data = param;
-	if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+	if (keydata.key == MLX_KEY_ESCAPE )
 		mlx_close_window(data->mlx);
-	if (mlx_is_key_down(data->mlx, MLX_KEY_SPACE))
+	if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_RELEASE)
 		interact_with_door(data);
-	if (mlx_is_key_down(data->mlx, MLX_KEY_TAB))
+	if (keydata.key == MLX_KEY_TAB && keydata.action == MLX_PRESS)
 	{
 		data->cursor_enabled = !data->cursor_enabled;
 		mlx_set_cursor_mode(data->mlx, iternary(data->cursor_enabled, MLX_MOUSE_NORMAL, MLX_MOUSE_HIDDEN));
