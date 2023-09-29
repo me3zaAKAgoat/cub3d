@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 22:27:54 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/27 20:43:59 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/29 13:47:26 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ bool	is_wall(t_map *map, double x, double y)
 	return (0);
 }
 
-bool	hitbox_compromised(t_global *data, double viewing_angle)
+bool	hitbox_compromised(t_global *data, double view_angle)
 {
 	t_ray	ray;
 
-	ray.angle = sanitize_angle(viewing_angle);
+	ray.angle = sanitize_angle(view_angle);
 	ray.is_facing_right = is_facing_right(ray.angle);
 	ray.is_facing_up = is_facing_up(ray.angle);
 	ray.distance = intersection_distance(data->map, data->player.x, data->player.y, &ray);
@@ -49,32 +49,32 @@ void	move_player(void *param)
 	double		lr_ystep;
 	
 	data = param;
-	fs_xstep = MOVE_SPEED * cos(data->player.viewing_angle);
-	fs_ystep = MOVE_SPEED * sin(data->player.viewing_angle);
-	lr_xstep = MOVE_SPEED * cos(data->player.viewing_angle + M_PI_2);
-	lr_ystep = MOVE_SPEED * sin(data->player.viewing_angle + M_PI_2);
+	fs_xstep = MOVE_SPEED * cos(data->player.view_angle);
+	fs_ystep = MOVE_SPEED * sin(data->player.view_angle);
+	lr_xstep = MOVE_SPEED * cos(data->player.view_angle + M_PI_2);
+	lr_ystep = MOVE_SPEED * sin(data->player.view_angle + M_PI_2);
 	if (is_movement_key_down(data))
 	{
 		if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
-			data->player.viewing_angle -= ROTATION_SPEED;
+			data->player.view_angle -= ROTATION_SPEED;
 		if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-			data->player.viewing_angle += ROTATION_SPEED;
-		if (mlx_is_key_down(data->mlx, MLX_KEY_W) && !hitbox_compromised(data, data->player.viewing_angle))
+			data->player.view_angle += ROTATION_SPEED;
+		if (mlx_is_key_down(data->mlx, MLX_KEY_W) && !hitbox_compromised(data, data->player.view_angle))
 		{
 			data->player.x += fs_xstep;
 			data->player.y += fs_ystep;
 		}
-		if (mlx_is_key_down(data->mlx, MLX_KEY_S) && !hitbox_compromised(data, data->player.viewing_angle + M_PI))
+		if (mlx_is_key_down(data->mlx, MLX_KEY_S) && !hitbox_compromised(data, data->player.view_angle + M_PI))
 		{
 			data->player.x -= fs_xstep;
 			data->player.y -= fs_ystep;
 		}
-		if (mlx_is_key_down(data->mlx, MLX_KEY_D) && !hitbox_compromised(data, data->player.viewing_angle + M_PI_2))
+		if (mlx_is_key_down(data->mlx, MLX_KEY_D) && !hitbox_compromised(data, data->player.view_angle + M_PI_2))
 		{
 			data->player.x += lr_xstep;
 			data->player.y += lr_ystep;
 		}
-		if (mlx_is_key_down(data->mlx, MLX_KEY_A) && !hitbox_compromised(data, data->player.viewing_angle - M_PI_2))
+		if (mlx_is_key_down(data->mlx, MLX_KEY_A) && !hitbox_compromised(data, data->player.view_angle - M_PI_2))
 		{
 			data->player.x -= lr_xstep;
 			data->player.y -= lr_ystep;

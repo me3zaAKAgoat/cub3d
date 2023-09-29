@@ -35,6 +35,9 @@ SOURCES = src/main.c\
 	src/geometry/intersection_utilis.c\
 	src/movement/movement.c\
 	src/movement/door_logic.c\
+	src/movement/movement_util.c\
+	src/minimap/minimap_util.c\
+	src/geometry/projection_util.c\
 
 HEADERS = includes/cub3d.h
 OBJECTS = $(SOURCES:.c=.o)

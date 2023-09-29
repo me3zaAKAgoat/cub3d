@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 00:39:37 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/28 01:38:36 by marvin           ###   ########.fr       */
+/*   Updated: 2023/09/29 13:55:16 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ double	horizontal_intersection_distance(t_map *map,
 	{
 		if (is_wall(map, final.x, final.y - dternary(ray->is_facing_up, \
 			0.03125, 0)))
-			return (ray->wall_hit_horizontal.x = final.x, \
-			ray->wall_hit_horizontal.y = final.y, sqrt(pow(final.x - x, 2) \
+			return (ray->hit_hor.x = final.x, \
+			ray->hit_hor.y = final.y, sqrt(pow(final.x - x, 2) \
 			+ pow(final.y - y, 2)));
 		final.x += step.x;
 		final.y += step.y;
@@ -62,8 +62,8 @@ double	vertical_intersection_distance(t_map *map, double x, double y, \
 	{
 		if (is_wall(map, final.x - dternary(!ray->is_facing_right, \
 			0.03125, 0), final.y))
-			return (ray->wall_hit_ver.x = final.x, \
-			ray->wall_hit_ver.y = final.y, sqrt(pow(final.x - x, 2) \
+			return (ray->hit_ver.x = final.x, \
+			ray->hit_ver.y = final.y, sqrt(pow(final.x - x, 2) \
 				+ pow(final.y - y, 2)));
 		final.x += step.x;
 		final.y += step.y;
@@ -79,15 +79,15 @@ double	intersection_distance(t_map *map, double x, double y, t_ray *ray)
 	hdistance = horizontal_intersection_distance(map, x, y, ray);
 	vdistance = vertical_intersection_distance(map, x, y, ray);
 	if (hdistance < vdistance)
-		return (ray->hit_vertical = false, hdistance);
-	return (ray->hit_vertical = true, vdistance);
+		return (ray->hit_v = false, hdistance);
+	return (ray->hit_v = true, vdistance);
 }
 
 void	cast_rays(t_global *data)
 {
 	t_ray	ray;
 
-	ray.angle = sanitize_angle(data->player.viewing_angle - FOV / 2);
+	ray.angle = sanitize_angle(data->player.view_angle - FOV / 2);
 	ray.id = 0;
 	while (ray.id < NUM_RAYS)
 	{
@@ -95,7 +95,7 @@ void	cast_rays(t_global *data)
 		ray.is_facing_up = is_facing_up(ray.angle);
 		ray.distance = intersection_distance(data->map, data->player.x, \
 			data->player.y, &ray);
-		project_ray(data, &ray);
+		project_ray(data, &ray, 0);
 		ray.angle += FOV / NUM_RAYS;
 		ray.angle = sanitize_angle(ray.angle);
 		ray.id++;

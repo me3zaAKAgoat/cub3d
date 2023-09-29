@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 03:56:08 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/26 18:34:49 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/29 13:47:26 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	process_map_line(t_global *data, int x, int y, char *line)
 		{
 			data->player.x = x;
 			data->player.y = y;
-			data->player.viewing_angle = \
+			data->player.view_angle = \
 				initial_angle(data->map->map_array[y][x]);
 		}
 		x++;

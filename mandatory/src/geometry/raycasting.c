@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 00:39:37 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/27 16:32:55 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/29 13:54:45 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,22 +77,22 @@ double	intersection_distance(t_map *map, double x, double y, t_ray *ray)
 	hdistance = horizontal_intersection_distance(map, x, y, ray);
 	vdistance = vertical_intersection_distance(map, x, y, ray);
 	if (hdistance < vdistance)
-		return (ray->hit_vertical = false, hdistance);
-	return (ray->hit_vertical = true, vdistance);
+		return (ray->hit_v = false, hdistance);
+	return (ray->hit_v = true, vdistance);
 }
 
 void	cast_rays(t_global *data)
 {
 	t_ray	ray;
 
-	ray.angle = sanitize_angle(data->player.viewing_angle - FOV / 2);
+	ray.angle = sanitize_angle(data->player.view_angle - FOV / 2);
 	ray.id = 0;
 	while (ray.id < NUM_RAYS)
 	{
 		ray.is_facing_right = is_facing_right(ray.angle);
 		ray.is_facing_up = is_facing_up(ray.angle);
 		ray.distance = intersection_distance(data->map, data->player.x, data->player.y, &ray);
-		project_ray(data, &ray);
+		project_ray(data, &ray, 0);
 		ray.angle += FOV / NUM_RAYS;
 		ray.angle = sanitize_angle(ray.angle);
 		ray.id++;

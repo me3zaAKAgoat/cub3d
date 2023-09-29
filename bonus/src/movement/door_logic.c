@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   door_logic.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 21:34:39 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/28 01:44:29 by marvin           ###   ########.fr       */
+/*   Updated: 2023/09/29 13:45:16 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-bool	is_wall_kms(t_map *map, double x, double y)
-{
-	if (x < 0 || y < 0 || x >= map->width || y >= map->height)
-		return (1);
-	if (map->map_array[(int)floor(y)][(int)floor(x)] == WALL || \
-		map->map_array[(int)floor(y)][(int)floor(x)] == SURFACE_NOT_PLAYABLE \
-		|| map->map_array[(int)floor(y)][(int)floor(x)] == DOOR_CLOSED \
-		|| map->map_array[(int)floor(y)][(int)floor(x)] == DOOR_OPEN)
-		return (1);
-	return (0);
-}
 
 void	horiz_inter_kms(t_double_couple *step, t_ray *ray, double *tan_ra)
 {
@@ -53,8 +41,8 @@ double	horizontal_inter_distance_kms(t_map *map,
 	{
 		if (is_wall_kms(map, final.x, final.y - dternary(ray->is_facing_up, \
 			0.03125, 0)))
-			return (ray->wall_hit_horizontal.x = final.x, \
-				ray->wall_hit_horizontal.y = final.y, sqrt(pow(final.x - x, 2) \
+			return (ray->hit_hor.x = final.x, \
+				ray->hit_hor.y = final.y, sqrt(pow(final.x - x, 2) \
 					+ pow(final.y - y, 2)));
 		final.x += step.x;
 		final.y += step.y;
@@ -90,7 +78,7 @@ double	vertical_inter_distance_kms(t_map *map, double x, double y, t_ray *ray)
 	{
 		if (is_wall_kms(map, final.x - dternary(!ray->is_facing_right, 0.03125, \
 			0), final.y))
-			return (ray->wall_hit_ver.x = final.x, ray->wall_hit_ver.y
+			return (ray->hit_ver.x = final.x, ray->hit_ver.y
 				= final.y, sqrt(pow(final.x - x, 2) + pow(final.y - y, 2)));
 		final.x += step.x;
 		final.y += step.y;
@@ -106,6 +94,6 @@ double	intersection_distance_kms(t_map *map, double x, double y, t_ray *ray)
 	hdistance = horizontal_inter_distance_kms(map, x, y, ray);
 	vdistance = vertical_inter_distance_kms(map, x, y, ray);
 	if (hdistance < vdistance)
-		return (ray->hit_vertical = false, hdistance);
-	return (ray->hit_vertical = true, vdistance);
+		return (ray->hit_v = false, hdistance);
+	return (ray->hit_v = true, vdistance);
 }

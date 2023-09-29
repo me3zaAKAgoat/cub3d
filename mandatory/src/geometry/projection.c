@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   projection.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 19:03:21 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/26 18:02:40 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/29 13:47:26 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,31 @@
 
 xpm_t	*decide_texture(t_global *data, t_ray *ray)
 {
-	if (!ray->is_facing_up && !ray->hit_vertical)
+	if (!ray->is_facing_up && !ray->hit_v)
 		return (data->map->so_file);
-	else if (ray->is_facing_up && !ray->hit_vertical)
+	else if (ray->is_facing_up && !ray->hit_v)
 		return (data->map->no_file);
-	else if (!ray->is_facing_right && ray->hit_vertical)
+	else if (!ray->is_facing_right && ray->hit_v)
 		return (data->map->we_file);
-	else if (ray->is_facing_right && ray->hit_vertical)
+	else if (ray->is_facing_right && ray->hit_v)
 		return (data->map->ea_file);
 	return (NULL);
 }
 
-uint32_t	extract_color(xpm_t *xpm_file, int x_offset, int y_offset)
+uint32_t	extract_color(xpm_t *xpm, int x_offset, int y_offset)
 {
 	int			pixel_index;
 	uint32_t	r;
 	uint32_t	g;
 	uint32_t	b;
 
-	pixel_index = y_offset * xpm_file->texture.width + x_offset;
-	r = xpm_file->texture.pixels[pixel_index \
-	* xpm_file->texture.bytes_per_pixel];
-	g = xpm_file->texture.pixels[pixel_index \
-	* xpm_file->texture.bytes_per_pixel + 1];
-	b = xpm_file->texture.pixels[pixel_index \
-	* xpm_file->texture.bytes_per_pixel + 2];
+	pixel_index = y_offset * xpm->texture.width + x_offset;
+	r = xpm->texture.pixels[pixel_index \
+	* xpm->texture.bytes_per_pixel];
+	g = xpm->texture.pixels[pixel_index \
+	* xpm->texture.bytes_per_pixel + 1];
+	b = xpm->texture.pixels[pixel_index \
+	* xpm->texture.bytes_per_pixel + 2];
 	return (r << 24 | g << 16 | b << 8 | 255);
 }
 
@@ -59,26 +59,26 @@ void	project_ray(t_global *data, t_ray *ray)
 	t_distance	distance;
 	t_wall_data	wall;
 	t_point		offset;
-	xpm_t		*xpm_file;
+	xpm_t		*xpm;
 
-	xpm_file = decide_texture(data, ray);
+	xpm = decide_texture(data, ray);
 	distance.no_fishbowl = ray->distance * \
-		cos(data->player.viewing_angle - ray->angle);
-	distance.to_projection_plane = (WIN_WIDTH / 2) / tan(FOV / 2);
-	wall.top = (WIN_HEIGHT - (1 / distance.no_fishbowl) * distance.to_projection_plane) / 2;
+		cos(data->player.view_angle - ray->angle);
+	distance.pp = (WIN_WIDTH / 2) / tan(FOV / 2);
+	wall.top = (WIN_HEIGHT - (1 / distance.no_fishbowl) * distance.pp) / 2;
 	wall.bottom = (WIN_HEIGHT + (1 / distance.no_fishbowl) \
-	* distance.to_projection_plane) / 2;
+	* distance.pp) / 2;
 	wall.strip_height = wall.bottom - wall.top;
 	wall.top = iternary(wall.top < 0, 0, wall.top);
 	wall.bottom = iternary(wall.bottom > WIN_HEIGHT, WIN_HEIGHT, wall.bottom);
 	paint_surfaces(data, ray, &wall);
-	offset.x = iternary(ray->hit_vertical, (int)(ray->wall_hit_y * xpm_file->texture.width) \
-		% xpm_file->texture.width, (int)(ray->wall_hit_x * xpm_file->texture.width) % xpm_file->texture.width);
+	offset.x = iternary(ray->hit_v, (int)(ray->wall_hit_y * xpm->texture.width) \
+		% xpm->texture.width, (int)(ray->wall_hit_x * xpm->texture.width) % xpm->texture.width);
 	while (wall.top < wall.bottom)
 	{
 		distance.from_top = wall.top + ((wall.strip_height) - WIN_HEIGHT) / 2;
-		offset.y = (double)(distance.from_top * xpm_file->texture.height) / (double)(wall.strip_height);
-		mlx_put_pixel(data->game_img, ray->id, wall.top, extract_color(xpm_file, offset.x, offset.y));
+		offset.y = (double)(distance.from_top * xpm->texture.height) / (double)(wall.strip_height);
+		mlx_put_pixel(data->game_img, ray->id, wall.top, extract_color(xpm, offset.x, offset.y));
 		wall.top++;
 	}
 }
