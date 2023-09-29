@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/29 13:04:31 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/29 18:24:01 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,15 @@
 
 void	square(t_global *data, int x, int y, uint32_t color, int edge_size)
 {
-	int	left;
-	int	top;
-	int	right;
-	int	bottom;
 	int	i;
 	int	j;
 
-	left = x - edge_size / 2;
-	top = y - edge_size / 2;
-	right = x + edge_size / 2;
-	bottom = y + edge_size / 2;
-	i = top;
-	while (i <= bottom)
+	data->squre.left = x - edge_size / 2;
+	data->squre.top = y - edge_size / 2;
+	data->squre.right = x + edge_size / 2;
+	data->squre.bottom = y + edge_size / 2;
+	i = data->squre.top;
+	while (i <= data->squre.bottom)
 	{
 		j = left;
 		while (j <= right)

@@ -6,7 +6,21 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 19:03:21 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/29 13:47:26 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/29 17:32:33 by selhilal         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3d.h"
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   projection.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/21 19:03:21 by echoukri          #+#    #+#             */
+/*   Updated: 2023/09/29 17:32:05 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,31 +68,31 @@ void	paint_surfaces(t_global *data, t_ray *ray, t_wall_data *wall)
 		mlx_put_pixel(data->game_img, ray->id, y++, data->map->floor_color);
 }
 
-void	project_ray(t_global *data, t_ray *ray)
+void	project_ray(t_global *data, t_ray *ray, xpm_t *xpm)
 {
 	t_distance	distance;
 	t_wall_data	wall;
 	t_point		offset;
-	xpm_t		*xpm;
 
 	xpm = decide_texture(data, ray);
-	distance.no_fishbowl = ray->distance * \
-		cos(data->player.view_angle - ray->angle);
+	distance.no_fishbowl = handle_fishbowl_effect(data, ray, &distance);
 	distance.pp = (WIN_WIDTH / 2) / tan(FOV / 2);
 	wall.top = (WIN_HEIGHT - (1 / distance.no_fishbowl) * distance.pp) / 2;
-	wall.bottom = (WIN_HEIGHT + (1 / distance.no_fishbowl) \
-	* distance.pp) / 2;
+	wall.bottom = (WIN_HEIGHT + (1 / distance.no_fishbowl) * distance.pp) / 2;
 	wall.strip_height = wall.bottom - wall.top;
 	wall.top = iternary(wall.top < 0, 0, wall.top);
 	wall.bottom = iternary(wall.bottom > WIN_HEIGHT, WIN_HEIGHT, wall.bottom);
 	paint_surfaces(data, ray, &wall);
-	offset.x = iternary(ray->hit_v, (int)(ray->wall_hit_y * xpm->texture.width) \
-		% xpm->texture.width, (int)(ray->wall_hit_x * xpm->texture.width) % xpm->texture.width);
+	offset.x = iternary(ray->hit_v, (int)(ray->hit_ver.y * xpm->texture.width) \
+		% xpm->texture.width, (int)(ray->hit_hor.x * \
+			xpm->texture.width) % xpm->texture.width);
 	while (wall.top < wall.bottom)
 	{
 		distance.from_top = wall.top + ((wall.strip_height) - WIN_HEIGHT) / 2;
-		offset.y = (double)(distance.from_top * xpm->texture.height) / (double)(wall.strip_height);
-		mlx_put_pixel(data->game_img, ray->id, wall.top, extract_color(xpm, offset.x, offset.y));
+		offset.y = (double)(distance.from_top * xpm->texture.height) / \
+			(double)(wall.strip_height);
+		mlx_put_pixel(data->game_img, ray->id, wall.top, \
+			extract_color(xpm, offset.x, offset.y));
 		wall.top++;
 	}
 }

@@ -1,48 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   movement_util.c                                    :+:      :+:    :+:   */
+/*   movement_keys.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/29 11:53:14 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/29 18:15:07 by selhilal         ###   ########.fr       */
+/*   Created: 2023/09/29 18:32:31 by selhilal          #+#    #+#             */
+/*   Updated: 2023/09/29 19:03:54 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-bool	is_wall_kms(t_map *map, double x, double y)
+void	key_move_up_down(t_global *data, int flag)
 {
-	if (x < 0 || y < 0 || x >= map->width || y >= map->height)
-		return (1);
-	if (map->map_array[(int)floor(y)][(int)floor(x)] == WALL || \
-		map->map_array[(int)floor(y)][(int)floor(x)] == SURFACE_NOT_PLAYABLE \
-		|| map->map_array[(int)floor(y)][(int)floor(x)] == DOOR_CLOSED \
-		|| map->map_array[(int)floor(y)][(int)floor(x)] == DOOR_OPEN)
-		return (1);
-	return (0);
+	if (flag == PLUS)
+	{
+		data->player.x += data->steps.fs_xstep;
+		data->player.y += data->steps.fs_ystep;
+	}
+	else if (flag == MINUS)
+	{
+		data->player.x -= data->steps.fs_xstep;
+		data->player.y -= data->steps.fs_ystep;
+	}
 }
 
-bool	is_wall(t_map *map, double x, double y)
+void	key_move_left_right(t_global *data, int flag)
 {
-	if (x < 0 || y < 0 || x >= map->width || y >= map->height)
-		return (1);
-	if (map->map_array[(int)floor(y)][(int)floor(x)] == WALL | \
-		map->map_array[(int)floor(y)][(int)floor(x)] == SURFACE_NOT_PLAYABLE
-		|| map->map_array[(int)floor(y)][(int)floor(x)] == DOOR_CLOSED)
-		return (1);
-	return (0);
-}
-
-bool	is_movement_key_down(t_global *data)
-{
-	return (mlx_is_key_down(data->mlx, MLX_KEY_W)
-		|| mlx_is_key_down(data->mlx, MLX_KEY_S)
-		|| mlx_is_key_down(data->mlx, MLX_KEY_D)
-		|| mlx_is_key_down(data->mlx, MLX_KEY_A)
-		|| mlx_is_key_down(data->mlx, MLX_KEY_LEFT)
-		|| mlx_is_key_down(data->mlx, MLX_KEY_RIGHT));
+	if (flag == MINUS)
+	{
+		data->player.x -= data->steps.lr_xstep;
+		data->player.y -= data->steps.lr_yste;
+	}
+	else if (flag == PLUS)
+	{
+		data->player.x += data->steps.lr_xstep;
+		data->player.y += data->steps.lr_yste;
+	}
 }
 
 void	move_player_ut(t_global *data)

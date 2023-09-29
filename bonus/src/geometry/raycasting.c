@@ -6,12 +6,11 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 00:39:37 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/29 13:55:16 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/29 17:51:48 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <time.h>
 
 double	horizontal_intersection_distance(t_map *map,
 	double x, double y, t_ray *ray)
@@ -104,19 +103,5 @@ void	cast_rays(t_global *data)
 
 void	render_game(t_global *data)
 {
-	clock_t	start_time, end_time;
-	static	mlx_image_t *x;
-	char	*fps;
-	double	dfps;
-
-	start_time = clock();
-	minimap(data);
 	cast_rays(data);
-	end_time = clock();
-	mlx_delete_image(data->mlx, x);
-	dfps = 1 / ((double)(end_time - start_time) / CLOCKS_PER_SEC);
-	fps = ft_itoa(dfps);
-	x = mlx_put_string(data->mlx, dfps > 300 ? "300" : fps, WIN_WIDTH - \
-		50, 10);
-	free(fps);
 }

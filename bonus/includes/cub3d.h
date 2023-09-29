@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/29 13:57:00 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/29 18:38:59 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@
 # define WALL_STRIP_WIDTH 1
 # define DDTPP 2291.83118183 //(WIN_WIDTH / 2) / tan(FOV / 2)
 # define NUM_RAYS 1600       //(WIN_WIDTH / WALL_STRIP_WIDTH)
+# define PLUS 1
+# define MINUS 0
 
 typedef enum e_map_element
 {
@@ -52,6 +54,14 @@ typedef enum e_map_element
 	SOUTH,
 	HORIZONTAL_TERM
 }						t_map_element;
+
+typedef struct s_squre
+{
+	int	left;
+	int	top;
+	int	right;
+	int	bottom;
+}			t_squre;
 
 typedef struct s_map
 {
@@ -74,6 +84,14 @@ typedef struct s_player
 	double				y;
 }						t_player;
 
+typedef struct s_steps
+{
+	double		fs_xstep;
+	double		fs_ystep;
+	double		lr_xstep;
+	double		lr_yste;
+}						t_steps;
+
 typedef struct s_global
 {
 	t_map				*map;
@@ -86,6 +104,8 @@ typedef struct s_global
 	mlx_image_t			*game_img;
 	mlx_image_t			*hud_img;
 	bool				cursor_enabled;
+	t_squre				squre;
+	t_steps				steps;
 }						t_global;
 
 typedef struct s_double_couple
@@ -134,9 +154,12 @@ typedef struct s_distance
 	int					from_top;
 }						t_distance;
 
-double					handle_fishbowl_effect(t_global *data, t_ray *ray,
+extern void				key_move_left_right(t_global *data, int flag);
+extern void				key_move_up_down(t_global *data, int flag);
+extern bool				hitbox_compromised(t_global *data, double view_angle);
+extern void				move_player_ut(t_global *data);
+extern	double			handle_fishbowl_effect(t_global *data, t_ray *ray,
 							t_distance *distance);
-
 extern bool				is_wall_kms(t_map *map, double x, double y);
 extern double			intersection_distance_kms(t_map *map, double x,
 							double y, t_ray *ray);

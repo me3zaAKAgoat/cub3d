@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/27 17:07:16 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/29 17:39:41 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,11 @@ int	parse_texture(t_map *map, char *line)
 	return (1);
 }
 
-void	parse_assets(t_global *data, int fd)
+void	parse_assets(t_global *data, int fd, int textures_recognized)
 {
 	char	*line;
-	int		textures_recognized;
 	int		surfaces_recognized;
 
-	textures_recognized = 0;
 	surfaces_recognized = 0;
 	line = get_next_line(fd);
 	while (line != NULL)
@@ -119,7 +117,7 @@ void	parse_config_file(t_global *data, char *filename)
 		werror("Error\nCan't open config file.");
 		exit(1);
 	}
-	parse_assets(data, fd);
+	parse_assets(data, fd, 0);
 	parse_map(data, fd);
 	get_map_dimensions(data);
 	uniform_arrays_width(data);
