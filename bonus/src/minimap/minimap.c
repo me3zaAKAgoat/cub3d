@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/29 22:21:20 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/30 00:03:27 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,8 @@ void	minimap(t_global *data)
 {
 	t_point	iterators;
 
-	square(data, (t_double_couple){.x = MINIMAP_SIZE / 2, .y = \
-	MINIMAP_SIZE / 2}, 0xFFFFFF40, MINIMAP_SIZE);
+	square(data, (t_double_couple){.x = MINIMAP_SIZE / 2, \
+		.y = MINIMAP_SIZE / 2}, 0xFFFFFF40, MINIMAP_SIZE);
 	draw_minimap_background(data, iterators);
 	player_icon(data, MINIMAP_SIZE / 2, MINIMAP_SIZE / 2, UNIT_SIZE / 2);
 }

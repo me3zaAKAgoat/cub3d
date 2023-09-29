@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 21:52:34 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/29 21:53:36 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/29 23:39:45 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,7 @@ void	move_player_ut(t_global *data)
 		if (mlx_is_key_down(data->mlx, MLX_KEY_A) && \
 			!hitbox_compromised(data, data->player.viewing_angle - M_PI_2))
 			key_move_left_right(data, MINUS);
+		if (mlx_is_key_down(data->mlx, MLX_KEY_S))
+			mlx_delete_image(data->mlx, data->first);
 	}
 }

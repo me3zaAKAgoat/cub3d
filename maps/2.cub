@@ -1,8 +1,8 @@
-NO ./assets/x.xpm42
-SO ./assets/x.xpm42
-WE ./assets/x.xpm42
-EA ./assets/x.xpm42
-D  ./assets/door.xpm42
+NO ./assets/wall2.xpm42
+SO ./assets/wall2.xpm42
+WE ./assets/wall2.xpm42
+EA ./assets/wall2.xpm42
+D  ./assets/door2.xpm42
 
 C 150,150,255
 F 71,73,74

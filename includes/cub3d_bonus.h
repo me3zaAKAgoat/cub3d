@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/29 22:35:55 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/29 23:51:28 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ typedef struct s_global
 	mlx_t				*mlx;
 	mlx_image_t			*game_img;
 	mlx_image_t			*hud_img;
+	mlx_texture_t		*img;
+	mlx_image_t			*first;
 	t_square			square;
 	t_draw				draw;
 	bool				cursor_enabled;
@@ -208,8 +210,6 @@ extern void				render_game(t_global *data);
 extern void				print_map(t_map_element **map);
 extern size_t			horizontal_len(t_map_element *arr);
 extern size_t			vertical_len(t_map_element **arr);
-extern void				draw_minimap_background(t_global *data,
-							t_point iterators);
 extern uint32_t			map_element_color(t_map_element element);
 extern void				move_player(void *param);
 extern double			sanitize_angle(double angle);
