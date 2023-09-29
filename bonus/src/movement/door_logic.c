@@ -6,11 +6,11 @@
 /*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 21:34:39 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/28 13:12:23 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/29 15:54:49 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 /* Yes kms indeed means I will kill
 	myself for this code duplication, thank you kind reader :D 

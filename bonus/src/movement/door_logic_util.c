@@ -6,11 +6,11 @@
 /*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 13:08:10 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/28 13:12:31 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/29 15:54:49 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	horizontal_intersection_init_kms(t_double_couple *intercept,
 	t_double_couple *step, t_double_couple xy, t_ray *ray)

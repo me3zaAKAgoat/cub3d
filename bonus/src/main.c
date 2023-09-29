@@ -6,11 +6,11 @@
 /*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/28 11:47:17 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/29 15:54:49 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	set_global_defaults(t_global *data, t_map *map)
 {

@@ -6,11 +6,11 @@
 /*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 15:49:18 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/28 10:28:00 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/29 15:54:49 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 bool	is_player(t_map *map, size_t x, size_t y)
 {

@@ -2,7 +2,6 @@
 
 - [ ] Thouroughly check for any makefile errors !!
 - [ ] find out a way to exit and clean all heap memory gracefully in order to fully utilize leak detectors as they flag even heap memory in use at exit 
-
 - [ ] test parsing of different maps
 - [ ] add more sanitization for surface colors
 - [ ] look for all function that use malloc and check if they're failure safe
@@ -12,6 +11,8 @@
 
 ## prio
 
+- [ ] check if it would be considered 
+- [ ] finalize parsing
 - [ ] check that the view angle and all the important macros are the same on bonus and mandatory 
 - [ ] remove fps counter pre ship
 - [ ] check all failure cases that could be caused by textures
