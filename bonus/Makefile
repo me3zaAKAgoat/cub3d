@@ -8,9 +8,9 @@ MLX42 = ../libraries/MLX42/build
 
 OS := $(shell uname)
 ifeq ($(OS), Linux)
-    LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -ldl -lglfw -pthread -lm
+    LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L $(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -ldl -lglfw -pthread -lm
 else
-    LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -framework Cocoa -framework OpenGL -framework IOKit -lglfw -L/Users/$(USER)/.brew/Cellar/glfw/3.3.8/lib
+    LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L $(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -framework Cocoa -framework OpenGL -framework IOKit -lglfw -L/Users/$(USER)/.brew/Cellar/glfw/3.3.8/lib
 endif
 
 SOURCES = src/main.c\
@@ -22,6 +22,7 @@ SOURCES = src/main.c\
 	src/util/ft_realloc.c\
 	src/util/clear_global.c\
 	src/minimap/minimap.c\
+	src/minimap/minimap_util.c\
 	src/parsing/parsing.c\
 	src/parsing/map_parsing.c\
 	src/parsing/map_parsing_util.c\
@@ -32,10 +33,14 @@ SOURCES = src/main.c\
 	src/geometry/raycasting_util.c\
 	src/geometry/line_drawing.c\
 	src/geometry/projection.c\
+	src/geometry/projection_util.c\
 	src/geometry/angle_util.c\
 	src/movement/movement.c\
+	src/movement/movement_keys.c\
 	src/movement/door_logic.c\
 	src/movement/door_logic_util.c\
+
+	
 
 HEADERS = ../includes/cub3d_bonus.h
 OBJECTS = $(SOURCES:.c=.o)

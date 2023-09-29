@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   util.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 18:58:58 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/27 20:24:22 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/29 19:48:02 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_map_element	char_to_map_element(char c)
 		return (HORIZONTAL_TERM);
 	else
 	{
+		printf("%c\n", c);
 		werror("Error\nUnrecognizable map element.");
 		exit(1);
 	}

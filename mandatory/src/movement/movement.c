@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 22:27:54 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/28 10:00:47 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/29 22:30:42 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,46 +49,13 @@ bool	is_movement_key_down(t_global *data)
 void	move_player(void *param)
 {
 	t_global	*data;
-	double		fs_xstep;
-	double		fs_ystep;
-	double		lr_xstep;
-	double		lr_ystep;
 
 	data = param;
-	fs_xstep = MOVE_SPEED * cos(data->player.viewing_angle);
-	fs_ystep = MOVE_SPEED * sin(data->player.viewing_angle);
-	lr_xstep = MOVE_SPEED * cos(data->player.viewing_angle + M_PI_2);
-	lr_ystep = MOVE_SPEED * sin(data->player.viewing_angle + M_PI_2);
-	if (is_movement_key_down(data))
-	{
-		if (mlx_is_key_down(data->mlx, MLX_KEY_LEFT))
-			data->player.viewing_angle -= ROTATION_SPEED;
-		if (mlx_is_key_down(data->mlx, MLX_KEY_RIGHT))
-			data->player.viewing_angle += ROTATION_SPEED;
-		if (mlx_is_key_down(data->mlx, MLX_KEY_W)
-			&& !hitbox_compromised(data, data->player.viewing_angle))
-		{
-			data->player.x += fs_xstep;
-			data->player.y += fs_ystep;
-		}
-		if (mlx_is_key_down(data->mlx, MLX_KEY_S)
-			&& !hitbox_compromised(data, data->player.viewing_angle + M_PI))
-		{
-			data->player.x -= fs_xstep;
-			data->player.y -= fs_ystep;
-		}
-		if (mlx_is_key_down(data->mlx, MLX_KEY_D)
-			&& !hitbox_compromised(data, data->player.viewing_angle + M_PI_2))
-		{
-			data->player.x += lr_xstep;
-			data->player.y += lr_ystep;
-		}
-		if (mlx_is_key_down(data->mlx, MLX_KEY_A)
-			&& !hitbox_compromised(data, data->player.viewing_angle - M_PI_2))
-		{
-			data->player.x -= lr_xstep;
-			data->player.y -= lr_ystep;
-		}
-	}
-	render_game(data);
+	data->steps.fs_xstep = MOVE_SPEED * cos(data->player.viewing_angle);
+	data->steps.fs_ystep = MOVE_SPEED * sin(data->player.viewing_angle);
+	data->steps.lr_xstep = MOVE_SPEED * \
+	cos(data->player.viewing_angle + M_PI_2);
+	data->steps.lr_yste = MOVE_SPEED * sin(data->player.viewing_angle + M_PI_2);
+	move_player_ut(data);
+	cast_rays(data);
 }

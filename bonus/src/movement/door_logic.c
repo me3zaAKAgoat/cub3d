@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   door_logic.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 21:34:39 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/29 15:54:49 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/29 21:01:02 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ double	horizontal_intersection_distance_kms(t_map *map,
 	{
 		if (is_wall_kms(map,
 				final.x, final.y - dternary(ray->is_facing_up, 0.03125, 0)))
-			return (ray->wall_hit_horizontal.x = final.x,
-				ray->wall_hit_horizontal.y = final.y,
+			return (ray->wall_hit_x.x = final.x,
+				ray->wall_hit_x.y = final.y,
 				sqrt(pow(final.x - x, 2) + pow(final.y - y, 2)));
 		final.x += step.x;
 		final.y += step.y;
@@ -70,8 +70,8 @@ double	vertical_intersection_distance_kms(t_map *map, double x,
 	{
 		if (is_wall_kms(map,
 				final.x - dternary(!ray->is_facing_right, 0.03125, 0), final.y))
-			return (ray->wall_hit_vertical.x = final.x,
-				ray->wall_hit_vertical.y = final.y,
+			return (ray->wall_hit_y.x = final.x,
+				ray->wall_hit_y.y = final.y,
 				sqrt(pow(final.x - x, 2) + pow(final.y - y, 2)));
 		final.x += step.x;
 		final.y += step.y;
@@ -102,13 +102,13 @@ void	interact_with_door(t_global *data)
 	ray.distance = intersection_distance_kms(data->map,
 			data->player.x, data->player.y, &ray);
 	if (ray.hit_vertical)
-		door = data->map->map_array[(int)ray.wall_hit_vertical.y]
-			+ (int)ray.wall_hit_vertical.x
+		door = data->map->map_array[(int)ray.wall_hit_y.y]
+			+ (int)ray.wall_hit_y.x
 			+ iternary(!ray.is_facing_right, -1, 0);
 	if (!ray.hit_vertical)
-		door = data->map->map_array[(int)ray.wall_hit_horizontal.y
+		door = data->map->map_array[(int)ray.wall_hit_x.y
 			+ iternary(ray.is_facing_up, -1, 0)]
-			+ (int)ray.wall_hit_horizontal.x;
+			+ (int)ray.wall_hit_x.x;
 	if (ray.distance < 2)
 	{
 		if (*door == DOOR_CLOSED)

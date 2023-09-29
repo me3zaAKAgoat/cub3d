@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/29 15:54:49 by me3za            ###   ########.fr       */
+/*   Updated: 2023/09/29 22:36:17 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	main(int ac, char **av)
 		werror("mlx new img to window failed.");
 	mlx_set_cursor_mode(data.mlx,
 		iternary(data.cursor_enabled, MLX_MOUSE_NORMAL, MLX_MOUSE_HIDDEN));
-	render_game(&data);
+	cast_rays(&data);
 	mlx_cursor_hook(data.mlx, cursor_handler, &data);
 	mlx_key_hook(data.mlx, simple_key_handlers, &data);
 	mlx_loop_hook(data.mlx, move_player, &data);
