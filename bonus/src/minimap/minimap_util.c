@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 21:13:50 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/29 21:24:36 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/30 11:51:40 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ uint32_t	map_element_color(t_map_element element)
 	else if (element == SURFACE_NOT_PLAYABLE)
 		return (0xFFFFFF40);
 	else if (element == SURFACE_PLAYABLE)
-		return (0x7F7F7FFF);
+		return (0x008FD9FF);
 	else
 		return (0x0FFFFFFFF);
 }
 
 void	player_pixel(mlx_image_t *img, int i, int y, int ym)
 {
-	mlx_put_pixel(img, i, ym + y, map_element_color(NORTH));
-	mlx_put_pixel(img, i, ym - y, map_element_color(NORTH));
+	mlx_put_pixel(img, i, ym + y, PLAYER_COLOR);
+	mlx_put_pixel(img, i, ym - y, PLAYER_COLOR);
 }

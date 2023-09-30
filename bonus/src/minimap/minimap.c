@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/30 00:03:27 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/30 12:03:10 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	player_icon(t_global *data, int xm, int ym, int r)
 	err = 2 - 2 * r;
 	while (x < 0)
 	{
-		i = xm + x;
+		i = xm + x -1;
 		while (++i <= xm - x)
 			player_pixel(data->hud_img, i, y, ym);
 		r = err;
@@ -51,8 +51,8 @@ void	square(t_global *data, t_double_couple xy, \
 	iterators.y = data->square.top;
 	while (iterators.y <= data->square.bottom)
 	{
-		iterators.x = left;
-		while (iterators.x <= right)
+		iterators.x = data->square.left;
+		while (iterators.x <= data->square.right)
 		{
 			if (iterators.x < MINIMAP_SIZE && iterators.y < MINIMAP_SIZE)
 				mlx_put_pixel(data->hud_img, abs(iterators.x), \
@@ -77,23 +77,23 @@ void	draw_minimap_background(t_global *data, t_point iterators)
 	iterators.y = ((data->draw.top - UNIT_SIZE) / UNIT_SIZE) - 1;
 	while (iterators.y++ <= (data->draw.bottom + UNIT_SIZE) / UNIT_SIZE)
 	{
-		iterators.x = (left - UNIT_SIZE) / UNIT_SIZE;
-		while (iterators.x <= (right + UNIT_SIZE) / UNIT_SIZE)
+		iterators.x = (data->draw.left - UNIT_SIZE) / UNIT_SIZE;
+		while (iterators.x <= (data->draw.right + UNIT_SIZE) / UNIT_SIZE)
 		{
 			if (iterators.x >= 0 && iterators.x <= (int)data->map->width && \
-			iterators.y >= 0 && iterators.y < (int)data->map->height)
+				iterators.y >= 0 && iterators.y < (int)data->map->height)
 			{
-				if (data->map->map_array[iterators.y][iterators.x] >= NORTH && \
-				data->map->map_array[iterators.y][iterators.x] <= SOUTH)
+				if (data->map->map_array[iterators.y][iterators.x] >= NORTH \
+					&& data->map->map_array[iterators.y][iterators.x] <= SOUTH)
 					square(data, (t_double_couple){.x = iterators.x * UNIT_SIZE \
-					- left, .y = iterators.y * UNIT_SIZE - data->draw.top}, \
-				map_element_color(SURFACE_PLAYABLE), UNIT_SIZE);
+					- data->draw.left, .y = iterators.y * UNIT_SIZE - \
+					data->draw.top}, map_element_color(SURFACE_PLAYABLE), \
+					UNIT_SIZE);
 				else
-					square(data, (t_double_couple){.x = iterators.x * \
-				UNIT_SIZE - left, .y = iterators.y * UNIT_SIZE - \
-				data->draw.top}, \
-				map_element_color(data->map->map_array[iterators.y] \
-				[iterators.x]), UNIT_SIZE);
+					square(data, (t_double_couple){.x = iterators.x * UNIT_SIZE \
+					- data->draw.left, .y = iterators.y * UNIT_SIZE - \
+					data->draw.top}, map_element_color(data->map->map_array \
+					[iterators.y][iterators.x]), UNIT_SIZE);
 			}
 			iterators.x++;
 		}
