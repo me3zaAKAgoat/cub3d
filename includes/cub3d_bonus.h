@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/30 12:00:25 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/30 14:46:38 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_steps
 	double				fs_xstep;
 	double				fs_ystep;
 	double				lr_xstep;
-	double				lr_yste;
+	double				lr_ystep;
 }						t_steps;
 
 typedef struct s_square

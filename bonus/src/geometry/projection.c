@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 19:03:21 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/29 22:22:19 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/30 14:55:39 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,16 @@ void	paint_surfaces(t_global *data, t_ray *ray, t_wall_data *wall)
 		mlx_put_pixel(data->game_img, ray->id, y++, data->map->floor_color);
 }
 
-t_wall_data	calc_wall_data(t_global *data, t_distance distance \
-	, t_wall_data wall)
+void	calc_wall_data(t_global *data, t_distance distance \
+	, t_wall_data *wall)
 {
-	wall.top = (WIN_HEIGHT - (1 / distance.no_fishbowl) * distance.pp) / 2;
-	wall.bottom = (WIN_HEIGHT + (1 / distance.no_fishbowl) \
+	wall->top = (WIN_HEIGHT - (1 / distance.no_fishbowl) * distance.pp) / 2;
+	wall->bottom = (WIN_HEIGHT + (1 / distance.no_fishbowl) \
 	* distance.pp) / 2;
-	wall.strip_height = wall.bottom - wall.top;
-	wall.top = iternary(wall.top < 0, 0, wall.top);
-	wall.bottom = iternary(wall.bottom > WIN_HEIGHT, WIN_HEIGHT, wall.bottom);
-	return (wall);
+	wall->strip_height = wall->bottom - wall->top;
+	wall->top = iternary(wall->top < 0, 0, wall->top);
+	wall->bottom = iternary(wall->bottom > WIN_HEIGHT, \
+	WIN_HEIGHT, wall->bottom);
 }
 
 void	project_ray(t_global *data, t_ray *ray, xpm_t *xpm_file)
@@ -63,7 +63,7 @@ void	project_ray(t_global *data, t_ray *ray, xpm_t *xpm_file)
 	distance.no_fishbowl = ray->distance * \
 		cos(data->player.viewing_angle - ray->angle);
 	distance.pp = (WIN_WIDTH / 2) / tan(FOV / 2);
-	wall = calc_wall_data(data, distance, wall);
+	calc_wall_data(data, distance, &wall);
 	paint_surfaces(data, ray, &wall);
 	offset.x = iternary(ray->hit_vertical, (int)(ray->wall_hit_y.y \
 		* xpm_file->texture.width) % xpm_file->texture.width, \

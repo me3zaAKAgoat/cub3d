@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/30 12:14:32 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/30 14:54:00 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	init_img(t_global *data)
 	data->hud_img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!data->game_img || !data->hud_img)
 		werror("mlx new img failed.");
-	data->img = mlx_load_png("assets/VALORANT (1).png");
+	data->img = mlx_load_png("assets/valorant.png");
 	if (!data->img)
 	{
 		werror("mlx load png failed.");
@@ -89,7 +89,6 @@ int	main(int ac, char **av)
 	if (!data.mlx)
 		werror("mlx init failed.");
 	init_img(&data);
-	mlx_resize_image(data.first, WIN_WIDTH, WIN_HEIGHT);
 	if (mlx_image_to_window(data.mlx, data.game_img, 0, 0) < 0
 		|| mlx_image_to_window(data.mlx, data.hud_img, 0, 0) < 0 || \
 		mlx_image_to_window(data.mlx, data.first, 0, 0) < 0)

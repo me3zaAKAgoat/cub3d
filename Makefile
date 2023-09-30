@@ -48,6 +48,6 @@ fclean :
 	@make fclean -C mandatory --no-print-directory
 	@make fclean -C bonus --no-print-directory
 
-re : fclean all
+re : fclean all bonus
 
 .PHONY : fclean re clean all bonus

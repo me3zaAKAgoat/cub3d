@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 22:27:54 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/30 12:05:44 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/30 14:46:46 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ void	move_player(void *param)
 	data->steps.fs_ystep = MOVE_SPEED * sin(data->player.viewing_angle);
 	data->steps.lr_xstep = MOVE_SPEED * \
 	cos(data->player.viewing_angle + M_PI_2);
-	data->steps.lr_yste = MOVE_SPEED * sin(data->player.viewing_angle + M_PI_2);
+	data->steps.lr_ystep = MOVE_SPEED * \
+	sin(data->player.viewing_angle + M_PI_2);
 	move_player_ut(data);
 	render_game(data);
 }

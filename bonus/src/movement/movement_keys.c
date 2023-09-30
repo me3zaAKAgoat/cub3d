@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 21:52:34 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/29 23:39:45 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/30 14:56:25 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,12 @@ void	key_move_left_right(t_global *data, int flag)
 	if (flag == MINUS)
 	{
 		data->player.x -= data->steps.lr_xstep;
-		data->player.y -= data->steps.lr_yste;
+		data->player.y -= data->steps.lr_ystep;
 	}
 	else if (flag == PLUS)
 	{
 		data->player.x += data->steps.lr_xstep;
-		data->player.y += data->steps.lr_yste;
+		data->player.y += data->steps.lr_ystep;
 	}
 }
 
