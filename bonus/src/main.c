@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/30 00:25:17 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/30 12:14:32 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,26 @@ void	sanitization(int ac, char **av)
 		return (werror("Error\nConfig file must end in '.cub'."), exit(1));
 }
 
+void	init_img(t_global *data)
+{
+	data->game_img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
+	data->hud_img = mlx_new_image(data->mlx, WIN_WIDTH, WIN_HEIGHT);
+	if (!data->game_img || !data->hud_img)
+		werror("mlx new img failed.");
+	data->img = mlx_load_png("assets/VALORANT (1).png");
+	if (!data->img)
+	{
+		werror("mlx load png failed.");
+		exit(EXIT_FAILURE);
+	}
+	data->first = mlx_texture_to_image(data->mlx, data->img);
+	if (!data->first)
+	{
+		werror("mlx texture to image failed.");
+		exit(EXIT_FAILURE);
+	}
+}
+
 int	main(int ac, char **av)
 {
 	t_map		map;
@@ -68,22 +88,7 @@ int	main(int ac, char **av)
 	data.mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "cub3d", false);
 	if (!data.mlx)
 		werror("mlx init failed.");
-	data.game_img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
-	data.hud_img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
-	if (!data.game_img || !data.hud_img)
-		werror("mlx new img failed.");
-	data.img = mlx_load_png("assets/VALORANT (1).png");
-	if (!data.img)
-	{
-		werror("mlx load png failed.");
-		exit(EXIT_FAILURE);
-	}
-	data.first = mlx_texture_to_image(data.mlx, data.img);
-	if (!data.first)
-	{
-		werror("mlx texture to image failed.");
-		exit(EXIT_FAILURE);
-	}
+	init_img(&data);
 	mlx_resize_image(data.first, WIN_WIDTH, WIN_HEIGHT);
 	if (mlx_image_to_window(data.mlx, data.game_img, 0, 0) < 0
 		|| mlx_image_to_window(data.mlx, data.hud_img, 0, 0) < 0 || \
