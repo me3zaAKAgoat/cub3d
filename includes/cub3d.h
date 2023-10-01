@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/29 17:26:58 by me3za            ###   ########.fr       */
+/*   Updated: 2023/10/01 17:42:30 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,17 @@ typedef struct s_distance
 
 /* Function Definitions */
 
+extern	void			init_steps(t_global *data, t_double_couple *fs_step, \
+						t_double_couple *lr_step);
+extern	void			move_fb(t_global *data, \
+						t_double_couple *fs_step, bool forward);
+extern	void			move_lr(t_global *data, \
+						t_double_couple *lr_step, bool right);
+extern	void			horizontal_intersection_init(t_double_couple \
+						*intercept, t_double_couple *step, \
+						t_double_couple xy, t_ray *ray);
+extern	void			vertical_intersection_init(t_double_couple *intercept, \
+						t_double_couple *step, t_double_couple xy, t_ray *ray);
 extern	size_t		horizontal_len(t_map_element *arr);
 extern	size_t		vertical_len(t_map_element **arr);
 extern	void			get_map_dimensions(t_global *data);
@@ -129,14 +140,14 @@ extern	bool			contacts_void_right(t_map *map, size_t x, size_t y);
 extern	bool			contacts_void_left(t_map *map, size_t x, size_t y);
 extern	bool			contacts_void(t_map *map, size_t x, size_t y);
 extern	void			sanitize_map(t_map *map);
-extern	double		horizontal_intersection_distance(t_map *map,
-						double x, double y, t_ray *ray);
-extern	double		vertical_intersection_distance(t_map *map,
-						double x, double y, t_ray *ray);
-extern	double		intersection_distance(t_map *map,
-						double x, double y, t_ray *ray);
-extern	double		dternary(bool statement,
-						double fexpression, double sexpression);
+extern	double		horizontal_intersection_distance(t_map *map, \
+					double x, double y, t_ray *ray);
+extern	double		vertical_intersection_distance(t_map *map, \
+					double x, double y, t_ray *ray);
+extern	double		intersection_distance(t_map *map, \
+					double x, double y, t_ray *ray);
+extern	double		dternary(bool statement, \
+					double fexpression, double sexpression);
 extern	int			iternary(bool statement, int fexpression, int sexpression);
 extern	double		initial_angle(t_map_element element);
 extern	t_map_element	char_to_map_element(char c);
@@ -160,7 +171,7 @@ extern	bool			is_facing_left(double angle);
 extern	void			project_ray(t_global *data, t_ray *ray);
 extern	bool			is_wall(t_map *map, double x, double y);
 extern	void			cast_rays(t_global *data);
-extern	void			bresenham(mlx_image_t *img,
+extern	void			bresenham(mlx_image_t *img, \
 						t_point a, t_point b, uint32_t color);
 extern	void			clear_global(t_global *data);
 extern	void			*ft_realloc(void *ptr, size_t oldsize, size_t newsize);

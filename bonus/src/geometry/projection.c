@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   projection.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 19:03:21 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/29 15:54:49 by me3za            ###   ########.fr       */
+/*   Updated: 2023/10/01 15:56:38 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ bool	is_door(t_global *data, t_ray *ray)
 {
 	if (ray->hit_vertical
 		&& data->map->map_array[(int)floor(ray->wall_hit_vertical.y)]
-		[(int)floor(ray->wall_hit_vertical.x + iternary(!ray->is_facing_right, -1, 0))] == DOOR_CLOSED)
+		[(int)floor(ray->wall_hit_vertical.x
+				+ iternary(!ray->is_facing_right, -1, 0))] == DOOR_CLOSED)
 		return (true);
 	else if (!ray->hit_vertical
-		&& data->map->map_array[(int)floor(ray->wall_hit_horizontal.y + iternary(ray->is_facing_up, -1, 0))]
+		&& data->map->map_array[(int)floor(ray->wall_hit_horizontal.y
+				+ iternary(ray->is_facing_up, -1, 0))]
 		[(int)floor(ray->wall_hit_horizontal.x)] == DOOR_CLOSED)
 		return (true);
 	return (false);
@@ -80,20 +82,19 @@ void	project_ray(t_global *data, t_ray *ray)
 	distance.no_fishbowl = ray->distance * \
 		cos(data->player.viewing_angle - ray->angle);
 	distance.to_projection_plane = (WIN_WIDTH / 2) / tan(FOV / 2);
-	wall.top = (WIN_HEIGHT - (1 / distance.no_fishbowl) * distance.to_projection_plane) / 2;
-	wall.bottom = (WIN_HEIGHT + (1 / distance.no_fishbowl) \
-	* distance.to_projection_plane) / 2;
-	wall.strip_height = wall.bottom - wall.top;
-	wall.top = iternary(wall.top < 0, 0, wall.top);
-	wall.bottom = iternary(wall.bottom > WIN_HEIGHT, WIN_HEIGHT, wall.bottom);
+	initiate_wall_values(&wall, &distance);
 	paint_surfaces(data, ray, &wall);
-	offset.x = iternary(ray->hit_vertical, (int)(ray->wall_hit_vertical.y * xpm_file->texture.width) \
-		% xpm_file->texture.width, (int)(ray->wall_hit_horizontal.x * xpm_file->texture.width) % xpm_file->texture.width);
+	offset.x = iternary(ray->hit_vertical, \
+		(int)(ray->wall_hit_vertical.y * xpm_file->texture.width) \
+		% xpm_file->texture.width, (int)(ray->wall_hit_horizontal.x \
+		* xpm_file->texture.width) % xpm_file->texture.width);
 	while (wall.top < wall.bottom)
 	{
 		distance.from_top = wall.top + ((wall.strip_height) - WIN_HEIGHT) / 2;
-		offset.y = (double)(distance.from_top * xpm_file->texture.height) / (double)(wall.strip_height);
-		mlx_put_pixel(data->game_img, ray->id, wall.top, extract_color(xpm_file, offset.x, offset.y));
+		offset.y = (double)(distance.from_top * xpm_file->texture.height) / \
+		(double)(wall.strip_height);
+		mlx_put_pixel(data->game_img, ray->id, wall.top, extract_color(\
+		xpm_file, offset.x, offset.y));
 		wall.top++;
 	}
 }

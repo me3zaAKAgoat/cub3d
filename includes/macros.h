@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   macros.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 17:19:29 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/29 17:35:42 by me3za            ###   ########.fr       */
+/*   Updated: 2023/10/01 17:11:19 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,8 @@
 # define MINIMAP_OFFSET_Y 5
 # define MOVE_SPEED .2
 # define ROTATION_SPEED .06
-# define FOV 40 * .01745329251
-# define WALL_STRIP_WIDTH 1
-# define NUM_RAYS WIN_WIDTH / WALL_STRIP_WIDTH
+# define FOV 0.69813170079
+# define NUM_RAYS 1600
 # define PLAYER_COLOR 0x67E2CBFF
 
 #endif

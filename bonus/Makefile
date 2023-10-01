@@ -22,17 +22,20 @@ SOURCES = src/main.c\
 	src/util/ft_realloc.c\
 	src/util/clear_global.c\
 	src/minimap/minimap.c\
+	src/minimap/util.c\
 	src/parsing/parsing.c\
 	src/parsing/map_parsing.c\
 	src/parsing/map_parsing_util.c\
 	src/parsing/sanitization.c\
 	src/parsing/sanitization_util.c\
 	src/parsing/util.c\
+	src/geometry/util.c\
 	src/geometry/raycasting.c\
 	src/geometry/raycasting_util.c\
 	src/geometry/line_drawing.c\
 	src/geometry/projection.c\
 	src/geometry/angle_util.c\
+	src/movement/movement_util.c\
 	src/movement/movement.c\
 	src/movement/door_logic.c\
 	src/movement/door_logic_util.c\

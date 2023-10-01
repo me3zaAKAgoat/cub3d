@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/29 17:34:12 by me3za            ###   ########.fr       */
+/*   Updated: 2023/10/01 17:27:48 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,34 @@ typedef struct s_distance
 	int		from_top;
 }	t_distance;
 
+typedef struct s_sides
+{
+	int	top;
+	int	bottom;
+	int	left;
+	int	right;
+}	t_sides;
+
 /* Function Definitions */
 
+extern	void			move_fb(t_global *data, \
+						t_double_couple *fs_step, bool forward);
+extern	void			move_lr(t_global *data, \
+						t_double_couple *lr_step, bool left);
+extern	void			square(t_global *data, t_double_couple xy,
+							uint32_t color, int edge_size);
+extern	void			draw_minimap_unit(t_global *data, \
+						t_point *iterators, t_sides *sides);
+extern	bool			is_wall(t_map *map, double x, double y);
+extern	void			cursor_handler(double x, double y, void *param);
+extern	bool			hitbox_compromised(\
+						t_global *data, double viewing_angle);
+extern	uint32_t		map_element_color(t_map_element element);
+extern	void			minimap_bg_init(\
+						t_global *data, t_sides *sides, t_point *iterators);
+extern	bool			player_sp(t_map_element **map_array, int x, int y);
+extern	void			initiate_wall_values(\
+						t_wall_data *wall, t_distance *distance);
 extern	void			interact_with_door(t_global *data);
 extern	void			horizontal_intersection_init_kms(
 							t_double_couple *intercept, t_double_couple *step,

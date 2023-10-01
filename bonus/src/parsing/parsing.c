@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/29 15:54:49 by me3za            ###   ########.fr       */
+/*   Updated: 2023/10/01 16:52:26 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	parse_ceiling_color(t_global *data, char *line)
 	if (strarr_len(colors) < 3
 		|| !(ft_isnumber(colors[0])
 			&& ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
-		return (free(tmp), split_clear(colors), werror("Error\nCeiling colors invalid."), exit(1), 0);
+		return (free(tmp), split_clear(colors), \
+		werror("Error\nCeiling colors invalid."), exit(1), 0);
 	r = ft_atoi(colors[0]);
 	g = ft_atoi(colors[1]);
 	b = ft_atoi(colors[2]);
@@ -38,6 +39,7 @@ int	parse_ceiling_color(t_global *data, char *line)
 	split_clear(colors);
 	return (1);
 }
+
 int	parse_floor_color(t_global *data, char *line)
 {
 	char	*tmp;
@@ -53,7 +55,8 @@ int	parse_floor_color(t_global *data, char *line)
 	if (strarr_len(colors) < 3
 		|| !(ft_isnumber(colors[0])
 			&& ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
-		return (free(tmp), split_clear(colors), werror("Error\nFloor colors invalid."), exit(1), 0);
+		return (free(tmp), split_clear(colors), \
+		werror("Error\nFloor colors invalid."), exit(1), 0);
 	r = ft_atoi(colors[0]);
 	g = ft_atoi(colors[1]);
 	b = ft_atoi(colors[2]);

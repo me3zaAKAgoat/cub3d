@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 03:56:08 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/29 15:54:49 by me3za            ###   ########.fr       */
+/*   Updated: 2023/10/01 16:52:26 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	uniform_arrays_width(t_global *data)
 			data->map->map_array[y] = ft_realloc(data->map->map_array[y],
 					hlen * sizeof(int), (data->map->width + 2) * sizeof(int));
 			if (!data->map->map_array[y])
-				return (werror("Error\nA heap allocation failed."), exit(1));
+				return (werror("Error\nA heap allocation failed."), \
+				exit(1));
 			x = hlen;
 			while (x <= data->map->width)
 			{
