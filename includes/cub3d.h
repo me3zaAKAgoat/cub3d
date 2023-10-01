@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/10/01 17:42:30 by echoukri         ###   ########.fr       */
+/*   Created: 2023/09/08 00:25:57 by echoukri          #+#    #+#             */
+/*   Updated: 2023/10/01 20:44:16 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct s_distance
 
 /* Function Definitions */
 
+extern	bool			color_invalid(char **colors);
 extern	void			init_steps(t_global *data, t_double_couple *fs_step, \
 						t_double_couple *lr_step);
 extern	void			move_fb(t_global *data, \

@@ -1,31 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   macros.h                                           :+:      :+:    :+:   */
+/*   util2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/29 17:19:29 by echoukri          #+#    #+#             */
-/*   Updated: 2023/10/01 20:33:50 by echoukri         ###   ########.fr       */
+/*   Created: 2023/10/01 20:45:30 by echoukri          #+#    #+#             */
+/*   Updated: 2023/10/01 20:45:46 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MACROS_H
-# define MACROS_H
+#include "cub3d.h"
 
-# define WIN_WIDTH 1600
-# define WIN_HEIGHT 900
-
-# define MINIMAP_SIZE 160
-# define UNIT_SIZE 6
-# define TEXTURE_SIZE 64
-# define HITBOX_SIZE .6
-# define MINIMAP_OFFSET_X 5
-# define MINIMAP_OFFSET_Y 5
-# define MOVE_SPEED .2
-# define ROTATION_SPEED .06
-# define FOV 0.69813170079
-# define NUM_RAYS 1600
-# define PLAYER_COLOR 0x67E2CBFF
-
-#endif
+bool	color_invalid(char **colors)
+{
+	return (strarr_len(colors) != 3 \
+		|| !(ft_isnumber(colors[0]) \
+		&& ft_isnumber(colors[1]) && ft_isnumber(colors[2])));
+}

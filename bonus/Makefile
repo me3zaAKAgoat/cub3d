@@ -29,6 +29,7 @@ SOURCES = src/main.c\
 	src/parsing/sanitization.c\
 	src/parsing/sanitization_util.c\
 	src/parsing/util.c\
+	src/parsing/util2.c\
 	src/geometry/util.c\
 	src/geometry/raycasting.c\
 	src/geometry/raycasting_util.c\

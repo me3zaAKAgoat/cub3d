@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 00:34:33 by me3za             #+#    #+#             */
-/*   Updated: 2023/10/01 17:01:22 by echoukri         ###   ########.fr       */
+/*   Created: 2023/09/08 00:34:33 by echoukri          #+#    #+#             */
+/*   Updated: 2023/10/01 20:47:31 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ int	parse_ceiling_color(t_global *data, char *line)
 	int		g;
 	int		b;
 
+	if (data->map->ceil_color != -1)
+		return (werror("Error\nCeiling color was recognized twice."), \
+		exit(1), 0);
 	tmp = ft_strtrim(skip_wspace(line + 1), "\n");
 	colors = ft_split(tmp, ',');
 	if (!colors)
 		return (werror("Error\nA heap allocation failed."), exit(1), 0);
-	if (strarr_len(colors) < 3
-		|| !(ft_isnumber(colors[0])
-			&& ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
+	if (color_invalid(colors))
 		return (free(tmp), split_clear(colors), \
 		werror("Error\nCeiling colors invalid."), exit(1), 0);
 	r = ft_atoi(colors[0]);
@@ -48,13 +49,13 @@ int	parse_floor_color(t_global *data, char *line)
 	int		g;
 	int		b;
 
+	if (data->map->floor_color != -1)
+		return (werror("Error\nFloor color was recognized twice."), exit(1), 0);
 	tmp = ft_strtrim(skip_wspace(line + 1), "\n");
 	colors = ft_split(tmp, ',');
 	if (!colors)
 		return (werror("Error\nA heap allocation failed."), exit(1), 0);
-	if (strarr_len(colors) < 3
-		|| !(ft_isnumber(colors[0])
-			&& ft_isnumber(colors[1]) && ft_isnumber(colors[2])))
+	if (color_invalid(colors))
 		return (free(tmp), split_clear(colors), \
 		werror("Error\nFloor colors invalid."), exit(1), 0);
 	r = ft_atoi(colors[0]);
@@ -106,8 +107,9 @@ void	parse_assets(t_global *data, int fd)
 			assets_recognized += parse_ceiling_color(data, line);
 		else if (!ft_strncmp(skip_wspace(line), "F", 1))
 			assets_recognized += parse_floor_color(data, line);
-		else if (ft_strncmp(skip_wspace(line), "\n", 1)
-			|| assets_recognized == 6)
+		else if (ft_strncmp(skip_wspace(line), "\n", 1))
+			break ;
+		if (assets_recognized == 6)
 			break ;
 		free(line);
 		line = get_next_line(fd);
