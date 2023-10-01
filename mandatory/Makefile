@@ -1,10 +1,10 @@
 CC = cc
-CFLAGS = -O3 -Wall -Wextra -Werror -g
+CFLAGS = -Ofast #-Wall -Wextra -Werror
 NAME = cub3d
-LINKED_LIST = libraries/linked_list
-GET_NEXT_LINE = libraries/get_next_line
-LIBFT = libraries/libft
-MLX42 = libraries/MLX42/build
+LINKED_LIST = ../libraries/linked_list
+GET_NEXT_LINE = ../libraries/get_next_line
+LIBFT = ../libraries/libft
+MLX42 = ../libraries/MLX42/build
 
 OS := $(shell uname)
 ifeq ($(OS), Linux)
@@ -21,7 +21,6 @@ SOURCES = src/main.c\
 	src/util/ft_isnumber.c\
 	src/util/ft_realloc.c\
 	src/util/clear_global.c\
-	src/minimap/minimap.c\
 	src/parsing/parsing.c\
 	src/parsing/map_parsing.c\
 	src/parsing/map_parsing_util.c\
@@ -29,16 +28,14 @@ SOURCES = src/main.c\
 	src/parsing/sanitization_util.c\
 	src/parsing/util.c\
 	src/geometry/raycasting.c\
+	src/geometry/raycasting_util.c\
 	src/geometry/line_drawing.c\
 	src/geometry/projection.c\
 	src/geometry/angle_util.c\
-	src/geometry/intersection_utilis.c\
 	src/movement/movement.c\
-	src/minimap/minimap_util.c\
-	src/geometry/projection_util.c\
-	src/movement/movement_keys.c\
+	src/movement/movement_util.c\
 
-HEADERS = includes/cub3d.h
+HEADERS = ../includes/cub3d.h
 OBJECTS = $(SOURCES:.c=.o)
 
 COLOR_OFF=\033[0m
@@ -51,34 +48,24 @@ PURPLE=\033[1;35m
 CYAN=\033[1;36m
 WHITE=\033[1;37m
 
-all : $(NAME)
+all : ../$(NAME)
 
-$(NAME) : $(OBJECTS)
-	@make -C $(LINKED_LIST) --no-print-directory
-	@make -C $(GET_NEXT_LINE) --no-print-directory
-	@make -C $(LIBFT) --no-print-directory
-	@echo 'cd libraries/MLX42 && cmake -B build > /dev/null && (printf "${GREEN}MLX42 build was setup successfully.${COLOR_OFF}\n" || "${RED}MLX42 build setup failed.${COLOR_OFF}\n") && cmake --build build -j4 > /dev/null && (printf "${GREEN}MLX42 built successfully.${COLOR_OFF}\n" || "${RED}MLX42 build failed.${COLOR_OFF}\n")' | bash
+../$(NAME) : $(OBJECTS)
 	@printf "${BLUE}Linking\r${COLOR_OFF}"
 	@$(CC) $(CFLAGS) -o $@ $(OBJECTS) $(LDLFLAGS)
 	@printf "${GREEN}Done Making $(NAME).                        ${COLOR_OFF}\n"
 
 %.o : %.c $(HEADERS)
 	@printf "${BLUE}Compiling $<...\r${COLOR_OFF}"
-	@$(CC) $(CFLAGS) -I./includes -c $< -o $@
+	@$(CC) $(CFLAGS) -I../includes -c $< -o $@
 
 clean :
 	@rm -f $(OBJECTS)
 	@printf "${RED}Removed $(NAME) object files.${COLOR_OFF}\n"
-	@make -C $(LIBFT) clean --no-print-directory 
-	@make -C $(LINKED_LIST) clean --no-print-directory 
-	@make -C $(GET_NEXT_LINE) clean --no-print-directory 
 
 fclean :
-	@rm -f $(OBJECTS) $(NAME) 
+	@rm -f $(OBJECTS) ../$(NAME) 
 	@printf "${RED}Removed $(NAME) object files and $(NAME) binary.${COLOR_OFF}\n"
-	@make -C $(LIBFT) fclean --no-print-directory 
-	@make -C $(LINKED_LIST) fclean --no-print-directory 
-	@make -C $(GET_NEXT_LINE) fclean --no-print-directory 
 
 re : fclean all
 

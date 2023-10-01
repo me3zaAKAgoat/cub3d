@@ -6,11 +6,11 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 18:58:58 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/27 20:24:22 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/10/01 16:52:26 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 bool	is_texture_line(char *line)
 {

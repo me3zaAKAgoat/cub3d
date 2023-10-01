@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/29 15:55:46 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/10/01 16:52:26 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	set_global_defaults(t_global *data, t_map *map)
 {
@@ -43,8 +43,8 @@ void	simple_key_handlers(mlx_key_data_t keydata, void *param)
 	if (keydata.key == MLX_KEY_TAB && keydata.action == MLX_PRESS)
 	{
 		data->cursor_enabled = !data->cursor_enabled;
-		mlx_set_cursor_mode(data->mlx, iternary(data->cursor_enabled, \
-		MLX_MOUSE_NORMAL, MLX_MOUSE_HIDDEN));
+		mlx_set_cursor_mode(data->mlx,
+			iternary(data->cursor_enabled, MLX_MOUSE_NORMAL, MLX_MOUSE_HIDDEN));
 	}
 }
 
@@ -75,8 +75,8 @@ int	main(int ac, char **av)
 	if (mlx_image_to_window(data.mlx, data.game_img, 0, 0) < 0
 		|| mlx_image_to_window(data.mlx, data.hud_img, 0, 0) < 0)
 		werror("mlx new img to window failed.");
-	mlx_set_cursor_mode(data.mlx, iternary(data.cursor_enabled, \
-	MLX_MOUSE_NORMAL, MLX_MOUSE_HIDDEN));
+	mlx_set_cursor_mode(data.mlx,
+		iternary(data.cursor_enabled, MLX_MOUSE_NORMAL, MLX_MOUSE_HIDDEN));
 	render_game(&data);
 	mlx_cursor_hook(data.mlx, cursor_handler, &data);
 	mlx_key_hook(data.mlx, simple_key_handlers, &data);

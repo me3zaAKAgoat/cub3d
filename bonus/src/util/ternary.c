@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ternary.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
+/*   By: me3za <me3za@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 08:44:33 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/24 09:00:48 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/09/29 15:54:49 by me3za            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 int	iternary(bool statement, int fexpression, int sexpression)
 {

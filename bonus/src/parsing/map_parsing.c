@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
+/*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/23 03:56:08 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/29 13:47:26 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/10/01 16:52:26 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3d_bonus.h"
 
 void	uniform_arrays_width(t_global *data)
 {
@@ -27,7 +27,8 @@ void	uniform_arrays_width(t_global *data)
 			data->map->map_array[y] = ft_realloc(data->map->map_array[y],
 					hlen * sizeof(int), (data->map->width + 2) * sizeof(int));
 			if (!data->map->map_array[y])
-				return (werror("Error\nA heap allocation failed."), exit(1));
+				return (werror("Error\nA heap allocation failed."), \
+				exit(1));
 			x = hlen;
 			while (x <= data->map->width)
 			{
@@ -44,19 +45,13 @@ void	initialize_map_array(t_global *data, int y, char *line)
 {
 	data->map->map_array = ft_realloc(data->map->map_array,
 			y * sizeof(int *), (y + 2) * sizeof(int *));
-	data->map->map_array[y + 1] = NULL;
 	if (!data->map->map_array)
-	{
-		werror("Error\nA heap allocation failed.");
-		exit(1);
-	}
+		return (werror("Error\nA heap allocation failed."), exit(1));
+	data->map->map_array[y + 1] = NULL;
 	data->map->map_array[y] = malloc((ft_strlen(line)
 				+ 1 * (line[ft_strlen(line) - 1] != '\n')) * sizeof(int));
 	if (!data->map->map_array[y])
-	{
-		werror("Error\nA heap allocation failed.");
-		exit(1);
-	}
+		return (werror("Error\nA heap allocation failed."), exit(1));
 }
 
 void	process_map_line(t_global *data, int x, int y, char *line)
@@ -67,9 +62,9 @@ void	process_map_line(t_global *data, int x, int y, char *line)
 		if (data->map->map_array[y][x] >= NORTH
 			&& data->map->map_array[y][x] <= SOUTH)
 		{
-			data->player.x = x;
-			data->player.y = y;
-			data->player.view_angle = \
+			data->player.x = x + .5;
+			data->player.y = y + .5;
+			data->player.viewing_angle = \
 				initial_angle(data->map->map_array[y][x]);
 		}
 		x++;
