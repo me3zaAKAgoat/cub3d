@@ -31,7 +31,7 @@ bonus: $(MLX42_LIB)
 	@make -C bonus --no-print-directory
 
 clean :
-	@printf "${RED}removed MLX42 library.${COLOR_OFF}\n"	
+	@printf "${RED}Removed MLX42 library.${COLOR_OFF}\n"	
 	@rm -rf $(MLX42_LIB)
 	@make clean -C mandatory --no-print-directory
 	@make clean -C bonus --no-print-directory
@@ -40,7 +40,7 @@ clean :
 	@make -C $(GET_NEXT_LINE) clean --no-print-directory 
 
 fclean :
-	@printf "${RED}removed MLX42 build.${COLOR_OFF}\n"	
+	@printf "${RED}Removed MLX42 build.${COLOR_OFF}\n"	
 	@rm -rf $(MLX42)
 	@make -C $(LIBFT) fclean --no-print-directory 
 	@make -C $(LINKED_LIST) fclean --no-print-directory 
