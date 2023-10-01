@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/30 14:46:38 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/30 17:39:03 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ typedef struct s_global
 	mlx_image_t			*hud_img;
 	mlx_texture_t		*img;
 	mlx_image_t			*first;
+	mlx_image_t			*sprit;
+	mlx_texture_t		*sprite;
 	t_square			square;
 	t_draw				draw;
 	bool				cursor_enabled;

@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/30 14:54:00 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/30 21:47:35 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,15 @@ void	init_img(t_global *data)
 	if (!data->game_img || !data->hud_img)
 		werror("mlx new img failed.");
 	data->img = mlx_load_png("assets/valorant.png");
-	if (!data->img)
+	data->sprite = mlx_load_png("assets/sprite2.png");
+	if (!data->img || !data->sprite)
 	{
 		werror("mlx load png failed.");
 		exit(EXIT_FAILURE);
 	}
 	data->first = mlx_texture_to_image(data->mlx, data->img);
-	if (!data->first)
+	data->sprit = mlx_texture_to_image(data->mlx, data->sprite);
+	if (!data->first || !data->sprit)
 	{
 		werror("mlx texture to image failed.");
 		exit(EXIT_FAILURE);
@@ -85,13 +87,15 @@ int	main(int ac, char **av)
 	set_global_defaults(&data, &map);
 	sanitization(ac, av);
 	parse_config_file(&data, av[1]);
-	data.mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "cub3d", false);
+	mlx_set_setting(MLX_STRETCH_IMAGE, true);
+	data.mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "cub3d", true);
 	if (!data.mlx)
 		werror("mlx init failed.");
 	init_img(&data);
 	if (mlx_image_to_window(data.mlx, data.game_img, 0, 0) < 0
 		|| mlx_image_to_window(data.mlx, data.hud_img, 0, 0) < 0 || \
-		mlx_image_to_window(data.mlx, data.first, 0, 0) < 0)
+			mlx_image_to_window(data.mlx, data.sprit, 0, 0) < 0 || \
+			mlx_image_to_window(data.mlx, data.first, 0, 0) < 0)
 		werror("mlx new img to window failed.");
 	mlx_set_cursor_mode(data.mlx,
 		iternary(data.cursor_enabled, MLX_MOUSE_NORMAL, MLX_MOUSE_HIDDEN));

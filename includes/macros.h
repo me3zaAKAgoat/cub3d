@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 17:19:29 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/30 14:56:03 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/09/30 18:25:55 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@
 # define PLAYER_COLOR 0x67E2CBFF
 # define PLUS 1
 # define MINUS 0
+# define MINIMAP_BACKGROUND_COLOR 0x10101040
 
 #endif
