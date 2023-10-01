@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 21:34:39 by echoukri          #+#    #+#             */
-/*   Updated: 2023/10/01 20:33:50 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/10/01 22:05:19 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	interact_with_door(t_global *data)
 		door = data->map->map_array[(int)ray.wall_hit_horizontal.y
 			+ iternary(ray.is_facing_up, -1, 0)]
 			+ (int)ray.wall_hit_horizontal.x;
-	if (ray.distance < 2)
+	if (ray.distance < DOOR_INTERACTION_DISTANCE)
 	{
 		if (*door == DOOR_CLOSED)
 			*door = DOOR_OPEN;

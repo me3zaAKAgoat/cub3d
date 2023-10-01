@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 17:19:29 by echoukri          #+#    #+#             */
-/*   Updated: 2023/10/01 20:33:50 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/10/01 22:05:39 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@
 # define FOV 0.69813170079
 # define NUM_RAYS 1600
 # define PLAYER_COLOR 0x67E2CBFF
+# define DOOR_INTERACTION_DISTANCE 4
 
 #endif
