@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Ofast #-Wall -Wextra -Werror
+CFLAGS = -Ofast -g #-Wall -Wextra -Werror 
 NAME = cub3d_bonus
 LINKED_LIST = ../libraries/linked_list
 GET_NEXT_LINE = ../libraries/get_next_line
@@ -39,6 +39,7 @@ SOURCES = src/main.c\
 	src/movement/movement_keys.c\
 	src/movement/door_logic.c\
 	src/movement/door_logic_util.c\
+	src/sprite.c
 
 	
 

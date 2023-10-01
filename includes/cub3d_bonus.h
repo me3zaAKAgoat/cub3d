@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by me3za             #+#    #+#             */
-/*   Updated: 2023/09/30 17:39:03 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/10/01 14:28:22 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,14 @@ typedef struct s_draw
 typedef struct s_global
 {
 	t_map				*map;
+	int					i;
 	t_player			player;
 	mlx_t				*mlx;
 	mlx_image_t			*game_img;
 	mlx_image_t			*hud_img;
 	mlx_texture_t		*img;
 	mlx_image_t			*first;
-	mlx_image_t			*sprit;
-	mlx_texture_t		*sprite;
+	mlx_texture_t		*sprite[4];
 	t_square			square;
 	t_draw				draw;
 	bool				cursor_enabled;
@@ -153,7 +153,8 @@ typedef struct s_distance
 
 /* Function Definitions */
 
-extern bool				hitbox_compromised(t_global *data,
+extern	void    init_sprite(t_global *data);
+extern	bool				hitbox_compromised(t_global *data,
 							double viewing_angle);
 extern bool				is_movement_key_down(t_global *data);
 extern void				move_player_ut(t_global *data);

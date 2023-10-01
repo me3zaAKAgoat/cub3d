@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/30 21:47:35 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/10/01 14:28:36 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,13 @@ void	init_img(t_global *data)
 	if (!data->game_img || !data->hud_img)
 		werror("mlx new img failed.");
 	data->img = mlx_load_png("assets/valorant.png");
-	data->sprite = mlx_load_png("assets/sprite2.png");
-	if (!data->img || !data->sprite)
+	if (!data->img)
 	{
 		werror("mlx load png failed.");
 		exit(EXIT_FAILURE);
 	}
 	data->first = mlx_texture_to_image(data->mlx, data->img);
-	data->sprit = mlx_texture_to_image(data->mlx, data->sprite);
-	if (!data->first || !data->sprit)
+	if (!data->first)
 	{
 		werror("mlx texture to image failed.");
 		exit(EXIT_FAILURE);
@@ -92,9 +90,9 @@ int	main(int ac, char **av)
 	if (!data.mlx)
 		werror("mlx init failed.");
 	init_img(&data);
+	init_sprite(&data);
 	if (mlx_image_to_window(data.mlx, data.game_img, 0, 0) < 0
 		|| mlx_image_to_window(data.mlx, data.hud_img, 0, 0) < 0 || \
-			mlx_image_to_window(data.mlx, data.sprit, 0, 0) < 0 || \
 			mlx_image_to_window(data.mlx, data.first, 0, 0) < 0)
 		werror("mlx new img to window failed.");
 	mlx_set_cursor_mode(data.mlx,

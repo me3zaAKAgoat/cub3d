@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 22:27:54 by echoukri          #+#    #+#             */
-/*   Updated: 2023/09/30 14:46:46 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/10/01 14:22:23 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ bool	is_movement_key_down(t_global *data)
 		|| mlx_is_key_down(data->mlx, MLX_KEY_D)
 		|| mlx_is_key_down(data->mlx, MLX_KEY_A)
 		|| mlx_is_key_down(data->mlx, MLX_KEY_LEFT)
-		|| mlx_is_key_down(data->mlx, MLX_KEY_RIGHT));
+		|| mlx_is_key_down(data->mlx, MLX_KEY_RIGHT)
+		|| mlx_is_key_down(data->mlx, MLX_KEY_Q));
 }
 
 void	move_player(void *param)

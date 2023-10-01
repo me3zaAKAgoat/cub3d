@@ -6,7 +6,7 @@
 /*   By: selhilal <selhilal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 21:52:34 by selhilal          #+#    #+#             */
-/*   Updated: 2023/09/30 14:56:25 by selhilal         ###   ########.fr       */
+/*   Updated: 2023/10/01 14:47:54 by selhilal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,26 @@ void	move_player_ut(t_global *data)
 		if (mlx_is_key_down(data->mlx, MLX_KEY_A) && \
 			!hitbox_compromised(data, data->player.viewing_angle - M_PI_2))
 			key_move_left_right(data, MINUS);
-		if (mlx_is_key_down(data->mlx, MLX_KEY_S))
+		if (mlx_is_key_down(data->mlx, MLX_KEY_Q))
+		{
 			mlx_delete_image(data->mlx, data->first);
+			data->first = NULL;
+		}
 	}
+	if (data->first != NULL)
+	{
+		mlx_delete_image(data->mlx, data->first);
+		data->first = NULL;
+	}
+	printf("data->i = %d\n", data->i);
+	data->first = mlx_texture_to_image(data->mlx, data->sprite[data->i]);
+	if (!data->first)
+	{
+		werror("mlx texture to image failed.");
+		exit(EXIT_FAILURE);
+	}
+	if(++data->i > 3)
+		data->i = 0;
+	if(mlx_image_to_window(data->mlx, data->first, 0, 0) <0)
+		exit(1);
 }
