@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:05:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/10/01 20:21:27 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/10/02 18:40:08 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	set_global_defaults(t_global *data, t_map *map)
 	data->map->we_file = NULL;
 	data->map->height = 0;
 	data->map->width = 0;
-	data->map->ceil_color = -1;
-	data->map->floor_color = -1;
+	data->map->ceil_color = 0x00000000;
+	data->map->floor_color = 0x00000000;
 	data->map->map_array = NULL;
 	data->game_img = NULL;
 	data->hud_img = NULL;
@@ -55,14 +55,14 @@ int	main(int ac, char **av)
 	parse_config_file(&data, av[1]);
 	data.mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "cub3d", false);
 	if (!data.mlx)
-		werror("mlx init failed.");
+		werror("Error\nmlx init failed.");
 	data.game_img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
 	data.hud_img = mlx_new_image(data.mlx, WIN_WIDTH, WIN_HEIGHT);
 	if (!data.game_img || !data.hud_img)
-		werror("mlx new img failed.");
+		werror("Error\nmlx new img failed.");
 	if (mlx_image_to_window(data.mlx, data.game_img, 0, 0) < 0
 		|| mlx_image_to_window(data.mlx, data.hud_img, 0, 0) < 0)
-		werror("mlx new img to window failed.");
+		werror("Error\nmlx new img to window failed.");
 	render_game(&data);
 	mlx_loop_hook(data.mlx, move_player, &data);
 	mlx_key_hook(data.mlx, quit, data.mlx);

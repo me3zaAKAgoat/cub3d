@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 00:32:11 by echoukri          #+#    #+#             */
-/*   Updated: 2023/10/01 20:33:50 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/10/02 17:00:00 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	player_icon(t_global *data, int xm, int ym, int r)
 {
 	int	x;
 	int	y;
-	int	i;
 	int	err;
 
 	xm -= r;
@@ -112,7 +111,7 @@ void	draw_minimap_background(t_global *data)
 void	minimap(t_global *data)
 {
 	square(data, (t_double_couple){.x = MINIMAP_SIZE / 2, \
-	.y = MINIMAP_SIZE / 2}, 0xFFFFFF40, MINIMAP_SIZE);
+	.y = MINIMAP_SIZE / 2}, 0xFFFFFF20, MINIMAP_SIZE);
 	draw_minimap_background(data);
 	player_icon(data, MINIMAP_SIZE / 2, MINIMAP_SIZE / 2, UNIT_SIZE / 2);
 }

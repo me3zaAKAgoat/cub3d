@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by echoukri          #+#    #+#             */
-/*   Updated: 2023/10/01 20:47:31 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/10/02 18:39:10 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	parse_ceiling_color(t_global *data, char *line)
 	int		g;
 	int		b;
 
-	if (data->map->ceil_color != -1)
+	if (data->map->ceil_color != 0x00000000)
 		return (werror("Error\nCeiling color was recognized twice."), \
 		exit(1), 0);
 	tmp = ft_strtrim(skip_wspace(line + 1), "\n");
@@ -49,7 +49,7 @@ int	parse_floor_color(t_global *data, char *line)
 	int		g;
 	int		b;
 
-	if (data->map->floor_color != -1)
+	if (data->map->floor_color != 0x00000000)
 		return (werror("Error\nFloor color was recognized twice."), exit(1), 0);
 	tmp = ft_strtrim(skip_wspace(line + 1), "\n");
 	colors = ft_split(tmp, ',');

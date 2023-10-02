@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Ofast #-Wall -Wextra -Werror
+CFLAGS = -Ofast -Wall -Wextra -Werror
 NAME = cub3d_bonus
 LINKED_LIST = ../libraries/linked_list
 GET_NEXT_LINE = ../libraries/get_next_line
