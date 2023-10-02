@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 16:14:50 by echoukri          #+#    #+#             */
-/*   Updated: 2023/10/01 16:50:09 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/10/02 15:33:41 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ uint32_t	map_element_color(t_map_element element)
 	else if (element == SURFACE_PLAYABLE)
 		return (0x7F7F7FFF);
 	else
-		return (0x0FFFFFFFF);
+		return (0xFFFFFF40);
 }
 
 void	minimap_bg_init(t_global *data, t_sides *sides, t_point *iterators)
