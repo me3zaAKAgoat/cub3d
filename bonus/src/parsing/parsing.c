@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by echoukri          #+#    #+#             */
-/*   Updated: 2023/10/02 16:57:20 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/10/03 19:19:52 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,8 @@ void	parse_config_file(t_global *data, char *filename)
 	}
 	parse_assets(data, fd);
 	parse_map(data, fd);
+	if (extraneous_lines(fd))
+		return (werror("Error\nThe map can't be seperated."), exit(1));
 	get_map_dimensions(data);
 	uniform_arrays_width(data);
 	sanitize_map(data->map);

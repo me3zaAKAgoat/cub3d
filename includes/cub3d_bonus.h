@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by echoukri          #+#    #+#             */
-/*   Updated: 2023/10/01 20:44:08 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/10/03 19:21:13 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ typedef struct s_sides
 
 /* Function Definitions */
 
+extern	bool			extraneous_lines(int fd);
 extern	bool			color_invalid(char **colors);
 extern	void			move_fb(t_global *data, \
 						t_double_couple *fs_step, bool forward);
