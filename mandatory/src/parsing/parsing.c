@@ -6,11 +6,12 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:34:33 by echoukri          #+#    #+#             */
-/*   Updated: 2023/10/03 19:09:51 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/10/04 05:18:36 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <errno.h>
 
 int	parse_ceiling_color(t_global *data, char *line)
 {
@@ -27,13 +28,13 @@ int	parse_ceiling_color(t_global *data, char *line)
 	colors = ft_split(tmp, ',');
 	if (!colors)
 		return (werror("Error\nA heap allocation failed."), exit(1), 0);
-	if (color_invalid(colors))
+	if (count_char(line, ',') > 2 || color_invalid(colors))
 		return (free(tmp), split_clear(colors), \
 		werror("Error\nCeiling colors invalid."), exit(1), 0);
 	r = ft_atoi(colors[0]);
 	g = ft_atoi(colors[1]);
 	b = ft_atoi(colors[2]);
-	if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0)
+	if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0 || errno == EOVERFLOW)
 		return (werror("Error\nCeiling colors are out of bound."), exit(1), 0);
 	data->map->ceil_color = r << 24 | g << 16 | b << 8 | 255;
 	free(tmp);
@@ -55,13 +56,13 @@ int	parse_floor_color(t_global *data, char *line)
 	colors = ft_split(tmp, ',');
 	if (!colors)
 		return (werror("Error\nA heap allocation failed."), exit(1), 0);
-	if (color_invalid(colors))
+	if (count_char(line, ',') > 2 || color_invalid(colors))
 		return (free(tmp), split_clear(colors), \
 		werror("Error\nFloor colors invalid."), exit(1), 0);
 	r = ft_atoi(colors[0]);
 	g = ft_atoi(colors[1]);
 	b = ft_atoi(colors[2]);
-	if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0)
+	if (r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0 || errno == EOVERFLOW)
 		return (werror("Error\nCeiling colors are out of bound."), exit(1), 0);
 	data->map->floor_color = r << 24 | g << 16 | b << 8 | 255;
 	free(tmp);

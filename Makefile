@@ -1,4 +1,3 @@
-LINKED_LIST = libraries/linked_list
 GET_NEXT_LINE = libraries/get_next_line
 LIBFT = libraries/libft
 MLX42 = libraries/MLX42/build
@@ -16,7 +15,6 @@ CYAN=\033[1;36m
 WHITE=\033[1;37m
 
 all: $(MLX42_LIB)
-	@make -C $(LINKED_LIST) --no-print-directory
 	@make -C $(GET_NEXT_LINE) --no-print-directory
 	@make -C $(LIBFT) --no-print-directory
 	@make -C mandatory --no-print-directory
@@ -25,7 +23,6 @@ $(MLX42_LIB) :
 	@echo 'cd libraries/MLX42 && cmake -B build > /dev/null && (printf "${GREEN}MLX42 build was setup successfully.${COLOR_OFF}\n" || "${RED}MLX42 build setup failed.${COLOR_OFF}\n") && cmake --build build -j4 > /dev/null && (printf "${GREEN}MLX42 built successfully.${COLOR_OFF}\n" || "${RED}MLX42 build failed.${COLOR_OFF}\n")' | bash
 
 bonus: $(MLX42_LIB)
-	@make -C $(LINKED_LIST) --no-print-directory
 	@make -C $(GET_NEXT_LINE) --no-print-directory
 	@make -C $(LIBFT) --no-print-directory
 	@make -C bonus --no-print-directory
@@ -36,14 +33,12 @@ clean :
 	@make clean -C mandatory --no-print-directory
 	@make clean -C bonus --no-print-directory
 	@make -C $(LIBFT) clean --no-print-directory 
-	@make -C $(LINKED_LIST) clean --no-print-directory 
 	@make -C $(GET_NEXT_LINE) clean --no-print-directory 
 
 fclean :
 	@printf "${RED}Removed MLX42 build.${COLOR_OFF}\n"	
 	@rm -rf $(MLX42)
 	@make -C $(LIBFT) fclean --no-print-directory 
-	@make -C $(LINKED_LIST) fclean --no-print-directory 
 	@make -C $(GET_NEXT_LINE) fclean --no-print-directory 
 	@make fclean -C mandatory --no-print-directory
 	@make fclean -C bonus --no-print-directory

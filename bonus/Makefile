@@ -1,16 +1,15 @@
 CC = cc
 CFLAGS = -Ofast -Wall -Wextra -Werror
-NAME = cub3d_bonus
-LINKED_LIST = ../libraries/linked_list
+NAME = cub3D_bonus
 GET_NEXT_LINE = ../libraries/get_next_line
 LIBFT = ../libraries/libft
 MLX42 = ../libraries/MLX42/build
 
 OS := $(shell uname)
 ifeq ($(OS), Linux)
-    LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -ldl -lglfw -pthread -lm
+    LDLFLAGS = -lmlx42 -lgnl -lft -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -ldl -lglfw -pthread -lm
 else
-    LDLFLAGS = -lmlx42 -lll -lgnl -lft -L$(LINKED_LIST) -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -framework Cocoa -framework OpenGL -framework IOKit -lglfw -L/Users/$(USER)/.brew/Cellar/glfw/3.3.8/lib
+    LDLFLAGS = -lmlx42 -lgnl -lft -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -framework Cocoa -framework OpenGL -framework IOKit -lglfw -L/Users/$(USER)/.brew/Cellar/glfw/3.3.8/lib
 endif
 
 SOURCES = src/main.c\
@@ -41,7 +40,7 @@ SOURCES = src/main.c\
 	src/movement/door_logic.c\
 	src/movement/door_logic_util.c\
 
-HEADERS = ../includes/cub3d_bonus.h
+HEADERS = ../includes/cub3d_bonus.h ../includes/get_next_line.h ../includes/libft.h ../includes/macros.h
 OBJECTS = $(SOURCES:.c=.o)
 
 COLOR_OFF=\033[0m
