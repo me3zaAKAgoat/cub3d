@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by echoukri          #+#    #+#             */
-/*   Updated: 2023/10/04 05:06:48 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/10/04 05:33:21 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,8 @@ typedef struct s_distance
 
 /* Function Definitions */
 
-extern	size_t			count_char(char *str, char c);
+extern	size_t		count_char(char *str, char c);
+extern	bool			colors_out_bound(int r, int g, int b);
 extern	bool			extraneous_lines(int fd);
 extern	bool			color_invalid(char **colors);
 extern	void			init_steps(t_global *data, t_double_couple *fs_step, \

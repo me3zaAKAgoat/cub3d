@@ -6,11 +6,12 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/01 20:45:30 by echoukri          #+#    #+#             */
-/*   Updated: 2023/10/04 05:04:30 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/10/04 05:34:25 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+#include <errno.h>
 
 bool	color_invalid(char **colors)
 {
@@ -49,4 +50,10 @@ size_t	count_char(char *str, char c)
 		i++;
 	}
 	return (count);
+}
+
+bool	colors_out_bound(int r, int g, int b)
+{
+	return (r > 255 || r < 0 || g > 255 || g < 0 \
+	|| b > 255 || b < 0 || errno == EOVERFLOW);
 }

@@ -6,7 +6,7 @@
 /*   By: echoukri <echoukri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 00:25:57 by echoukri          #+#    #+#             */
-/*   Updated: 2023/10/04 05:06:52 by echoukri         ###   ########.fr       */
+/*   Updated: 2023/10/04 05:33:21 by echoukri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,14 +129,15 @@ typedef struct s_sides
 
 /* Function Definitions */
 
-extern	size_t			count_char(char *str, char c);
+extern	size_t		count_char(char *str, char c);
+extern	bool			colors_out_bound(int r, int g, int b);
 extern	bool			extraneous_lines(int fd);
 extern	bool			color_invalid(char **colors);
 extern	void			move_fb(t_global *data, \
 						t_double_couple *fs_step, bool forward);
 extern	void			move_lr(t_global *data, \
 						t_double_couple *lr_step, bool left);
-extern	void			square(t_global *data, t_double_couple xy,
+extern	void			square(t_global *data, t_double_couple xy, \
 							uint32_t color, int edge_size);
 extern	void			draw_minimap_unit(t_global *data, \
 						t_point *iterators, t_sides *sides);
@@ -151,20 +152,20 @@ extern	bool			player_sp(t_map_element **map_array, int x, int y);
 extern	void			initiate_wall_values(\
 						t_wall_data *wall, t_distance *distance);
 extern	void			interact_with_door(t_global *data);
-extern	void			horizontal_intersection_init_kms(
-							t_double_couple *intercept, t_double_couple *step,
+extern	void			horizontal_intersection_init_kms(\
+							t_double_couple *intercept, t_double_couple *step, \
 							t_double_couple xy, t_ray *ray);
-extern	void			vertical_intersection_init_kms(
-							t_double_couple *intercept, t_double_couple *step,
+extern	void			vertical_intersection_init_kms(\
+							t_double_couple *intercept, t_double_couple *step, \
 							t_double_couple xy, t_ray *ray);
 extern	void			horizontal_intersection_init(t_double_couple *intercept,
-							t_double_couple *step, t_double_couple xy,
-							t_ray *ray);
+						t_double_couple *step, t_double_couple xy, \
+						t_ray *ray);
 
-extern	void			vertical_intersection_init(t_double_couple *intercept,
-							t_double_couple *step, t_double_couple xy,
+extern	void			vertical_intersection_init(t_double_couple *intercept, \
+							t_double_couple *step, t_double_couple xy, \
 							t_ray *ray);
-extern	double		intersection_distance_kms(t_map *map,
+extern	double		intersection_distance_kms(t_map *map, \
 							double x, double y, t_ray *ray);
 extern	void			cursor_handler(double x, double y, void *param);
 extern	void			interact_with_door(t_global *data);
@@ -180,13 +181,13 @@ extern	bool			contacts_void_left(t_map *map, size_t x, size_t y);
 extern	bool			contacts_void(t_map *map, size_t x, size_t y);
 extern	void			sanitize_map(t_map *map);
 extern	double		horizontal_intersection_distance(t_map *map,
-							double x, double y, t_ray *ray);
+						double x, double y, t_ray *ray);
 extern	double		vertical_intersection_distance(t_map *map,
-							double x, double y, t_ray *ray);
+						double x, double y, t_ray *ray);
 extern	double		intersection_distance(t_map *map,
-							double x, double y, t_ray *ray);
+						double x, double y, t_ray *ray);
 extern	double		dternary(bool statement,
-							double fexpression, double sexpression);
+						double fexpression, double sexpression);
 extern	int			iternary(bool statement, int fexpression, int sexpression);
 extern	double		initial_angle(t_map_element element);
 extern	t_map_element	char_to_map_element(char c);
@@ -212,7 +213,7 @@ extern	void			project_ray(t_global *data, t_ray *ray);
 extern	bool			is_wall(t_map *map, double x, double y);
 extern	void			cast_rays(t_global *data);
 extern	void			bresenham(mlx_image_t *img,
-							t_point a, t_point b, uint32_t color);
+						t_point a, t_point b, uint32_t color);
 extern	void			clear_global(t_global *data);
 extern	void			minimap(t_global *data);
 extern	void			*ft_realloc(void *ptr, size_t oldsize, size_t newsize);
