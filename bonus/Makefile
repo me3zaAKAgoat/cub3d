@@ -5,6 +5,9 @@ GET_NEXT_LINE = ../libraries/get_next_line
 LIBFT = ../libraries/libft
 MLX42 = ../libraries/MLX42/build
 
+FT_LIB = ../libraries/libft/libft.a
+GNL_LIB = ../libraries/get_next_line/libgnl.a
+
 OS := $(shell uname)
 ifeq ($(OS), Linux)
     LDLFLAGS = -lmlx42 -lgnl -lft -L$(LIBFT) -L$(GET_NEXT_LINE) -L$(MLX42) -ldl -lglfw -pthread -lm
@@ -40,7 +43,7 @@ SOURCES = src/main.c\
 	src/movement/door_logic.c\
 	src/movement/door_logic_util.c\
 
-HEADERS = ../includes/cub3d_bonus.h ../includes/get_next_line.h ../includes/libft.h ../includes/macros.h
+HEADERS = ../includes/cub3d_bonus.h ../includes/macros.h
 OBJECTS = $(SOURCES:.c=.o)
 
 COLOR_OFF=\033[0m
@@ -55,7 +58,7 @@ WHITE=\033[1;37m
 
 all : ../$(NAME)
 
-../$(NAME) : $(OBJECTS)
+../$(NAME) : $(OBJECTS) $(FT_LIB) $(GNL_LIB)
 	@printf "${BLUE}Linking\r${COLOR_OFF}"
 	@$(CC) $(CFLAGS) -o $@ $(OBJECTS) $(LDLFLAGS)
 	@printf "${GREEN}Done Making $(NAME).                        ${COLOR_OFF}\n"
