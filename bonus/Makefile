@@ -65,7 +65,7 @@ all : ../$(NAME)
 
 %.o : %.c $(HEADERS)
 	@printf "${BLUE}Compiling $<...\r${COLOR_OFF}"
-	@$(CC) $(CFLAGS) -I../includes -c $< -o $@
+	@$(CC) $(CFLAGS) -I../includes -I../libraries/get_next_line -I../libraries/libft -I../libraries/MLX42/include/MLX42 -c $< -o $@
 
 clean :
 	@rm -f $(OBJECTS)
