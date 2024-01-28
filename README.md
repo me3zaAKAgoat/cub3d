@@ -1,4 +1,4 @@
-# cub3D - Our First RayCaster with miniLibX
+<h1 align="center">cub3D - Our First RayCaster with miniLibX </h1>
 
 <div align="center">
   <img src="./readme_assets/cub3d.gif" alt="Visual Of Running Program">
